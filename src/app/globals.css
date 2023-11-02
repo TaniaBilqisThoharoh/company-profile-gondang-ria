@@ -36,6 +36,19 @@ body {
   background-position: bottom;
 }
 
+#login-page {
+  background-image: url("../../public/Bg-login.png");
+}
+
+#login-admin {
+  background: radial-gradient(
+    231% 135.8% at 0.9% 2.98%,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  backdrop-filter: blur(21px);
+}
+
 #GR-tiket {
   clip-path: inset(0, 0, 0, 10%);
 }
@@ -182,4 +195,28 @@ footer {
     0px 1px 3px 0px rgba(0, 0, 0, 0.1), 2px 5px 5px 0px rgba(0, 0, 0, 0.09),
     4px 11px 7px 0px rgba(0, 0, 0, 0.05), 8px 19px 8px 0px rgba(0, 0, 0, 0.01),
     12px 30px 9px 0px rgba(0, 0, 0, 0);
+}
+
+.sidebar {
+  background: radial-gradient(
+    231% 135.8% at 0.9% 2.98%,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  backdrop-filter: blur(21px);
+}
+
+#admin-page {
+  background-image: url("../../public/Bg-admin.png");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.upload {
+  background: radial-gradient(
+    231% 135.8% at 0.9% 2.98%,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  backdrop-filter: blur(21px);
 }

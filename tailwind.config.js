@@ -14,6 +14,8 @@ module.exports = {
       },
       colors: {
         'title-grey': '#F9F9F9',
+        'login_fontClr': '#616161',
+        'ble-admin': '#e2edf5',
         'ble-50': '#EBF4F9',
         'ble-100': '#D7E8F4',
         'ble-200': '#AFD2E9',
@@ -22,8 +24,9 @@ module.exports = {
         'ble-500': '#398EC7',
         'ble-600': '#2D719F',
         'ble-700': '#225577',
+        'ble-800': '#163950',
         'ble-900': '#0B1C28',
-        
+        'ble-950': '#060E14',
       },
     },
   },

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function WahanaSec() {
   return (
-    <section className="z-20 bg-ble-100 w-screen flex justify-center align-center py-24 px-36">
+    <section className="z-20 bg-ble-100 w-screen flex justify-center align-center py-32 px-36">
       <div
         id="wahana_card_bg"
       >

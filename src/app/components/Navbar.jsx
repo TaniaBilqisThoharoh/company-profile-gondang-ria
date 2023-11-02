@@ -71,7 +71,7 @@ export default function Navbar() {
                 {/* LINK BERANDA */}
                 <Link
                   href="/"
-                  className="flex justify-center align-middle"
+                  className="flex justify-center items-center hover:text-ble-500 active:underline active:underline-offset-2"
                 >
                   Beranda
                 </Link>
@@ -80,7 +80,7 @@ export default function Navbar() {
                 {/* LINK WAHANA */}
                 <Link
                   href="/wahana"
-                  className="flex justify-center align-middle"
+                  className="flex justify-center items-center hover:text-ble-500 active:underline active:underline-offset-2"
                 >
                   Wahana
                 </Link>
@@ -89,7 +89,7 @@ export default function Navbar() {
                 {/* LINK FASILITAS */}
                 <Link
                   href="/fasilitas"
-                  className="flex justify-center align-middle"
+                  className="flex justify-center items-center hover:text-ble-500 active:underline active:underline-offset-2"
                 >
                   Fasilitas
                 </Link>
@@ -98,7 +98,7 @@ export default function Navbar() {
                 {/* LINK PESAN TIKET */}
                 <Link
                   href="/pesan-tiket"
-                  className="flex justify-center align-middle"
+                  className="flex justify-center items-center hover:text-ble-500 active:underline active:underline-offset-2"
                 >
                   Pesan Tiket
                 </Link>
@@ -107,7 +107,7 @@ export default function Navbar() {
                 {/* LINK HUBUNGI KAMI */}
                 <Link
                   href="/hubungi-kami"
-                  className="flex justify-center align-middle"
+                  className="flex justify-center items-center hover:text-ble-500 active:underline active:underline-offset-2"
                 >
                   Hubungi Kami
                 </Link>

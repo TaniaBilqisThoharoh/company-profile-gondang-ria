@@ -1,6 +1,10 @@
+'use client'
+
 import './globals.css'
 import Navbar from './components/Navbar'
 import { Noto_Sans_Display } from 'next/font/google'
+import { usePathname } from 'next/navigation'
+import Sidebar from './components/Sidebar'
 
 const NotoSans = Noto_Sans_Display({ 
   weight: ['400', '600', '700'],
@@ -14,10 +18,13 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  const pathName = usePathname()
+  const adminPath = "/2aefc34200a294a3cc7db81b43a81873/admin"
+
   return (
     <html lang="en">
       <body className={`${NotoSans.className} overflow-x-hidden`}>
-        <Navbar />
+        {pathName.includes(adminPath) ? <Sidebar /> : <Navbar />}
         {children}
         </body>
     </html>

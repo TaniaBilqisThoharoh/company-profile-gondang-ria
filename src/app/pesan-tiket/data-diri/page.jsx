@@ -60,7 +60,7 @@ export default function DataDiri() {
         <Link
           href={`/pesan-tiket`}
           type="submit"
-          className="grid place-items-center row-start-4 col-span-2 place-self-center bg-ble-400 hover:bg-ble-500 text-ble-50 h-[63px] font-bold text-2xl rounded-[10px] w-[90%]"
+          className="grid place-items-center row-start-4 col-span-2 place-self-center bg-ble-400 hover:bg-ble-500 active:bg-ble-600 text-ble-50 h-[63px] font-bold text-2xl rounded-[10px] w-full"
         >
           SELESAI
         </Link>
