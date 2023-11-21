@@ -1,7 +1,7 @@
 import React from "react";
 import { RiImageAddLine } from "react-icons/ri";
 
-export default function DropZone({ data, dispatch, imagePreviews }) {
+export default function DropZone({ data, dispatch, imagePreviews, previewsFromServer, customClass }) {
   // onDragEnter sets inDropZone to true
   const handleDragEnter = (e) => {
     e.preventDefault();
@@ -49,7 +49,7 @@ export default function DropZone({ data, dispatch, imagePreviews }) {
       dispatch({ type: "SET_IN_DROP_ZONE", inDropZone: false });
     }
   };
-
+  
   // handle file selection via input element
   const handleFileSelect = (e) => {
     // get files from event on the input element as an array
@@ -70,7 +70,7 @@ export default function DropZone({ data, dispatch, imagePreviews }) {
 
   return (
     <div
-      className={`dropzone flex flex-col ${imagePreviews ? "opacity-0" : "opacity-100"} ${data.inDropZone ? "bg-ble-600 backdrop-blur-0 opacity-70" : "bg-ble-100 backdrop-blur-[21px] bg-opacity-0"} group justify-center cursor-pointer items-center border-ble-300 border-[3px] border-dashed rounded-[15px] w-[50vw] h-[50vh] hover:opacity-70 hover:backdrop-blur-0 hover:bg-ble-600 transition-all`}
+      className={`dropzone flex flex-col ${imagePreviews || previewsFromServer ? "opacity-0" : "opacity-100"} ${data.inDropZone ? "bg-ble-600 backdrop-blur-0 opacity-70" : "bg-ble-100 backdrop-blur-[21px] bg-opacity-0"} group justify-center cursor-pointer items-center border-ble-300 border-[3px] border-dashed rounded-[15px] ${customClass && customClass} h-[50vh] hover:opacity-70 hover:backdrop-blur-0 hover:bg-ble-600 transition-all`}
       onDrop={(e) => handleDrop(e)}
       onDragOver={(e) => handleDragOver(e)}
       onDragEnter={(e) => handleDragEnter(e)}

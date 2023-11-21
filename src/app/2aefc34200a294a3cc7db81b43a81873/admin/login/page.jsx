@@ -29,7 +29,6 @@ export default function Login() {
   const loginHandler = async (e) => {
     e.preventDefault();
 
-    const exp = new Date(new Date().getTime() + 1 * 60 * 1000);
     //initialize formData
     const formData = new FormData();
 
@@ -42,7 +41,9 @@ export default function Login() {
       .post(`http://127.0.0.1:8000/api/login`, formData)
       .then((response) => {
         //set token on cookies
-        Cookies.set("token", response.data.access_token/* , {expires: exp} */);
+        const exp = new Date(new Date().getTime() + response.data.expires_in * 1000);
+
+        Cookies.set("token", response.data.access_token, {expires: exp});
 
         //redirect to dashboard
         router.push("/2aefc34200a294a3cc7db81b43a81873/admin/transaksi");

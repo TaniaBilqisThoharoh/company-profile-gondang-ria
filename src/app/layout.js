@@ -1,5 +1,6 @@
 'use client'
 
+
 import './globals.css'
 import Navbar from './components/Navbar'
 import { Noto_Sans_Display } from 'next/font/google'

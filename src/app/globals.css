@@ -55,7 +55,7 @@ body {
 
 #wahana_card {
   background: linear-gradient(
-    95deg,
+    180deg,
     #fff 40.62%,
     rgba(255, 255, 255, 0.45) 100%
   );
@@ -70,9 +70,11 @@ body {
   z-index: -2;
   position: absolute;
   content: "";
-  width: 77.3rem;
-  height: 30.16rem;
-  left: 10px;
+  max-width: 1262.89px;
+  max-height: 535.42px;
+  width: 88.5vw;
+  height: 39vw;
+  left: -10px;
   top: 0;
   transform: rotate(-2deg);
   border-radius: 1.25rem;
@@ -83,6 +85,24 @@ body {
     -51px -26px 34px 0px rgba(0, 0, 0, 0.05),
     -90px -46px 40px 0px rgba(0, 0, 0, 0.01),
     -141px -71px 44px 0px rgba(0, 0, 0, 0);
+}
+
+@media (min-width: 768px) {
+  #wahana_card {
+    background: linear-gradient(
+      95deg,
+      #fff 40.62%,
+      rgba(255, 255, 255, 0.45) 100%
+    );
+  }
+
+  #wahana_card_bg::before {
+    left: 10px;
+    max-width: 1230px;
+    max-height: 483px;
+    width: 86vw;
+    height: 34vw;
+  }
 }
 
 #fasilitas_card {
@@ -197,6 +217,13 @@ footer {
     12px 30px 9px 0px rgba(0, 0, 0, 0);
 }
 
+.fasilitas-card-admin {
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.1),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.1), 2px 5px 5px 0px rgba(0, 0, 0, 0.09),
+    4px 11px 7px 0px rgba(0, 0, 0, 0.05), 8px 19px 8px 0px rgba(0, 0, 0, 0.01),
+    12px 30px 9px 0px rgba(0, 0, 0, 0);
+}
+
 .sidebar {
   background: radial-gradient(
     231% 135.8% at 0.9% 2.98%,
@@ -219,4 +246,37 @@ footer {
     rgba(255, 255, 255, 0) 100%
   );
   backdrop-filter: blur(21px);
+}
+
+.hubungi-kami {
+  text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.1),
+    0px 5px 5px rgba(0, 0, 0, 0.09), 0px 12px 7px rgba(0, 0, 0, 0.05),
+    0px 21px 8px rgba(0, 0, 0, 0.01), 0px 32px 9px rgba(0, 0, 0, 0);
+}
+
+.info-box {
+  box-shadow: 0px 0px 0px 0px rgba(57, 142, 199, 0.1),
+    0px 1px 3px 0px rgba(57, 142, 199, 0.1),
+    0px 5px 5px 0px rgba(57, 142, 199, 0.09),
+    0px 11px 7px 0px rgba(57, 142, 199, 0.05),
+    0px 20px 8px 0px rgba(57, 142, 199, 0.01),
+    0px 32px 9px 0px rgba(57, 142, 199, 0);
+  animation: bounce 3s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-10%);
+  }
+  50% {
+    transform: translateY(0);
+  }
+}
+
+.gmaps {
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.1),
+    0px 15px 32px 0px rgba(0, 0, 0, 0.1), 0px 59px 59px 0px rgba(0, 0, 0, 0.09),
+    0px 133px 80px 0px rgba(0, 0, 0, 0.05),
+    0px 236px 94px 0px rgba(0, 0, 0, 0.01), 0px 368px 103px 0px rgba(0, 0, 0, 0);
 }

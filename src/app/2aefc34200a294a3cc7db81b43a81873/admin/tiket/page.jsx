@@ -2,12 +2,10 @@
 
 import { useState, useEffect, useReducer } from "react";
 import { useRouter } from "next/navigation";
-import { BarLoader } from "react-spinners";
 import Cookies from "js-cookie";
 import axios from "axios";
-import DropZone from "../components/DropZone";
 
-export default function Beranda() {
+export default function Tiket() {
   const [image, setImage] = useState();
   const [imagePreviews, setImagePreviews] = useState();
   const [previewsFromServer, setPreviewsFromServer] = useState();
@@ -72,7 +70,7 @@ export default function Beranda() {
   }, []);
 
   // multile image upload
-  const imageUpload = async (e) => {
+  const tiketUpload = async (e) => {
     e.preventDefault();
 
     let formData = new FormData();
@@ -121,68 +119,47 @@ export default function Beranda() {
       });
   };
 
-  const customClass = "w-[50vw] xl:w-full";
+  const customClass = "w-full";
 
   return (
     <main id="admin-page" className="relative h-screen w-screen">
-      <div
-        className={`${
-          previewsFromServer
-            ? "border-[3px] border-white"
-            : "bg-transparent border-0"
-        } absolute upload left-1/2 -translate-x-1/2 w-[95vw] md:w-[62vw] md:left-[35vw] md:translate-x-0 top-1/2 -translate-y-1/2 flex flex-col rounded-[25px] py-[10px] px-[25px] gap-[15px] md:py-[20px] md:px-[50px] md:gap-[25px]`}
-      >
-        {previewsFromServer ? (
-          <>
-            <h2 className="text-lg md:text-4xl font-bold text-ble-950 py-1">
-              Ubah Gambar Hero
+      <div className="absolute upload left-1/2 -translate-x-1/2 w-[95vw] md:w-[62vw] md:left-[35vw] md:translate-x-0 top-1/2 -translate-y-1/2 flex flex-col border-[3px] border-white rounded-[25px] py-[10px] px-[10px] gap-[15px] md:py-[20px] md:px-[20px] md:gap-[25px]">
+        <form
+          encType="multipart/form-data"
+          onSubmit={tiketUpload}
+          className="flex flex-col justify-between gap-[35px] lg:gap-[50px]"
+        >
+          <div className="relative grid gap-[15px] md:gap-[30px] w-full rounded-[15px]">
+            <h3 className="text-lg md:text-3xl text-ble-950 font-normal">
+              Harga Tiket Saat Ini
+            </h3>
+            <h2 className="text-xl md:text-4xl text-ble-950 font-bold">
+              Rp. 15.000
             </h2>
-            <form
-              encType="multipart/form-data"
-              onSubmit={imageUpload}
-              className="grid gap-[15px] md:gap-[25px]"
-            >
-              <div className="relative rounded-[15px] overflow-hidden">
-                {previewsFromServer ? (
-                  <div className="absolute w-full top-1/2 -translate-y-1/2">
-                    <img
-                      priority
-                      className={`${
-                        imagePreviews ? "hidden" : "block"
-                      } object-cover h-full rounded-[15px]`}
-                      src={`http://127.0.0.1:8000/images/${previewsFromServer}`}
-                      alt={`Preview`}
-                    />
-                    <img
-                      className={`${
-                        !imagePreviews ? "hidden" : "block"
-                      } object-cover rounded-[15px]`}
-                      src={imagePreviews}
-                      alt={`Preview`}
-                    />
-                  </div>
-                ) : null}
-                <DropZone
-                  data={data}
-                  dispatch={dispatch}
-                  imagePreviews={imagePreviews}
-                  previewsFromServer={previewsFromServer}
-                  customClass={customClass}
-                />
-              </div>
-              <button
-                className={`rounded-[10px] justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
-                type="submit"
-              >
-                Simpan
-              </button>
-            </form>
-          </>
-        ) : (
-          <div className="w-full flex justify-center">
-            <BarLoader color="#2D719F" height={5} width={500} />
           </div>
-        )}
+          <div className="flex flex-col gap-[10px] lg:gap-[30px] justify-between w-full">
+            <label for="editHarga" className="text-lg md:text-3xl text-ble-950">
+              Ubah Harga Tiket
+            </label>
+            <div className="flex w-full">
+              <h3 className="leading-10 md:leading-10 font-bold text-base md:text-xl text-ble-50 bg-ble-600 rounded-l-[10px] border-y-2 border-l-2 border-white px-2">
+                Rp
+              </h3>
+              <input
+                type="number"
+                className="resize-none w-full border-y-2 border-r-2 border-white bg-transparent bg-gradient-to-r from-white p-[10px] rounded-r-[10px]"
+                id="editHarga"
+                name="editHarga"
+              />
+            </div>
+            <button
+              className={`rounded-[10px] self-end justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
+              type="submit"
+            >
+              Simpan
+            </button>
+          </div>
+        </form>
       </div>
     </main>
   );

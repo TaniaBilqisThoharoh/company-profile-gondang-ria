@@ -2,12 +2,12 @@
 
 import logo from "../../../public/logo/logo.png";
 import { useState } from "react";
-import { useParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Navbar() {
-  const params = useParams()
+  const pathName = usePathname()
   const [navbar, setNavbar] = useState(false);
 
   return (
@@ -67,11 +67,11 @@ export default function Navbar() {
             }`}
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-12 md:space-y-0">
-              <li className="text-ble-700 font-semibold active:underline active:underline-offset-2">
+              <li className="!text-ble-700 font-semibold">
                 {/* LINK BERANDA */}
                 <Link
                   href="/"
-                  className="flex justify-center items-center hover:text-ble-500 active:underline active:underline-offset-2"
+                  className={`flex justify-center items-center ${pathName === "/" && "underline underline-offset-2 text-ble-500"} hover:text-ble-500`}
                 >
                   Beranda
                 </Link>
@@ -80,7 +80,7 @@ export default function Navbar() {
                 {/* LINK WAHANA */}
                 <Link
                   href="/wahana"
-                  className="flex justify-center items-center hover:text-ble-500 active:underline active:underline-offset-2"
+                  className={`flex justify-center items-center ${pathName.includes("/wahana") && "underline underline-offset-2 text-ble-500"} hover:text-ble-500`}
                 >
                   Wahana
                 </Link>
@@ -89,7 +89,7 @@ export default function Navbar() {
                 {/* LINK FASILITAS */}
                 <Link
                   href="/fasilitas"
-                  className="flex justify-center items-center hover:text-ble-500 active:underline active:underline-offset-2"
+                  className={`flex justify-center items-center ${pathName.includes("/fasilitas") && "underline underline-offset-2 text-ble-500"} hover:text-ble-500`}
                 >
                   Fasilitas
                 </Link>
@@ -98,7 +98,7 @@ export default function Navbar() {
                 {/* LINK PESAN TIKET */}
                 <Link
                   href="/pesan-tiket"
-                  className="flex justify-center items-center hover:text-ble-500 active:underline active:underline-offset-2"
+                  className={`flex justify-center items-center ${pathName.includes("/pesan-tiket") && "underline underline-offset-2 text-ble-500" } hover:text-ble-500`}
                 >
                   Pesan Tiket
                 </Link>
@@ -107,7 +107,7 @@ export default function Navbar() {
                 {/* LINK HUBUNGI KAMI */}
                 <Link
                   href="/hubungi-kami"
-                  className="flex justify-center items-center hover:text-ble-500 active:underline active:underline-offset-2"
+                  className={`flex justify-center items-center ${pathName === "/hubungi-kami" && "underline underline-offset-2 text-ble-500"} hover:text-ble-500`}
                 >
                   Hubungi Kami
                 </Link>

@@ -1,56 +1,79 @@
-import Image from "next/image";
-import Link from "next/link";
+"use client";
+
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import axios from "axios";
+import FasilitasCard from "./FasilitasCard";
 
 export default function Fasilitas() {
+  const [dataFromServer, setDataFromServer] = useState();
+
+  //hook useEffect
+  useEffect(async () => {
+    //check token
+      const config = {
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` },
+      };
+      const url =
+        "http://127.0.0.1:8000/api/fasilitas";
+
+      await axios
+        .get(url, config)
+        .then(function (response) {
+          setDataFromServer(response.data);
+        })
+        .catch(function (error) {
+          window.alert(error);
+        });
+  }, []);
   return (
-    <main className="flex bg-white min-h-[800px] w-screen flex-col items-center gap-[100px]">
-      <div className="z-10 w-full h-[140px] pl-[150px] py-10 bg-title-grey justify-start items-center inline-flex">
+    <main className="flex bg-white min-h-[800px] w-screen h-full pb-[9vw] flex-col items-center gap-[50px] md:gap-[100px]">
+      <div className="z-10 w-full h-[20vw] max-h-[140px] pl-[50px] md:pl-[150px] bg-title-grey justify-start items-center inline-flex">
         {/* JUDUL DIGANTI SESUAI DATABASE */}
-        <h1 className="text-ble-900 text-5xl font-bold">Fasilitas</h1>
+        <h1 className="text-ble-900 text-2xl md:text-5xl font-bold">
+          Fasilitas
+        </h1>
       </div>
-      <div className="w-[80%]">
-        <div className="fasilitas-card w-[400px] h-[288px] relative rounded-[15px]">
-          <Link href={`/fasilitas/detail-fasilitas`}>
-            <div>
-              <img
-                className="absolute top-0 rounded-t-[15px] h-[221px] object-cover"
-                src="../../../Images/fasilitas1.jpeg"
-                alt=""
-              />
-              <div className=" content-[''] absolute bottom-[96px] right-0 w-[30px] h-[30px] bg-white"></div>
-              <div className="absolute overflow-hidden top-0 rounded-t-[15px] h-[192px] rounded-br-[25px]">
-                <img
-                  className="object-cover h-[221px]"
-                  src="../../../Images/fasilitas1.jpeg"
-                  alt=""
+      <ul
+        className={`${dataFromServer && "grid"} w-full md:w-[90%] place-items-center grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3`}
+      >
+        {dataFromServer ? (
+          dataFromServer.map((item) => {
+            return (
+              <li key={item.id}>
+                <FasilitasCard
+                  id={item.id}
+                  name={item.nama}
+                  image={item.gambar}
+                  description={item.deskripsi}
                 />
-              </div>
+              </li>
+            );
+          })
+        ) : (
+          <div class="grid place-items-center w-full h-screen">
+            <div role="status">
+              <svg
+                aria-hidden="true"
+                class="inline w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-ble-400"
+                viewBox="0 0 100 101"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentFill"
+                />
+              </svg>
+              <span class="sr-only">Loading...</span>
             </div>
-            <div className="h-[96px] bg-white rounded-b-[15px] rounded-tl-[15px] absolute bottom-0 w-full py-[15px] pl-[20px]">
-              <h3 className="text-ble-600 font-bold text-2xl mb-[11px]">
-                Kolam Renang Anak
-              </h3>
-              <p className="text-ble-300 text-base flex items-center gap-[10px]">
-                Lihat detail{" "}
-                <span>
-                  <svg
-                    width="22"
-                    height="16"
-                    viewBox="0 0 22 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M1 7C0.447715 7 0 7.44772 0 8C0 8.55228 0.447715 9 1 9V7ZM21.7071 8.70711C22.0976 8.31658 22.0976 7.68342 21.7071 7.29289L15.3431 0.928932C14.9526 0.538408 14.3195 0.538408 13.9289 0.928932C13.5384 1.31946 13.5384 1.95262 13.9289 2.34315L19.5858 8L13.9289 13.6569C13.5384 14.0474 13.5384 14.6805 13.9289 15.0711C14.3195 15.4616 14.9526 15.4616 15.3431 15.0711L21.7071 8.70711ZM1 9H21V7H1V9Z"
-                      fill="#88BBDD"
-                    />
-                  </svg>
-                </span>
-              </p>
-            </div>
-          </Link>
-        </div>
-      </div>
+          </div>
+        )}
+      </ul>
     </main>
   );
 }
