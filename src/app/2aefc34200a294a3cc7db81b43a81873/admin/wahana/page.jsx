@@ -50,11 +50,10 @@ export default function Wahana() {
     }
   });
 
-  //hook useEffect
-  useEffect(async () => {
+  const ambilData = async () => {
     //check token
     if (!Cookies.get("token")) {
-      //redirect page dashboard
+      //redirect to login page
       router.push("/2aefc34200a294a3cc7db81b43a81873/admin/login");
     } else {
       const config = {
@@ -76,6 +75,11 @@ export default function Wahana() {
           window.alert(error.data.message);
         });
     }
+  };
+
+  //hook useEffect
+  useEffect(() => {
+    ambilData();
   }, []);
 
   const deskripsiHandler = (e) => {
@@ -134,7 +138,7 @@ export default function Wahana() {
       });
   };
 
-  const customClass = "w-full";
+  const customClass = "w-full h-[50vh]";
 
   return (
     <main id="admin-page" className="relative h-screen w-screen">
@@ -204,7 +208,7 @@ export default function Wahana() {
           </form>
         ) : (
           <div className="w-full flex justify-center">
-          <BarLoader color="#2D719F" height={5} width={500} />
+            <BarLoader color="#2D719F" height={5} width={500} />
           </div>
         )}
       </div>

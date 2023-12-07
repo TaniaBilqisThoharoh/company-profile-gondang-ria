@@ -7,13 +7,8 @@ import axios from "axios";
 import DropZone from "../../components/DropZone";
 
 export default function TambahFasilitas() {
-  const [name, setName] = useState();
   const [image, setImage] = useState();
-  const [description, setDescription] = useState();
   const [imagePreviews, setImagePreviews] = useState();
-  const [nameFromServer, setNameFromServer] = useState();
-  const [previewsFromServer, setPreviewsFromServer] = useState();
-  const [descFromServer, setDescFromServer] = useState();
   const router = useRouter();
 
   // reducer function to handle state changes
@@ -50,10 +45,16 @@ export default function TambahFasilitas() {
     }
   });
 
-  if (!Cookies.get("token")) {
-    //redirect page dashboard
-    router.push("/2aefc34200a294a3cc7db81b43a81873/admin/login");
-  }
+  const cekCookies = async () => {
+    if (!Cookies.get("token")) {
+      //redirect to login page
+      router.push("/2aefc34200a294a3cc7db81b43a81873/admin/login");
+    }
+  };
+
+  useEffect(() => {
+    cekCookies();
+  }, [])
 
   const dataUpload = async (e) => {
     e.preventDefault();
@@ -75,43 +76,14 @@ export default function TambahFasilitas() {
       .post(uploadUrl, formData, config)
       .then((result) => {
         window.alert(`${result.data.message}`);
+        router.push("/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas");
       })
       .catch((err) => {
         window.alert(`${err}`);
       });
-    /* 
-    await axios
-      .get(url1, config)
-      .then(function (response) {
-        // handle success
-        uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/update/${params.id}`;
-
-        axios
-          .post(uploadUrl, formData, config)
-          .then((result) => {
-            window.alert(`${result.data.message}`);
-          })
-          .catch((err) => {
-            window.alert(`${err.data.message}`);
-          });
-      })
-      .catch(function (error) {
-        // handle error
-        uploadUrl =
-          "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/store";
-
-        axios
-          .post(uploadUrl, formData, config)
-          .then((result) => {
-            window.alert(`${result.data.message}`);
-          })
-          .catch((err) => {
-            window.alert(`${err.data.message}`);
-          });
-      }); */
   };
 
-  const customClass = "w-full";
+  const customClass = "w-full h-[40vh] md:h-[50vh]";
 
   return (
     <main id="admin-page" className="relative h-screen w-screen">
@@ -135,7 +107,6 @@ export default function TambahFasilitas() {
               data={data}
               dispatch={dispatch}
               imagePreviews={imagePreviews}
-              previewsFromServer={previewsFromServer}
               customClass={customClass}
             />
           </div>

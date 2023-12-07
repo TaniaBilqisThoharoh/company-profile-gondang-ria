@@ -2,15 +2,15 @@
 
 import { useState, useEffect, useReducer } from "react";
 import { useRouter } from "next/navigation";
+import { BarLoader } from "react-spinners";
 import Cookies from "js-cookie";
 import axios from "axios";
 import DropZone from "../../../components/DropZone";
 
 export default function EditFasilitas({ params }) {
-  const [name, setName] = useState();
   const [image, setImage] = useState();
-  const [description, setDescription] = useState();
   const [imagePreviews, setImagePreviews] = useState();
+  const [idFromServer, setIdFromServer] = useState();
   const [nameFromServer, setNameFromServer] = useState();
   const [previewsFromServer, setPreviewsFromServer] = useState();
   const [descFromServer, setDescFromServer] = useState();
@@ -42,7 +42,8 @@ export default function EditFasilitas({ params }) {
 
     reader.onload = () => {
       setImagePreviews(reader.result);
-      setImage(item);
+      item ? 
+      setImage(item) : setImage(previewsFromServer)
     };
 
     if (item) {
@@ -50,8 +51,7 @@ export default function EditFasilitas({ params }) {
     }
   });
 
-  //hook useEffect
-  useEffect(async () => {
+  const ambilData = async () => {
     //check token
     if (!Cookies.get("token")) {
       //redirect page dashboard
@@ -68,17 +68,21 @@ export default function EditFasilitas({ params }) {
         .then(function (response) {
           response.data.filter((item) => {
             if (item.id == params.id) {
+              setIdFromServer(item.id);
               setNameFromServer(item.nama);
               setPreviewsFromServer(item.gambar);
               setDescFromServer(item.deskripsi);
             }
           });
-          /* console.log(response.data.map((item) => {return item.id == params.id})) */
         })
         .catch(function (error) {
           window.alert(error.data.message);
         });
     }
+  };
+
+  useEffect(() => {
+    ambilData();
   }, []);
 
   const dataUpload = async (e) => {
@@ -88,6 +92,7 @@ export default function EditFasilitas({ params }) {
     formData.append("nama", e.target[1].value);
     formData.append("gambar", image ? image : null);
     formData.append("deskripsi", e.target[2].value);
+    console.log(formData.get("nama"))
 
     const config = {
       headers: {
@@ -97,96 +102,138 @@ export default function EditFasilitas({ params }) {
 
     let uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/update/${params.id}`;
 
-    const url1 =
-      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas";
-
     await axios
       .post(uploadUrl, formData, config)
       .then((result) => {
         window.alert(`${result.data.message}`);
+        router.push("/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas");
       })
       .catch((err) => {
         window.alert(`${err}`);
       });
   };
 
-  const customClass = "w-full";
+  const deleteFas = async () => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    };
+
+    let uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/destroy/${params.id}`;
+
+    await axios
+      .delete(uploadUrl, config)
+      .then((result) => {
+        window.alert(
+          `${result.data.message} (id: ${idFromServer}, nama: ${nameFromServer})`
+        );
+        router.push("/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas");
+      })
+      .catch((err) => {
+        window.alert(`${err.message}`);
+      });
+  };
+
+  const customClass = "w-full h-[40vh] md:h-[50vh]";
 
   return (
     <main id="admin-page" className="relative h-screen w-screen">
-      <div className="absolute upload left-1/2 -translate-x-1/2 w-[95vw] md:w-[62vw] md:left-[35vw] md:translate-x-0 top-1/2 -translate-y-1/2 flex flex-col border-[3px] border-white rounded-[25px] py-[10px] px-[10px] gap-[15px] md:py-[20px] md:px-[20px] md:gap-[25px]">
-        <form
-          encType="multipart/form-data"
-          onSubmit={dataUpload}
-          className="flex flex-col lg:flex-row justify-between gap-[15px] lg:gap-[25px]"
-        >
-          <div className="relative w-full lg:w-[45%] rounded-[15px] overflow-hidden">
-            {previewsFromServer ? (
-              <div className="absolute w-full top-1/2 -translate-y-1/2">
-                <img
-                  priority
-                  className={`${
-                    imagePreviews ? "hidden" : "block"
-                  } object-cover object-center h-full rounded-[15px]`}
-                  src={`http://127.0.0.1:8000/images/${previewsFromServer}`}
-                  alt={`Preview`}
-                />
-                <img
-                  className={`${
-                    !imagePreviews ? "hidden" : "block"
-                  } object-cover object-center rounded-[15px]`}
-                  src={imagePreviews}
-                  alt={`Preview`}
-                />
-              </div>
-            ) : null}
-            <DropZone
-              data={data}
-              dispatch={dispatch}
-              imagePreviews={imagePreviews}
-              previewsFromServer={previewsFromServer}
-              customClass={customClass}
-            />
-          </div>
-          <div className="flex flex-col gap-[10px] lg:gap-[30px] justify-between w-full lg:w-[55%]">
-            <div className="flex flex-col w-full gap-[10px]">
-              <label
-                className="text-base lg:text-3xl font-bold text-ble-950"
-                htmlFor="editNama"
-              >
-                Edit Nama
-              </label>
-              <input
-                className="text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
-                type="text"
-                id="editNama"
-                name="editNama"
-                defaultValue={nameFromServer}
+      <div
+        className={`${
+          previewsFromServer
+            ? "border-[3px] border-white"
+            : "bg-transparent border-0 place-items-center"
+        } absolute upload left-1/2 -translate-x-1/2 w-[95vw] md:w-[62vw] md:left-[35vw] md:translate-x-0 top-1/2 -translate-y-1/2 flex flex-col rounded-[25px] py-[10px] px-[10px] gap-[15px] md:py-[20px] md:px-[20px] md:gap-[25px]`}
+      >
+        {previewsFromServer ? (
+          <form
+            encType="multipart/form-data"
+            onSubmit={dataUpload}
+            className="flex flex-col lg:flex-row justify-between gap-[15px] lg:gap-[25px]"
+          >
+            <div className="relative w-full lg:w-[45%] rounded-[15px] overflow-hidden">
+              {previewsFromServer ? (
+                <div className="absolute w-full top-1/2 -translate-y-1/2">
+                  <img
+                    priority
+                    className={`${
+                      imagePreviews ? "hidden" : "block"
+                    } object-cover object-center h-full rounded-[15px]`}
+                    src={`http://127.0.0.1:8000/images/${previewsFromServer}`}
+                    alt={`Preview`}
+                  />
+                  <img
+                    className={`${
+                      !imagePreviews ? "hidden" : "block"
+                    } object-cover object-center rounded-[15px]`}
+                    src={imagePreviews}
+                    alt={`Preview`}
+                  />
+                </div>
+              ) : null}
+              <DropZone
+                data={data}
+                dispatch={dispatch}
+                imagePreviews={imagePreviews}
+                previewsFromServer={previewsFromServer}
+                customClass={customClass}
               />
             </div>
-            <div className="flex flex-col w-full gap-[10px]">
-              <label
-                htmlFor="editDesk"
-                className="text-base lg:text-3xl font-bold text-ble-950"
-              >
-                Edit Deskripsi
-              </label>
+            <div className="flex flex-col gap-[10px] lg:gap-[30px] justify-between w-full lg:w-[55%]">
+              <div className="flex flex-col w-full gap-[10px]">
+                <label
+                  className="text-base lg:text-3xl font-bold text-ble-950"
+                  htmlFor="editNama"
+                >
+                  Edit Nama
+                </label>
+                <input
+                  className="text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
+                  type="text"
+                  id="editNama"
+                  name="editNama"
+                  defaultValue={nameFromServer}
+                />
+              </div>
+              <div className="flex flex-col w-full gap-[10px]">
+                <label
+                  htmlFor="editDesk"
+                  className="text-base lg:text-3xl font-bold text-ble-950"
+                >
+                  Edit Deskripsi
+                </label>
 
-              <textarea
-                className="resize-none text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
-                id="editDesk"
-                name="editDesk"
-                defaultValue={descFromServer}
-              ></textarea>
+                <textarea
+                  className="resize-none text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
+                  id="editDesk"
+                  name="editDesk"
+                  rows={3}
+                  defaultValue={descFromServer}
+                ></textarea>
+              </div>
+              <div className="self-end justify-self-end flex gap-4">
+                <button
+                  onClick={deleteFas}
+                  className={`rounded-[10px] bg-red-600 text-red-50 hover:bg-red-700 active:bg-red-500 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] transition-all`}
+                  type="button"
+                >
+                  Hapus
+                </button>
+                <button
+                  className={`rounded-[10px] bg-ble-600 text-ble-50 hover:bg-ble-700 active:bg-ble-500 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] transition-all`}
+                  type="submit"
+                >
+                  Simpan
+                </button>
+              </div>
             </div>
-            <button
-              className={`rounded-[10px] self-end justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
-              type="submit"
-            >
-              Simpan
-            </button>
+          </form>
+        ) : (
+          <div className="w-full flex justify-center">
+            <BarLoader color="#2D719F" height={5} width={500} />
           </div>
-        </form>
+        )}
       </div>
     </main>
   );

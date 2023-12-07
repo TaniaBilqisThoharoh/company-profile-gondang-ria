@@ -47,8 +47,7 @@ export default function Beranda() {
     }
   });
 
-  //hook useEffect
-  useEffect(async () => {
+  const ambilData = async () => {
     //check token
     if (!Cookies.get("token")) {
       //redirect page dashboard
@@ -69,6 +68,11 @@ export default function Beranda() {
           window.alert(error.data.message);
         });
     }
+  };
+
+  //hook useEffect
+  useEffect(() => {
+    ambilData();
   }, []);
 
   // multile image upload
@@ -121,7 +125,7 @@ export default function Beranda() {
       });
   };
 
-  const customClass = "w-[50vw] xl:w-full";
+  const customClass = "w-[50vw] xl:w-full h-[50vh]";
 
   return (
     <main id="admin-page" className="relative h-screen w-screen">

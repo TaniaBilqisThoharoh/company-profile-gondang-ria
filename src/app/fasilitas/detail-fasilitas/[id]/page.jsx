@@ -9,8 +9,7 @@ export default function DetailFasilitas({ params }) {
   const [previewsFromServer, setPreviewsFromServer] = useState();
   const [descFromServer, setDescFromServer] = useState();
 
-  //hook useEffect
-  useEffect(async () => {
+  const ambilData = async () => {
     const config = {
       headers: { Authorization: `Bearer ${Cookies.get("token")}` },
     };
@@ -31,6 +30,11 @@ export default function DetailFasilitas({ params }) {
       .catch(function (error) {
         window.alert(error);
       });
+  };
+
+  //hook useEffect
+  useEffect(() => {
+    ambilData();
   }, []);
 
   return (
@@ -38,7 +42,6 @@ export default function DetailFasilitas({ params }) {
       {previewsFromServer ? (
         <>
           <div className="z-10 w-full h-[20vw] max-h-[140px] pl-[50px] md:pl-[150px] bg-title-grey justify-start items-center inline-flex">
-            {/* JUDUL DIGANTI SESUAI DATABASE */}
             <h1 className="text-ble-900 text-2xl md:text-5xl font-bold">
               {nameFromServer}
             </h1>
@@ -61,11 +64,11 @@ export default function DetailFasilitas({ params }) {
           </div>
         </>
       ) : (
-        <div class="grid place-items-center w-full h-screen">
+        <div className="grid place-items-center w-full h-screen">
           <div role="status">
             <svg
               aria-hidden="true"
-              class="inline w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-ble-400"
+              className="inline w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-ble-400"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +82,7 @@ export default function DetailFasilitas({ params }) {
                 fill="currentFill"
               />
             </svg>
-            <span class="sr-only">Loading...</span>
+            <span className="sr-only">Loading...</span>
           </div>
         </div>
       )}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function FasilitasCard({ id, name, image, description }) {
+export default function FasilitasCard({ id, name, image }) {
     return (
         <div className="fasilitas-card-admin border-2 border-white rounded-[15px] bg-black overflow-hidden group">
           <Link as={`/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/edit-fasilitas/${id}`} href={`/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/edit-fasilitas/id`}>

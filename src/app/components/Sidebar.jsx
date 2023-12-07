@@ -1,19 +1,27 @@
 "use client";
 
-import adminLogo from "../../../public/Images/adminLogo.jpeg";
+import adminLogo from "../../../public/logo/logoGR.png";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { BsChevronRight } from "react-icons/bs";
 import { TbEdit } from "react-icons/tb";
+import { LuLogOut } from "react-icons/lu";
 import { Popover, Transition } from "@headlessui/react";
 import { usePathname } from "next/navigation";
 import { Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useAppContext } from "../context/AppWrapper";
 
 const baseAdminURL = "/2aefc34200a294a3cc7db81b43a81873/admin";
 const adminPathTransaksi = `${baseAdminURL}/transaksi`;
 const adminPathLogin = `${baseAdminURL}/login`;
+const adminPathLupaPassword = `${baseAdminURL}/lupa-password`;
+const adminPathValidasi = `${baseAdminURL}/validasi`;
+const adminPathUbahPassword = `${baseAdminURL}/ubah-password`;
 const adminPathBeranda = `${baseAdminURL}/beranda`;
 const adminPathWahana = `${baseAdminURL}/wahana`;
 const adminPathFasilitas = `${baseAdminURL}/fasilitas`;
@@ -39,14 +47,46 @@ const solutions = [
 ];
 
 export default function Sidebar() {
+  const { isLoading, showLoading, hideLoading } = useAppContext();
+  const router = useRouter();
   const pathName = usePathname();
   const [navbar, setNavbar] = useState(false);
   const [activeBtn, setActiveBtn] = useState();
 
+  const logOutHandler = async () => {
+    let formData = new FormData();
+    formData.append("token", Cookies.get("token"));
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      },
+    };
+
+    await axios
+      .post(`http://127.0.0.1:8000/api/logout`, formData, config)
+      .then((response) => {
+        window.alert(response.data.message);
+
+        Cookies.remove("token");
+
+        router.push("/2aefc34200a294a3cc7db81b43a81873/admin/login");
+      })
+      .catch((error) => {
+        //assign error to state "validation"
+        window.alert(error);
+      });
+  };
+
   return (
     <nav
       className={`${
-        pathName.includes(adminPathLogin) ? "hidden" : "block"
+        pathName.includes(adminPathLogin) ||
+        pathName.includes(adminPathLupaPassword) ||
+        pathName.includes(adminPathValidasi) ||
+        pathName.includes(adminPathUbahPassword)
+          ? "hidden"
+          : "block"
       } h-auto md:h-[660px] sidebar z-50 w-full md:max-w-[390px] md:w-[30vw] bg-white fixed left-0 top-0 md:left-[2vw] md:top-[5vh] shadow-md md:shadow-none md:border-[3px] md:border-white md:border-opacity-80 rounded-b-[10px] md:rounded-[15px]`}
     >
       <div className="justify-between gap-[50px] flex-col py-0 px-4 lg:max-w-7xl md:items-center md:flex md:px-8">
@@ -56,9 +96,11 @@ export default function Sidebar() {
               <Image
                 src={adminLogo}
                 alt="Picture of the author"
-                className="my-4 md:m-0 p-0 object-cover rounded-full aspect-square w-10 md:w-16"
+                className="my-4 md:m-0 p-0 object-cover aspect-square w-10 md:w-16"
               />
-              <h3 className="md:text-2xl text-base text-center">Admin Gondang Ria</h3>
+              <h3 className="md:text-2xl text-base text-center">
+                Admin Gondang Ria
+              </h3>
             </div>
             <div className="md:hidden">
               <button
@@ -134,7 +176,7 @@ export default function Sidebar() {
                   activeBtn === "kelola-konten"
                     ? "bg-gradient-to-r from-ble-100 from-30% to-ble-300 to-70% text-ble-700"
                     : "bg-transparent text-ble-950"
-                } group rounded-[10px] p-[4px] w-full`}
+                } group rounded-[10px] p-[4px] w-full !mt-0`}
               >
                 <Popover
                   className={`${
@@ -181,7 +223,11 @@ export default function Sidebar() {
                                 <a
                                   key={item.name}
                                   href={item.href}
-                                  className={`${pathName.includes(item.href) ? "bg-ble-50 translate-x-4" : "" } -m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 hover:translate-x-4 mr-7`}
+                                  className={`${
+                                    pathName.includes(item.href)
+                                      ? "bg-ble-50 translate-x-4"
+                                      : ""
+                                  } -m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 hover:translate-x-4 mr-7`}
                                 >
                                   <div className="ml-4">
                                     <p className="md:text-[1.6vw] text-sm font-medium text-gray-900">
@@ -197,6 +243,15 @@ export default function Sidebar() {
                     </>
                   )}
                 </Popover>
+              </li>
+              <li className="!mt-0 grid place-items-start">
+                <button
+                  onClick={logOutHandler}
+                  className="md:text-[2vw] text-red-600 gap-[20px] py-[10px] px-[20px] bg-transparent border-none text-base flex justify-center items-center font-normal"
+                >
+                  <LuLogOut className="w-[20px] md:w-[3vw] h-[20px] md:h-[3vw] aspect-square" />
+                  Keluar
+                </button>
               </li>
             </ul>
           </div>

@@ -9,14 +9,16 @@ import Cookies from "js-cookie";
 export default function Transaksi() {
   const router = useRouter();
 
-    //hook useEffect
-    useEffect(() => {
-      //check token
-      if (!Cookies.get("token")) {
-        //redirect page dashboard
-        router.push("/2aefc34200a294a3cc7db81b43a81873/admin/login");
-      }
-    }, []);
+  const cekCookies = async () => {
+    if (!Cookies.get("token")) {
+      //redirect to login page
+      router.push("/2aefc34200a294a3cc7db81b43a81873/admin/login");
+    }
+  };
+
+  useEffect(() => {
+    cekCookies();
+  }, [])
     
   return (
     <main id="admin-page" className="flex bg-white h-screen w-screen flex-col items-center gap-[7rem]">

@@ -1,29 +1,32 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie";
+import PeekBtn from "../components/PeekBtn";
 
 export default function Login() {
   const router = useRouter();
   //define state
+  const [isPasswordHidden, setPasswordHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   //define state validation
   const [validation, setValidation] = useState([]);
 
-  //hook useEffect
-  useEffect(() => {
-    //check token
+  const cekCookies = async () => {
     if (Cookies.get("token")) {
-      //redirect page dashboard
+      //redirect to transaksi page
       router.push("/2aefc34200a294a3cc7db81b43a81873/admin/transaksi");
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    cekCookies();
+  }, [])
 
   //function "loginHanlder"
   const loginHandler = async (e) => {
@@ -41,15 +44,18 @@ export default function Login() {
       .post(`http://127.0.0.1:8000/api/login`, formData)
       .then((response) => {
         //set token on cookies
-        const exp = new Date(new Date().getTime() + response.data.expires_in * 1000);
+        const exp = new Date(
+          new Date().getTime() + response.data.expires_in * 1000
+        );
 
-        Cookies.set("token", response.data.access_token, {expires: exp});
+        Cookies.set("token", response.data.access_token, { expires: exp });
 
         //redirect to dashboard
         router.push("/2aefc34200a294a3cc7db81b43a81873/admin/transaksi");
       })
       .catch((error) => {
         //assign error to state "validation"
+        console.log(error)
         setValidation(error);
       });
   };
@@ -61,7 +67,7 @@ export default function Login() {
     >
       <div
         id="login-admin"
-        className="rounded-[20px] border-[3px] border-white border-opacity-90 py-8 px-12 bg-white opacity-100 flex items-center justify-center w-[95vw] md:w-[50vw]"
+        className="rounded-[20px] border-[3px] border-white border-opacity-90 py-8 px-12 bg-white opacity-100 flex items-center justify-center w-[95vw] md:w-[70vw] lg:w-[50vw]"
       >
         <form
           onSubmit={loginHandler}
@@ -79,20 +85,38 @@ export default function Login() {
           )}
           <div className="grid h-[86px]">
             <label
-              htmlFor="username"
+              htmlFor="email"
               className="text-login_fontClr font-normal text-base md:text-2xl text-opacity-80"
             >
-              Username
+              Email
             </label>
             <input
               type="email"
-              name="username"
+              name="email"
               onInput={(e) => setEmail(e.target.value)}
               className="w-full text-grn-950 font-normal text-2xl border-b-2 border-grn-950 p-[10px] outline-ble-300 rounded-[10px]"
             />
           </div>
           <div className="grid">
-            <label
+            <div>
+              <label
+                htmlFor="password"
+                className="text-login_fontClr font-normal text-base md:text-2xl text-opacity-80"
+              >
+                Password
+              </label>
+              <div className="relative w-full mt-2">
+                <PeekBtn isPasswordHidden={isPasswordHidden} setPasswordHidden={setPasswordHidden} />
+                <input
+                  type={isPasswordHidden ? "password" : "text"}
+                  name="password"
+                  onInput={(e) => setPassword(e.target.value)}
+                  className="w-full text-ble-950 font-normal text-2xl p-[10px] outline-ble-300 rounded-[10px]"
+                />
+              </div>
+            </div>
+
+            {/* <label
               htmlFor="password"
               className="text-login_fontClr font-normal text-base md:text-2xl text-opacity-80"
             >
@@ -103,17 +127,17 @@ export default function Login() {
               name="password"
               onInput={(e) => setPassword(e.target.value)}
               className="w-full text-grn-950 font-normal text-2xl border-b-2 border-grn-950 p-[10px] outline-ble-300 rounded-[10px]"
-            />
+            /> */}
             <Link
-              href={`/2aefc34200a294a3cc7db81b43a81873/admin/login`}
-              className="text-xs md:text-base font-normal text-login_fontClr place-self-end mt-[10px] md:mt-[30px]"
+              href={`/2aefc34200a294a3cc7db81b43a81873/admin/lupa-password`}
+              className="text-xs md:text-base font-normal text-login_fontClr place-self-end mt-[10px] md:mt-[30px] hover:text-ble-400 active:text-ble-500"
             >
               Lupa Password
             </Link>
           </div>
           <button
             type="submit"
-            className="max-w-[153px] bg-ble-400 text-base md:text-2xl font-normal text-ble-50 rounded-[10px] px-[30px] py-[7px] md:px-[50px] md:py-[15px] place-self-center hover:bg-ble-500 active:bg-ble-600 transition-all"
+            className="bg-ble-400 text-base md:text-2xl font-normal text-ble-50 rounded-[10px] px-[30px] py-[7px] md:px-[50px] md:py-[15px] place-self-center hover:bg-ble-500 active:bg-ble-600 transition-all"
           >
             Login
           </button>

@@ -2,26 +2,43 @@
 
 import logo from "../../../public/logo/logo.png";
 import { useState } from "react";
-import { usePathname } from 'next/navigation'
+import { usePathname, useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { useAppContext } from "../context/AppWrapper";
 
 export default function Navbar() {
-  const pathName = usePathname()
+  const { isLoading, showLoading, hideLoading } = useAppContext();
+  const pathName = usePathname();
   const [navbar, setNavbar] = useState(false);
+
+  const isTheSamePage = () => {
+    showLoading()
+/*     console.log("harusnya show")
+    const allLinks = document.getElementsByTagName("a");
+    for (const link of allLinks) {
+      const theRealLink = link.href.replace("http://localhost:3000/", "/");
+      if (pathName == theRealLink) {
+        console.log("harusnya hide")
+        hideLoading();
+      }
+    } */
+  };
 
   return (
     <nav className="z-50 w-full bg-white sticky top-0 shadow">
       <div className="justify-between py-0 px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
         <div>
           <div className="flex items-center justify-between py-3">
-            <Image
-              src={logo}
-              width={60}
-              height={60}
-              alt="Picture of the author"
-              className="p-0"
-            />
+            <Link href={`/`} onClick={() => isTheSamePage()} className="p-0">
+              <Image
+                src={logo}
+                width={60}
+                height={60}
+                alt="Picture of the author"
+                className="p-0"
+              />
+            </Link>
             <div className="md:hidden">
               <button
                 className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
@@ -71,7 +88,11 @@ export default function Navbar() {
                 {/* LINK BERANDA */}
                 <Link
                   href="/"
-                  className={`flex justify-center items-center ${pathName === "/" && "underline underline-offset-2 text-ble-500"} hover:text-ble-500`}
+                  onClick={() => isTheSamePage()}
+                  className={`flex justify-center items-center ${
+                    pathName === "/" &&
+                    "underline underline-offset-2 text-ble-500"
+                  } hover:text-ble-500`}
                 >
                   Beranda
                 </Link>
@@ -80,7 +101,11 @@ export default function Navbar() {
                 {/* LINK WAHANA */}
                 <Link
                   href="/wahana"
-                  className={`flex justify-center items-center ${pathName.includes("/wahana") && "underline underline-offset-2 text-ble-500"} hover:text-ble-500`}
+                  onClick={() => isTheSamePage()}
+                  className={`flex justify-center items-center ${
+                    pathName.includes("/wahana") &&
+                    "underline underline-offset-2 text-ble-500"
+                  } hover:text-ble-500`}
                 >
                   Wahana
                 </Link>
@@ -89,7 +114,11 @@ export default function Navbar() {
                 {/* LINK FASILITAS */}
                 <Link
                   href="/fasilitas"
-                  className={`flex justify-center items-center ${pathName.includes("/fasilitas") && "underline underline-offset-2 text-ble-500"} hover:text-ble-500`}
+                  onClick={() => isTheSamePage()}
+                  className={`flex justify-center items-center ${
+                    pathName.includes("/fasilitas") &&
+                    "underline underline-offset-2 text-ble-500"
+                  } hover:text-ble-500`}
                 >
                   Fasilitas
                 </Link>
@@ -98,7 +127,11 @@ export default function Navbar() {
                 {/* LINK PESAN TIKET */}
                 <Link
                   href="/pesan-tiket"
-                  className={`flex justify-center items-center ${pathName.includes("/pesan-tiket") && "underline underline-offset-2 text-ble-500" } hover:text-ble-500`}
+                  onClick={() => isTheSamePage()}
+                  className={`flex justify-center items-center ${
+                    pathName.includes("/pesan-tiket") &&
+                    "underline underline-offset-2 text-ble-500"
+                  } hover:text-ble-500`}
                 >
                   Pesan Tiket
                 </Link>
@@ -107,12 +140,15 @@ export default function Navbar() {
                 {/* LINK HUBUNGI KAMI */}
                 <Link
                   href="/hubungi-kami"
-                  className={`flex justify-center items-center ${pathName === "/hubungi-kami" && "underline underline-offset-2 text-ble-500"} hover:text-ble-500`}
+                  onClick={() => isTheSamePage()}
+                  className={`flex justify-center items-center ${
+                    pathName === "/hubungi-kami" &&
+                    "underline underline-offset-2 text-ble-500"
+                  } hover:text-ble-500`}
                 >
                   Hubungi Kami
                 </Link>
               </li>
-              
             </ul>
           </div>
         </div>

@@ -1,53 +1,34 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-<main
-      id="pesan-tiket-page"
-      className="flex bg-white min-h-[800px] w-screen flex-col items-center gap-[7rem]"
-    >
-      <div className="z-10 w-full h-[140px] pl-[150px] py-10 bg-title-grey justify-start items-center inline-flex">
-        <h1 className="text-ble-900 text-5xl font-bold">Pesan Tiket</h1>
-      </div>
-      <div className="max-w-[46.875rem] bg-ble-600 h-[18.75rem] rounded-[25px] flex items-center">
-        <div id="GR-tiket" className="relative border-[3px] border-ble-200 rounded-[20px]">
-          <img
-            className="absolute -top-2 -left-10 min-w-[280px] h-[250px] row-span-2"
-            src="../../../Bg-tiket.png"
-            alt=""
-          />
-          <div className="pl-48 py-5 w-[524px]">
-            <h3 className="font-bold text-[2.5rem] text-ble-50 place-self-center text-center">
-              GONDANG RIA WATERPARK
-            </h3>
-            {/* HARGA TIKET DISESUAIKAN DENGAN DATABASE */}
-            <h3 className="font-bold text-[3rem] text-ble-50 place-self-top text-center">
-              Rp. 15.000
-            </h3>
-          </div>
-        </div>
-        <div className="">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="4"
-            height="234"
-            viewBox="0 0 4 234"
-            fill="none"
-          >
-            <path
-              d="M2 2L2 232"
-              stroke="#398EC7"
-              strokeWidth="4"
-              strokeLinecap="round"
-              strokeDasharray="16 16"
-            />
-          </svg>
-        </div>
-        <div className="grid place-items-center m-5 border-[3px] border-ble-200 rounded-[20px]">
-          <h3 className="font-bold text-[3rem] text-ble-50 place-self-top text-center -rotate-90">
-            TIKET
-          </h3>
-        </div>
-      </div>
-    </main>
+
+Alamat: Jln. Mandiraja-Banyumas, Kaliwetan, Danaraja, Kec. Purwanegara, Kab. Banjarnegara, Jawa Tengah
+email: gondangria23@gmail.com
+ig: https://instagram.com/gondangriawaterpark?igshid=NzZlODBkYWE4Ng==
+penjelasan: Gondang Ria Waterpark
+
+Gondang Ria Waterpark merupakan destinasi air yang menyajikan kegembiraan sederhana dan menyenangkan untuk semua kalangan. Kami menawarkan dua kolam renang yang menyegarkan: satu untuk dewasa dan satu lagi khusus untuk anak-anak, dilengkapi dengan wahana waterboom yang seru di tengahnya.
+
+Fasilitas Utama:
+1. Kolam Renang Dewasa: Menyediakan ruang luas bagi pengunjung dewasa untuk bersantai dan menikmati keindahan air.
+  
+2. Kolam Renang Anak dengan Waterboom: Tempat yang aman dan menyenangkan untuk anak-anak bermain air dengan wahana waterboom yang menyajikan keceriaan ekstra.
+
+Fasilitas Pendukung:
+1. Kamar Mandi Bilas: Area yang bersih dan nyaman untuk bersih-bersih setelah bermain air.
+
+2. Kantin Gondang Ria dan Warung Gondang Ria: Tempat menyantap lezatnya kuliner lokal dan variasi hidangan yang memuaskan selera.
+
+3. Penyewaan Ban Pelampung: Menyediakan ban pelampung untuk pengunjung yang ingin mengapung di air dengan lebih santai.
+
+4. Gazebo: Area beratap yang nyaman untuk beristirahat sejenak atau berkumpul bersama keluarga dan teman-teman.
+
+5. Kafe: Menyuguhkan berbagai pilihan minuman segar dan camilan untuk menambah kesegaran pengalaman berkunjung.
+
+6. Tempat Parkir Luas: Memudahkan akses dan memberikan kenyamanan bagi pengunjung yang membawa kendaraan pribadi.
+
+Komitmen Kami:
+Gondang Ria Waterpark berkomitmen untuk memberikan pengalaman air yang aman, menyenangkan, dan terjangkau bagi seluruh keluarga. Kami mengundang Anda untuk menikmati kesederhanaan dan kegembiraan air bersama kami. Selamat datang di Gondang Ria Waterpark, di mana keseruan bertemu dengan kenyamanan.
+
 
 ## Getting Started
 

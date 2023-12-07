@@ -1,6 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import InfoBox from "./InfoBox";
+import InfoBox from "../components/InfoBox";
 
 const data = [
   {

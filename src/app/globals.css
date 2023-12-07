@@ -111,8 +111,8 @@ body {
 
 #main-bg-ble-400 {
   z-index: 0;
-  width: 41.67706rem;
-  height: 37.5rem;
+  max-width: 41.67706rem;
+  max-height: 37.5rem;
   transform: rotate(-45deg);
   border-radius: 3.125rem;
   background: var(--blue-400, #60a4d2);
@@ -126,8 +126,8 @@ body {
 
 #bg-ble-200 {
   z-index: 0;
-  width: 31.25rem;
-  height: 31.25rem;
+  max-width: 31.25rem;
+  max-height: 31.25rem;
   transform: rotate(-65.5deg);
   border-radius: 2.5rem;
   background: var(--blue-200, #afd2e9);
@@ -139,8 +139,6 @@ body {
 
 #bg-ble-50 {
   z-index: 0;
-  width: 18.75rem;
-  height: 18.75rem;
   border-radius: 1.875rem;
   background: var(--blue-50, #ebf4f9);
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.1),
@@ -279,4 +277,13 @@ footer {
     0px 15px 32px 0px rgba(0, 0, 0, 0.1), 0px 59px 59px 0px rgba(0, 0, 0, 0.09),
     0px 133px 80px 0px rgba(0, 0, 0, 0.05),
     0px 236px 94px 0px rgba(0, 0, 0, 0.01), 0px 368px 103px 0px rgba(0, 0, 0, 0);
+}
+
+.remove-arrow::-webkit-inner-spin-button,
+.remove-arrow::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.remove-arrow {
+    -moz-appearance: textfield;
 }

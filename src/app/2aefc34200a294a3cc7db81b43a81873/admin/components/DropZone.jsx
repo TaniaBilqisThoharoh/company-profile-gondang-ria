@@ -70,7 +70,7 @@ export default function DropZone({ data, dispatch, imagePreviews, previewsFromSe
 
   return (
     <div
-      className={`dropzone flex flex-col ${imagePreviews || previewsFromServer ? "opacity-0" : "opacity-100"} ${data.inDropZone ? "bg-ble-600 backdrop-blur-0 opacity-70" : "bg-ble-100 backdrop-blur-[21px] bg-opacity-0"} group justify-center cursor-pointer items-center border-ble-300 border-[3px] border-dashed rounded-[15px] ${customClass && customClass} h-[50vh] hover:opacity-70 hover:backdrop-blur-0 hover:bg-ble-600 transition-all`}
+      className={`dropzone flex flex-col ${imagePreviews || previewsFromServer ? "opacity-0" : "opacity-100"} ${data.inDropZone ? "bg-ble-600 backdrop-blur-0 opacity-70" : "bg-ble-100 backdrop-blur-[21px] bg-opacity-0"} group justify-center cursor-pointer items-center border-ble-300 border-[3px] border-dashed rounded-[15px] ${customClass && customClass} hover:opacity-70 hover:backdrop-blur-0 hover:bg-ble-600 transition-all`}
       onDrop={(e) => handleDrop(e)}
       onDragOver={(e) => handleDragOver(e)}
       onDragEnter={(e) => handleDragEnter(e)}

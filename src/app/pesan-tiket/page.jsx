@@ -1,19 +1,49 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Ticket from "./Ticket";
+import axios from "axios";
+import Ticket from "../components/Ticket";
 import Link from "next/link";
+import { useAppContext } from "../context/AppWrapper";
 
 export default function PesanTiket() {
+  const { isLoading, showLoading, hideLoading } = useAppContext()
   const [counter, setCounter] = useState(1);
   const [subtotal, setSubtotal] = useState();
   const [disabled, setDisabled] = useState(false);
+  const [dataFromServer, setDataFromServer] = useState();
+
+  const ambilData = async () => {
+    const url = "http://127.0.0.1:8000/api/harga_tiket";
+
+    await axios
+      .get(url)
+      .then(function (response) {
+        setDataFromServer(parseInt(response.data.data[0].harga_tiket));
+        setSubtotal(
+          new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+          }).format(counter * parseInt(response.data.data[0].harga_tiket))
+        );
+      })
+      .catch(function (error) {
+        window.alert(error);
+      });
+  };
 
   useEffect(() => {
-    setSubtotal(new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-    }).format(counter * 15000))
+    ambilData();
+    hideLoading();
+  }, []);
+
+  useEffect(() => {
+    setSubtotal(
+      new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      }).format(counter * (dataFromServer && dataFromServer))
+    );
 
     if (counter === 1 || counter <= 1) {
       return setDisabled(true);
@@ -21,9 +51,9 @@ export default function PesanTiket() {
     return setDisabled(false);
   }, [counter]);
 
-  /* GANTI FUNGSI SESUAI DATABASE */
   const beliHandler = () => {
-    
+    sessionStorage.setItem("jumlah_tiket", counter && counter)
+    sessionStorage.setItem("subtotal", subtotal && subtotal)
   };
 
   return (
@@ -32,9 +62,11 @@ export default function PesanTiket() {
       className="flex bg-white min-h-[800px] w-screen flex-col items-center gap-[3rem]"
     >
       <div className="z-10 w-full h-[20vw] max-h-[140px] pl-[50px] md:pl-[150px] bg-title-grey justify-start items-center inline-flex">
-        <h1 className="text-ble-900 text-2xl md:text-5xl font-bold">Pesan Tiket</h1>
+        <h1 className="text-ble-900 text-2xl md:text-5xl font-bold">
+          Pesan Tiket
+        </h1>
       </div>
-      <Ticket />
+      <Ticket harga={dataFromServer} />
       <div className="w-[80vw] max-w-[593px] py-5 mb-20 bg-white bg-opacity-[5%] rounded-[20px] border-[3px] border-ble-200 backdrop-blur-[21px] flex flex-col gap-[40px] justify-center items-center">
         <div className="custom-number-input h-10 w-[80%] items-center flex gap-[20px] mt-2">
           <label
@@ -65,11 +97,16 @@ export default function PesanTiket() {
             </button>
           </div>
         </div>
-        <div className="flex justify-between w-[80%] items-center">
-          <h3 className="text-ble-900 text-base md:text-2xl font-bold">Subtotal</h3>
-          <h3 className="text-ble-900 text-lg md:text-3xl font-bold">
-            {subtotal}
+        <div className="flex justify-between gap-6 md:gap-0 text-right w-[80%] items-center">
+          <h3 className="text-ble-900 text-base md:text-2xl font-bold">
+            Subtotal
           </h3>
+          <div>
+            <h3 className="text-ble-900 text-lg md:text-3xl font-bold">
+              {subtotal}
+            </h3>
+            <p className="text-xs md:text-base">*Harga dapat berubah sewaktu-waktu</p>
+          </div>
         </div>
         <Link
           href={`/pesan-tiket/data-diri`}
