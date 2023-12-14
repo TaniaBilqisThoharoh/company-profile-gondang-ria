@@ -3,10 +3,16 @@
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import FormValidasi from "../components/FormValidasi";
+import { useEffect, useState } from "react";
 
 export default function Validasi() {
-  const emailUser = sessionStorage.getItem("email")
+  /* const emailUser = (sessionStorage && sessionStorage.getItem("email")) */
+  const [emailUser, setEmailUser] = useState()
   const router = useRouter();
+
+  useEffect(() => {
+    setEmailUser(sessionStorage && sessionStorage.getItem("email"))
+  }, [])
 
   const cekTokenHandler = async (formData) => {
     const token = formData.get("token");

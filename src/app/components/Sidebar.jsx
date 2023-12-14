@@ -17,7 +17,7 @@ import Cookies from "js-cookie";
 import { useAppContext } from "../context/AppWrapper";
 
 const baseAdminURL = "/2aefc34200a294a3cc7db81b43a81873/admin";
-const adminPathTransaksi = `${baseAdminURL}/transaksi`;
+const adminPathTransaksi = `https://dashboard.midtrans.com/beta/transactions`;
 const adminPathLogin = `${baseAdminURL}/login`;
 const adminPathLupaPassword = `${baseAdminURL}/lupa-password`;
 const adminPathValidasi = `${baseAdminURL}/validasi`;
@@ -247,7 +247,7 @@ export default function Sidebar() {
               <li className="!mt-0 grid place-items-start">
                 <button
                   onClick={logOutHandler}
-                  className="md:text-[2vw] text-red-600 gap-[20px] py-[10px] px-[20px] bg-transparent border-none text-base flex justify-center items-center font-normal"
+                  className="md:text-[2vw] text-red-600 hover:text-red-400 active:text-red-700 gap-[20px] py-[10px] px-[20px] bg-transparent border-none text-base flex justify-center items-center font-normal"
                 >
                   <LuLogOut className="w-[20px] md:w-[3vw] h-[20px] md:h-[3vw] aspect-square" />
                   Keluar

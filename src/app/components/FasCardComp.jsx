@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { useAppContext } from "../context/AppWrapper";
 
 export default function FasCardComp({ id, image, name, desc }) {
+  const { showLoading } = useAppContext();
   return (
     <div className="w-full lg:w-[40vw] lg:h-[50vw] lg:max-w-[300px] lg:max-h-[581px] bg-ble-50 p-4 lg:p-0 lg:bg-transparent rounded-[20px] flex-row lg:flex-col justify-around lg:justify-center items-center gap-[3vw] inline-flex">
       <img
@@ -16,18 +18,22 @@ export default function FasCardComp({ id, image, name, desc }) {
           {desc}
         </p>
         <Link
-          as={`/fasilitas/detail-fasilitas/${id}`} href={`/fasilitas/detail-fasilitas/id`}
+          onClick={() => showLoading()}
+          as={`/fasilitas/detail-fasilitas/${id}`}
+          href={`/fasilitas/detail-fasilitas/id`}
           className="hidden lg:block max-w-[151px] bg-ble-600 rounded-[10px] text-ble-50 font-semibold text-sm md:text-base lg:text-lg py-2 px-8 ml-auto mr-auto hover:bg-ble-700 active:bg-ble-500 transition-all"
         >
           PELAJARI
         </Link>
       </div>
       <Link
-          as={`/fasilitas/detail-fasilitas/${id}`} href={`/fasilitas/detail-fasilitas/id`}
-          className="lg:hidden block max-w-[151px] bg-ble-600 rounded-[10px] text-ble-50 font-semibold text-xs md:text-base lg:text-lg py-2 px-4 lg:px-8 hover:bg-ble-700 active:bg-ble-500 transition-all"
-        >
-          PELAJARI
-        </Link>
+        onClick={() => showLoading()}
+        as={`/fasilitas/detail-fasilitas/${id}`}
+        href={`/fasilitas/detail-fasilitas/id`}
+        className="lg:hidden block max-w-[151px] bg-ble-600 rounded-[10px] text-ble-50 font-semibold text-xs md:text-base lg:text-lg py-2 px-4 lg:px-8 hover:bg-ble-700 active:bg-ble-500 transition-all"
+      >
+        PELAJARI
+      </Link>
     </div>
   );
 }

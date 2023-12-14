@@ -3,10 +3,16 @@
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import FormUbahPW from "../components/FormUbahPW";
+import { useEffect, useState } from "react";
 
 export default function UbahPassword() {
-  const emailUser = sessionStorage.getItem("email")
+  const [emailUser, setEmailUser] = useState()
+  /* const emailUser = (sessionStorage && sessionStorage.getItem("email")) */
   const router = useRouter();
+
+  useEffect(() => {
+    setEmailUser(sessionStorage && sessionStorage.getItem("email"))
+  }, [])
 
   const passBaruHandler = async (formData) => {
     const pass = formData.get("password");
@@ -24,7 +30,7 @@ export default function UbahPassword() {
       .post(`http://127.0.0.1:8000/api/password/change_password`, formData)
       .then((response) => {
         window.alert(response.data.message);
-        sessionStorage.removeItem("email")
+        (sessionStorage && sessionStorage.removeItem("email"))
         router.push("/2aefc34200a294a3cc7db81b43a81873/admin/login");
       })
       .catch((error) => {

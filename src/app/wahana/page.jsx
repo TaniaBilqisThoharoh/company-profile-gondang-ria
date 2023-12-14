@@ -20,7 +20,7 @@ export default function Wahana() {
       .catch(function (error) {
         window.alert(error.message);
       });
-      hideLoading();
+    hideLoading();
   };
 
   useEffect(() => {

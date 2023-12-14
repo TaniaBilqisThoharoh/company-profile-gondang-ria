@@ -20,7 +20,7 @@ export default function Login() {
   const cekCookies = async () => {
     if (Cookies.get("token")) {
       //redirect to transaksi page
-      router.push("/2aefc34200a294a3cc7db81b43a81873/admin/transaksi");
+      router.push("/2aefc34200a294a3cc7db81b43a81873/admin/beranda");
     }
   };
 
@@ -45,13 +45,13 @@ export default function Login() {
       .then((response) => {
         //set token on cookies
         const exp = new Date(
-          new Date().getTime() + response.data.expires_in * 1000
+          new Date().getTime() + response.data.expires_in * 100
         );
 
         Cookies.set("token", response.data.access_token, { expires: exp });
 
         //redirect to dashboard
-        router.push("/2aefc34200a294a3cc7db81b43a81873/admin/transaksi");
+        router.push("/2aefc34200a294a3cc7db81b43a81873/admin/beranda");
       })
       .catch((error) => {
         //assign error to state "validation"
@@ -115,19 +115,6 @@ export default function Login() {
                 />
               </div>
             </div>
-
-            {/* <label
-              htmlFor="password"
-              className="text-login_fontClr font-normal text-base md:text-2xl text-opacity-80"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              onInput={(e) => setPassword(e.target.value)}
-              className="w-full text-grn-950 font-normal text-2xl border-b-2 border-grn-950 p-[10px] outline-ble-300 rounded-[10px]"
-            /> */}
             <Link
               href={`/2aefc34200a294a3cc7db81b43a81873/admin/lupa-password`}
               className="text-xs md:text-base font-normal text-login_fontClr place-self-end mt-[10px] md:mt-[30px] hover:text-ble-400 active:text-ble-500"

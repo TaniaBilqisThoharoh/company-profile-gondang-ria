@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import Link from "next/link";
+import { useAppContext } from "@/app/context/AppWrapper";
 
 export default function WahanaSec() {
+  const { showLoading } = useAppContext();
   const [previewsFromServer, setPreviewsFromServer] = useState();
 
   const ambilData = async () => {
@@ -54,6 +56,7 @@ export default function WahanaSec() {
                 renang yang menenangkan, kesenangan ada di setiap sudut!
               </p>
               <Link
+                onClick={() => showLoading()}
                 href="/wahana"
                 className="max-w-[300px] border-[2px] md:border-[3.5px] border-ble-600 rounded-[10px] text-ble-600 font-semibold text-sm md:text-lg py-1 px-4 md:py-2 md:px-8 hover:bg-ble-600 hover:text-ble-50 active:bg-ble-500 active:border-ble-500 transition-all"
               >

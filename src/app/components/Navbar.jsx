@@ -2,24 +2,25 @@
 
 import logo from "../../../public/logo/logo.png";
 import { useState } from "react";
-import { usePathname, useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useAppContext } from "../context/AppWrapper";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const { isLoading, showLoading, hideLoading } = useAppContext();
   const pathName = usePathname();
   const [navbar, setNavbar] = useState(false);
+  const router = useRouter()
 
   const isTheSamePage = () => {
     showLoading()
-/*     console.log("harusnya show")
-    const allLinks = document.getElementsByTagName("a");
+    /* router.refresh() */
+    /* const allLinks = document.getElementsByTagName("a");
     for (const link of allLinks) {
       const theRealLink = link.href.replace("http://localhost:3000/", "/");
       if (pathName == theRealLink) {
-        console.log("harusnya hide")
         hideLoading();
       }
     } */

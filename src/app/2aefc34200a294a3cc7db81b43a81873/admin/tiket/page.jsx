@@ -39,10 +39,8 @@ export default function Tiket() {
   const tiketUpload = async (formData) => {
     const harga = formData.get("editHarga");
 
-    console.log(harga);
-
     formData.append("harga_tiket", harga);
-
+    
     const config = {
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,

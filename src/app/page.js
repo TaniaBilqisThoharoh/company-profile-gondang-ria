@@ -24,7 +24,7 @@ export default function Home() {
       .catch(function (error) {
         window.alert(error);
       });
-      hideLoading();
+    hideLoading();
   };
 
   useEffect(() => {

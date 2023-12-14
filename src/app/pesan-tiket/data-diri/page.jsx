@@ -1,163 +1,218 @@
 "use client";
 
+import axios from "axios";
 import { DatePicker } from "antd";
-import { useEffect } from "react";
-/* import { midtransClient } './midtrans-client-nodejs/index.js'; */
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAppContext } from "@/app/context/AppWrapper";
+import Spinner from "@/app/components/Spinner";
 
 export default function DataDiri() {
-  const jumlahTiket = sessionStorage.getItem("jumlah_tiket")
-  const subtotal = sessionStorage.getItem("subtotal")
+  const { isLoading, showLoading, hideLoading } = useAppContext();
+  const [jumlahTiket, setJumlahTiket] = useState()
+  const [subtotal, setSubtotal] = useState()
+  /* const jumlahTiket = (sessionStorage && sessionStorage.getItem("jumlah_tiket"));
+  const subtotal = (sessionStorage && sessionStorage.getItem("subtotal")); */
+  const router = useRouter();
+
   const disabledDate = (current) => {
     let date = new Date();
+    const jam = new Date().getHours();
 
-    date.setDate(date.getDate() - 1);
-    return current < date || new Date(current).getDay() === 5;
+    if (jam < 8 || jam > 17) {
+      date.setDate(date.getDate());
+      return current <= date || new Date(current).getDay() === 5;
+    } else {
+      date.setDate(date.getDate() - 1);
+      return current < date || new Date(current).getDay() === 5;
+    }
   };
 
-  const dataUpload = (formData) => {
-    const dataHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"]
-    const nama = formData.get("name")
-    const email = formData.get("email")
-    const phone = formData.get("phone")
-    const tgl = formData.get("tanggal")
-    const hari = new Date()
-  
-    const hariBerangkat = dataHari.filter((item, index) => hari.getDay(tgl) === index)
+  const kirimEmail = async (order_id) => {
+    console.log(order_id);
+    const urlKirimTiket = `http://127.0.0.1:8000/send-mail-ticket/${
+      order_id && order_id
+    }`;
 
-    formData.append("nama", nama)
-    formData.append("email", email)
-    formData.append("no_telepon", phone)
-    formData.append("tanggal", hariBerangkat[0])
-
+    await fetch(urlKirimTiket, { mode: "no-cors" });
   };
 
-  const snapToken = '8a537595-228b-4187-87b5-64abce59f9ae';
-  let snap = new midtransClient.Snap({
-    isProduction : false,
-    serverKey : 'SB-Mid-server-WhCkOGXvIKSEMKIEzklyKqBB',
-    clientKey : 'SB-Mid-client-ue4OhOdT44EWgk4W'
-});
+  const cobaBayar = (token, order_id) => {
+    snap.pay(token, {
+      // Optional
+      onSuccess: function (result) {
+        /* KIRIM TIKET LEWAT EMAIL */
+        kirimEmail(order_id);
 
-/*   useEffect(() => {
-    snap.pay(snapToken, {
-      // Optional
-      onSuccess: function(result){
-        // You may add your own js here, this is just example
-        document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+        (sessionStorage && sessionStorage.removeItem("jumlah_tiket"));
+        (sessionStorage && sessionStorage.removeItem("subtotal"));
+        window.alert("Status pembayara: Berhasil");
+        router.push("/pesan-tiket");
       },
-      // Optional
-      onPending: function(result){
-        // You may add your own js here, this is just example
-         document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+      onPending: function (result) {
+        window.alert("Status pembayara: Pending");
       },
-      // Optional
-      onError: function(result){
-        // You may add your own js here, this is just example
-         document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-      }
+      onError: function (result) {
+        window.alert("Status pembayara: Error");
+      },
     });
-  }, [snap]) */
+  };
+
+  const storeDataDiri = async (formData, order_id) => {
+    formData.append("order_id", order_id);
+    const urlPengunjung = "http://127.0.0.1:8000/api/pengunjung";
+    await axios
+      .post(urlPengunjung, formData)
+      .then((response) => {
+        /* respon jika sukses */
+      })
+      .catch((err) => {
+        window.alert(err.response.data.message);
+      });
+  };
+
+  const dataUpload = async (formData) => {
+    const nama = formData.get("name");
+    const email = formData.get("email");
+    const phone = formData.get("phone");
+    const tgl = formData.get("tanggal");
+
+    formData.append("nama", nama);
+    formData.append("email", email);
+    formData.append("jumlah_tiket", jumlahTiket);
+    formData.append("subtotal", subtotal);
+    formData.append("no_telepon", phone);
+    formData.append("tanggal", tgl);
+
+    const urlMidtrans = "http://127.0.0.1:8000/api/checkout-midtrans";
+
+    await axios
+      .post(urlMidtrans, formData)
+      .then(function (response) {
+        storeDataDiri(formData, response.data.orderId);
+        setOrderId(response.data.orderId);
+        cobaBayar(response.data.token, response.data.orderId);
+      })
+      .catch(function (error) {
+        window.alert("Mohon maaf, telah terjadi kesalahan jaringan");
+      });
+    hideLoading();
+  };
+
+  useEffect(() => {
+    setJumlahTiket(sessionStorage && sessionStorage.getItem("jumlah_tiket"));
+  setSubtotal(sessionStorage && sessionStorage.getItem("subtotal"));
+    const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+
+    let scriptTag = document.createElement("script");
+    scriptTag.src = midtransScriptUrl;
+
+    const myMidtransClientKey = "SB-Mid-client-ue4OhOdT44EWgk4W";
+    scriptTag.setAttribute("data-client-key", myMidtransClientKey);
+
+    document.body.appendChild(scriptTag);
+    hideLoading();
+    return () => {
+      document.body.removeChild(scriptTag);
+    };
+  }, []);
 
   return (
     <main
       id="pesan-tiket-page"
       className="flex bg-white w-screen flex-col items-center gap-10 pb-10"
     >
-      <div id="result-json"></div>
-      <div className="z-10 w-full h-[20vw] max-h-[140px] pl-[50px] md:pl-[150px] bg-title-grey justify-start items-center inline-flex">
-        <h1 className="text-ble-900 text-2xl md:text-5xl font-bold">
-          Data Diri
-        </h1>
-      </div>
-      <form
-        action={dataUpload}
-        className="grid grid-cols-1 md:grid-cols-2 gap-y-[41px] gap-x-[50px] w-[95vw] md:w-[70vw] bg-[#D7E8F4] backdrop-blur-[21px] bg-opacity-[50%] pt-[60px] pb-[35px] px-[50px] rounded-[20px] border-[3px] border-white"
-      >
-        <div className="rounded-2xl bg-gradient-to-tr from-ble-600 from-25% via-ble-500 via-70% to-ble-300 text-ble-50 shadow-xl p-4">
-          <p className="text-base">
-            Jumlah tiket Anda:
-          </p>
-          <h3 className="text-4xl font-bold">{jumlahTiket}</h3>
-        </div>
-        <div className="rounded-2xl bg-gradient-to-tr from-ble-600 from-25% via-ble-500 via-70% to-ble-300 text-ble-50 shadow-xl p-4">
-          <p className="text-base">
-            Subtotal:
-          </p>
-          <h3 className="text-2xl font-bold">{subtotal}</h3>
-        </div>
-        <div className="grid gap-y-5">
-          <label
-            className="font-bold text-ble-900 text-base md:text-xl"
-            htmlFor="name"
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <div className="z-10 w-full h-[20vw] max-h-[140px] pl-[50px] md:pl-[150px] bg-title-grey justify-start items-center inline-flex">
+            <h1 className="text-ble-900 text-2xl md:text-5xl font-bold">
+              Data Diri
+            </h1>
+          </div>
+          <form
+            action={dataUpload}
+            className="grid grid-cols-1 md:grid-cols-2 gap-y-[41px] gap-x-[50px] w-[95vw] md:w-[70vw] bg-[#D7E8F4] backdrop-blur-[21px] bg-opacity-[50%] pt-[60px] pb-[35px] px-[50px] rounded-[20px] border-[3px] border-white"
           >
-            Nama Lengkap
-          </label>
-          <input
-            className="px-3 outline-ble-100 text-ble-900 text-base md:text-xl w-full h-[50px] rounded-[10px]"
-            type="text"
-            name="name"
-            required
-          ></input>
-        </div>
-        <div className="grid  gap-y-5">
-          <label
-            className="font-bold text-ble-900 text-base md:text-xl"
-            htmlFor="email"
-          >
-            Email
-          </label>
-          <input
-            className="px-3 outline-ble-100 text-ble-900 text-base md:text-xl w-full h-[50px] rounded-[10px]"
-            type="email"
-            name="email"
-            required
-          ></input>
-        </div>
-        <div className="grid gap-y-5">
-          <label
-            className="font-bold text-ble-900 text-base md:text-xl"
-            htmlFor="phone"
-          >
-            No. Telepon
-          </label>
-          <input
-            className="px-3 outline-ble-100 text-ble-900 text-base md:text-xl w-full h-[50px] rounded-[10px]"
-            type="tel"
-            name="phone"
-            required
-          ></input>
-        </div>
-        <div className="grid  gap-y-5">
-          <label
-            className="font-bold text-ble-900 text-base md:text-xl"
-            htmlFor="tanggal"
-          >
-            Tanggal
-          </label>
-          <DatePicker
-            name="tanggal"
-            format="DD-MM-YYYY"
-            disabledDate={disabledDate}
-            className="border-none rounded-[10px] h-[50px]"
-          />
-          {/* <label className="font-bold text-ble-900 text-base md:text-xl" htmlFor="tanggal">
-            Tanggal
-          </label>
-          <input
-            className="px-3 text-ble-900 text-base md:text-xl w-full h-[50px] rounded-[10px]"
-            type="date"
-            name="tanggal"
-            required
-          ></input> */}
-        </div>
-        <button
-          /* href={`/pesan-tiket`} */
-          type="submit"
-          className="grid place-items-center col-span-1 md:col-span-2 place-self-center bg-ble-400 hover:bg-ble-500 active:bg-ble-600 text-ble-50 h-[63px] font-bold text-base md:text-2xl rounded-[10px] w-full"
-        >
-          SELESAI
-        </button>
-      </form>
+            <div className="rounded-2xl bg-gradient-to-tr from-ble-600 from-25% via-ble-500 via-70% to-ble-300 text-ble-50 shadow-xl p-4">
+              <p className="text-base">Jumlah tiket Anda:</p>
+              <h3 className="text-4xl font-bold">{jumlahTiket}</h3>
+            </div>
+            <div className="rounded-2xl bg-gradient-to-tr from-ble-600 from-25% via-ble-500 via-70% to-ble-300 text-ble-50 shadow-xl p-4">
+              <p className="text-base">Subtotal:</p>
+              <h3 className="text-2xl font-bold">
+                {new Intl.NumberFormat("id-ID", {
+                  style: "currency",
+                  currency: "IDR",
+                }).format(subtotal)}
+              </h3>
+            </div>
+            <div className="grid gap-y-5">
+              <label
+                className="font-bold text-ble-900 text-base md:text-xl"
+                htmlFor="name"
+              >
+                Nama Lengkap
+              </label>
+              <input
+                className="px-3 outline-ble-100 text-ble-900 text-base md:text-xl w-full h-[50px] rounded-[10px]"
+                type="text"
+                name="name"
+                required
+              ></input>
+            </div>
+            <div className="grid  gap-y-5">
+              <label
+                className="font-bold text-ble-900 text-base md:text-xl"
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <input
+                className="px-3 outline-ble-100 text-ble-900 text-base md:text-xl w-full h-[50px] rounded-[10px]"
+                type="email"
+                name="email"
+                required
+              ></input>
+            </div>
+            <div className="grid gap-y-5">
+              <label
+                className="font-bold text-ble-900 text-base md:text-xl"
+                htmlFor="phone"
+              >
+                No. Telepon
+              </label>
+              <input
+                className="px-3 outline-ble-100 text-ble-900 text-base md:text-xl w-full h-[50px] rounded-[10px]"
+                type="tel"
+                name="phone"
+                required
+              ></input>
+            </div>
+            <div className="grid  gap-y-5">
+              <label
+                className="font-bold text-ble-900 text-base md:text-xl"
+                htmlFor="tanggal"
+              >
+                Tanggal
+              </label>
+              <DatePicker
+                name="tanggal"
+                format="YYYY-MM-DD"
+                disabledDate={disabledDate}
+                className="border-none rounded-[10px] h-[50px]"
+              />
+            </div>
+            <button
+              type="submit"
+              className="grid place-items-center col-span-1 md:col-span-2 place-self-center bg-ble-400 hover:bg-ble-500 active:bg-ble-600 text-ble-50 h-[63px] font-bold text-base md:text-2xl rounded-[10px] w-full"
+            >
+              SELESAI
+            </button>
+          </form>
+        </>
+      )}
     </main>
   );
 }

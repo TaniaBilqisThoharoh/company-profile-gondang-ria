@@ -1,5 +1,10 @@
+"use client"
+
 import Link from "next/link";
 import InfoBox from "../components/InfoBox";
+import { useAppContext } from "../context/AppWrapper";
+import Spinner from "../components/Spinner";
+import { useEffect } from "react";
 
 const data = [
   {
@@ -14,7 +19,7 @@ const data = [
   {
     title: "Sosial Media",
     desc: [
-      <Link href="https://www.facebook.com/gondang.park?mibextid=LQQJ4d">
+      <Link key={1} href="https://www.facebook.com/gondang.park?mibextid=LQQJ4d">
         <svg
           width="60"
           height="60"
@@ -29,7 +34,7 @@ const data = [
           />
         </svg>
       </Link>,
-      <Link href="https://instagram.com/gondangriawaterpark?igshid=NzZlODBkYWE4Ng==">
+      <Link key={2} href="https://instagram.com/gondangriawaterpark?igshid=NzZlODBkYWE4Ng==">
         <svg
           width="60"
           height="60"
@@ -71,69 +76,83 @@ const data = [
 ];
 
 export default function HubungiKami() {
+  const { isLoading, hideLoading } = useAppContext();
+
+  useEffect(() => {
+    hideLoading()
+  }, [])
+
   return (
     <main className="flex flex-col bg-ble-50 h-full w-full">
-      <div className="z-10 w-full h-[20vw] max-h-[140px] pl-[50px] md:pl-[150px] bg-title-grey justify-start items-center inline-flex">
-        <h1 className="text-ble-900 text-2xl md:text-5xl font-bold">Hubungi Kami</h1>
-      </div>
-      <div className="w-screen h-screen grid place-items-center mt-16 md:mt-0">
-        <div className="rounded-[25px] bg-gradient-to-br from-ble-100 from-30% to-ble-600">
-          <div className="grid place-items-center md:relative m-[3px] py-4 rounded-[22px] bg-ble-50 bg-opacity-100 w-[80vw] md:max-w-[800px] md:w-[60vw] md:max-h-[480px] h-[100vh]">
-            {data.map((item, index) => {
-              return (
-                <InfoBox key={index} title={item.title} desc={item.desc} />
-              );
-            })}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <div className="z-10 w-full h-[20vw] max-h-[140px] pl-[50px] md:pl-[150px] bg-title-grey justify-start items-center inline-flex">
+            <h1 className="text-ble-900 text-2xl md:text-5xl font-bold">
+              Hubungi Kami
+            </h1>
           </div>
-        </div>
-      </div>
-      {/* GOOGLE MAPS API */}
-      <div className="relative w-screen grid place-items-center mt-32 md:mt-14">
-        <div className="gmaps absolute bottom-10 z-10 overflow-hidden rounded-[15px]">
-          <iframe
-          className="w-[85vw] md:w-[75vw] h-[75vh]"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.1925596066035!2d109.53930781088415!3d-7.443935773320485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6553d3732f68f5%3A0x2dfc876a84b0d3e5!2sGondang%20Ria%20Water%20Park!5e0!3m2!1sid!2sid!4v1699272269313!5m2!1sid!2sid"
-            style={{ border: 0 }}
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
-        <div className="z-0 w-[95vw] md:w-[90vw] h-full">
-          <div className="w-full rounded-t-[25px] bg-ble-700 flex gap-[10px] px-[50px] py-[20px]">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
-              viewBox="0 0 25 25"
-              fill="none"
-            >
-              <circle cx="12.5" cy="12.5" r="12.5" fill="#ED6A5D" />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
-              viewBox="0 0 25 25"
-              fill="none"
-            >
-              <circle cx="12.5" cy="12.5" r="12.5" fill="#F5C04F" />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
-              viewBox="0 0 25 25"
-              fill="none"
-            >
-              <circle cx="12.5" cy="12.5" r="12.5" fill="#61C654" />
-            </svg>
+          <div className="w-screen h-screen grid place-items-center mt-16 md:mt-0">
+            <div className="rounded-[25px] bg-gradient-to-br from-ble-100 from-30% to-ble-600">
+              <div className="grid place-items-center md:relative m-[3px] py-4 rounded-[22px] bg-ble-50 bg-opacity-100 w-[80vw] md:max-w-[800px] md:w-[60vw] md:max-h-[480px] h-[100vh]">
+                {data.map((item, index) => {
+                  return (
+                    <InfoBox key={index} title={item.title} desc={item.desc} />
+                  );
+                })}
+              </div>
+            </div>
           </div>
-          <div className="w-full p-[3px] pb-0 bg-gradient-to-br from-ble-200 from-30% to-ble-700">
-            <div className="bg-ble-50 h-[400px]"></div>
+          {/* GOOGLE MAPS API */}
+          <div className="relative w-screen grid place-items-center mt-32 md:mt-14">
+            <div className="gmaps absolute bottom-10 z-10 overflow-hidden rounded-[15px]">
+              <iframe
+                className="w-[85vw] md:w-[75vw] h-[75vh]"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.1925596066035!2d109.53930781088415!3d-7.443935773320485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6553d3732f68f5%3A0x2dfc876a84b0d3e5!2sGondang%20Ria%20Water%20Park!5e0!3m2!1sid!2sid!4v1699272269313!5m2!1sid!2sid"
+                style={{ border: 0 }}
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <div className="z-0 w-[95vw] md:w-[90vw] h-full">
+              <div className="w-full rounded-t-[25px] bg-ble-700 flex gap-[10px] px-[50px] py-[20px]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                >
+                  <circle cx="12.5" cy="12.5" r="12.5" fill="#ED6A5D" />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                >
+                  <circle cx="12.5" cy="12.5" r="12.5" fill="#F5C04F" />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                >
+                  <circle cx="12.5" cy="12.5" r="12.5" fill="#61C654" />
+                </svg>
+              </div>
+              <div className="w-full p-[3px] pb-0 bg-gradient-to-br from-ble-200 from-30% to-ble-700">
+                <div className="bg-ble-50 h-[400px]"></div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </main>
   );
 }

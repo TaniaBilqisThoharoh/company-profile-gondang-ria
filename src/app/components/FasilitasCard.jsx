@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { useAppContext } from "../context/AppWrapper";
 
 export default function FasilitasCard({ id, name, image, description }) {
+  const { showLoading } = useAppContext()
     return (
         <div className="fasilitas-card w-[300px] h-[216px] xl:w-[400px] xl:h-[288px] relative rounded-[15px]">
-          <Link as={`/fasilitas/detail-fasilitas/${id}`} href={`/fasilitas/detail-fasilitas/id`}>
+          <Link onClick={() => showLoading()} as={`/fasilitas/detail-fasilitas/${id}`} href={`/fasilitas/detail-fasilitas/id`}>
             <div className="w-full h-full">
               <img
                 className="belakang w-full absolute top-0 rounded-t-[15px] h-[149px] xl:h-[221px] object-cover"
