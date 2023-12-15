@@ -1,14 +1,24 @@
+// "use client" menandakan bahwa file ini dijalankan di client side (browser pengguna)
 "use client";
 
+// Ini adalah daftar import
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAppContext } from "../context/AppWrapper";
 import Spinner from "../components/Spinner";
 
+// Halaman Wahana
 export default function Wahana() {
+  // Memanggil context dari useAppContext() untuk mengendalikan state/kondisi loading
   const { isLoading, hideLoading } = useAppContext();
+
+  // Ini mendeklarasikan useState hooks untuk menyimpan data dari server
   const [dataFromServer, setDataFromServer] = useState();
 
+  // Fungsi untuk mengambil data
+  /* Fungsi biasa dieksekusi secara berurutan, mengembalikan nilai secara langsung,
+  sementara async function menggunakan kata kunci `async`, memungkinkan operasi-asinkron tanpa menunggu selesai,
+  mengembalikan promise, dan menggunakan `await` untuk menangani operasi-asinkron secara bersih. */
   const ambilData = async () => {
     const url = "http://127.0.0.1:8000/api/wahana";
 
