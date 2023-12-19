@@ -1,7 +1,7 @@
 export default function FormValidasi({ cekTokenHandler }) {
     return  (
         <form
-          action={cekTokenHandler}
+          onSubmit={cekTokenHandler}
           className="flex flex-col gap-[30px] w-full md:gap-[50px] md:w-[60%]"
         >
           <div className="flex flex-col items-center gap-[40px] w-full">
@@ -32,7 +32,7 @@ export default function FormValidasi({ cekTokenHandler }) {
           </div>
           <button
             type="submit"
-            className="bg-ble-400 text-base md:text-2xl font-normal text-ble-50 rounded-[10px] px-[30px] py-[7px] md:px-[50px] md:py-[15px] place-self-center hover:bg-ble-500 active:bg-ble-600 transition-all"
+            className="bg-ble-400 text-base font-normal text-ble-50 rounded-[10px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] place-self-center hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all"
           >
             Konfirmasi
           </button>

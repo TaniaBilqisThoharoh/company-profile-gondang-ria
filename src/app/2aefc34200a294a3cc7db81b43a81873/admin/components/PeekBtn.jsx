@@ -2,7 +2,7 @@ export default function PeekBtn({ isPasswordHidden, setPasswordHidden }) {
   return (
     <button
       type="button"
-      className="text-gray-400 absolute right-3 inset-y-0 my-auto hover:text-gray-500 active:text-gray-600"
+      className="text-gray-400 absolute right-3 inset-y-0 my-auto hover:text-gray-500 active:text-gray-600 active:scale-95"
       onClick={() => setPasswordHidden(!isPasswordHidden)}
     >
       {isPasswordHidden ? (

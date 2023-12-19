@@ -11,7 +11,7 @@ export default function WahanaSec() {
   const [previewsFromServer, setPreviewsFromServer] = useState();
 
   const ambilData = async () => {
-    const url = "http://127.0.0.1:8000/api/wahana";
+    const url = "https://newapi.gondangria.com/api/wahana";
 
     await axios
       .get(url)
@@ -38,7 +38,7 @@ export default function WahanaSec() {
             {previewsFromServer ? (
               <img
                 className="object-cover w-[25vw] h-[25vw] max-w-[21.875rem] max-h-[21.875rem] rounded-full aspect-square"
-                src={`http://127.0.0.1:8000/images/${previewsFromServer}`}
+                src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
                 alt="Wahana Photo"
               />
             ) : (

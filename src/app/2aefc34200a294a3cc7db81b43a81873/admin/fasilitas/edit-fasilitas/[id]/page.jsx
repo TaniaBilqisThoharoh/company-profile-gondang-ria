@@ -42,8 +42,7 @@ export default function EditFasilitas({ params }) {
 
     reader.onload = () => {
       setImagePreviews(reader.result);
-      item ? 
-      setImage(item) : setImage(previewsFromServer)
+      item ? setImage(item) : setImage(previewsFromServer);
     };
 
     if (item) {
@@ -60,8 +59,10 @@ export default function EditFasilitas({ params }) {
       const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` },
       };
+      /* const url =
+        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas"; */
       const url =
-        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas";
+        "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas";
 
       await axios
         .get(url, config)
@@ -76,7 +77,7 @@ export default function EditFasilitas({ params }) {
           });
         })
         .catch(function (error) {
-          window.alert(error.data.message);
+          window.alert(error);
         });
     }
   };
@@ -92,7 +93,6 @@ export default function EditFasilitas({ params }) {
     formData.append("nama", e.target[1].value);
     formData.append("gambar", image ? image : null);
     formData.append("deskripsi", e.target[2].value);
-    console.log(formData.get("nama"))
 
     const config = {
       headers: {
@@ -100,7 +100,8 @@ export default function EditFasilitas({ params }) {
       },
     };
 
-    let uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/update/${params.id}`;
+    /* let uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/update/${params.id}`; */
+    let uploadUrl = `https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/update/${params.id}`;
 
     await axios
       .post(uploadUrl, formData, config)
@@ -113,6 +114,14 @@ export default function EditFasilitas({ params }) {
       });
   };
 
+  const batalHandler = () => {
+    try {
+      window.history.back();
+    } catch {
+      router.push("/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas");
+    }
+  };
+
   const deleteFas = async () => {
     const config = {
       headers: {
@@ -120,7 +129,8 @@ export default function EditFasilitas({ params }) {
       },
     };
 
-    let uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/destroy/${params.id}`;
+    /* let uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/destroy/${params.id}`; */
+    let uploadUrl = `https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/destroy/${params.id}`;
 
     await axios
       .delete(uploadUrl, config)
@@ -131,7 +141,7 @@ export default function EditFasilitas({ params }) {
         router.push("/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas");
       })
       .catch((err) => {
-        window.alert(`${err.message}`);
+        window.alert(`${err}`);
       });
   };
 
@@ -160,7 +170,7 @@ export default function EditFasilitas({ params }) {
                     className={`${
                       imagePreviews ? "hidden" : "block"
                     } object-cover object-center h-full rounded-[15px]`}
-                    src={`http://127.0.0.1:8000/images/${previewsFromServer}`}
+                    src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
                     alt={`Preview`}
                   />
                   <img
@@ -212,21 +222,29 @@ export default function EditFasilitas({ params }) {
                   defaultValue={descFromServer}
                 ></textarea>
               </div>
-              
-              <div className="self-end justify-self-end flex gap-4">
+              <div className="flex justify-between">
                 <button
-                  onClick={deleteFas}
-                  className={`rounded-[10px] bg-red-600 text-red-50 hover:bg-red-700 active:bg-red-500 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] transition-all`}
+                  onClick={batalHandler}
+                  className={`rounded-[10px] bg-ble-950 text-red-50 hover:bg-ble-800 active:bg-ble-700 active:scale-95 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-lg md:py-[5px] md:px-[15px] xl:text-xl xl:py-[10px] xl:px-[25px] transition-all`}
                   type="button"
                 >
-                  Hapus
+                  Batal
                 </button>
-                <button
-                  className={`rounded-[10px] bg-ble-600 text-ble-50 hover:bg-ble-700 active:bg-ble-500 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] transition-all`}
-                  type="submit"
-                >
-                  Simpan
-                </button>
+                <div className="self-end justify-self-end flex gap-4">
+                  <button
+                    onClick={deleteFas}
+                    className={`rounded-[10px] bg-red-600 text-red-50 hover:bg-red-700 active:bg-red-500 active:scale-95 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-lg md:py-[5px] md:px-[15px] xl:text-xl xl:py-[10px] xl:px-[25px] transition-all`}
+                    type="button"
+                  >
+                    Hapus
+                  </button>
+                  <button
+                    className={`rounded-[10px] bg-ble-600 text-ble-50 hover:bg-ble-700 active:bg-ble-500 active:scale-95 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-lg md:py-[5px] md:px-[15px] xl:text-xl xl:py-[10px] xl:px-[25px] transition-all`}
+                    type="submit"
+                  >
+                    Simpan
+                  </button>
+                </div>
               </div>
             </div>
           </form>

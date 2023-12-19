@@ -18,8 +18,10 @@ export default function Tiket() {
       const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` },
       };
+      /* const url =
+        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/harga_tiket"; */
       const url =
-        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/harga_tiket";
+        "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/harga_tiket";
 
       await axios
         .get(url, config)
@@ -36,26 +38,26 @@ export default function Tiket() {
     ambilData();
   }, []);
 
-  const tiketUpload = async (formData) => {
-    const harga = formData.get("editHarga");
+  const tiketUpload = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    const harga = e.target[0].value;
 
     formData.append("harga_tiket", harga);
-    
+
     const config = {
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
       },
     };
 
-    let uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/harga_tiket/${dataFromServer.id}`;
-
-    const formTiket = document.querySelector(".formTiket");
+    /* let uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/harga_tiket/${dataFromServer.id}`; */
+    let uploadUrl = `https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/harga_tiket/${dataFromServer.id}`;
 
     await axios
       .post(uploadUrl, formData, config)
       .then((result) => {
         window.alert(`${result.data.message}`);
-        formTiket.reset();
         window.location.reload();
       })
       .catch((err) => {
@@ -68,7 +70,7 @@ export default function Tiket() {
       <div className="absolute upload left-1/2 -translate-x-1/2 w-[95vw] md:w-[62vw] md:left-[35vw] md:translate-x-0 top-1/2 -translate-y-1/2 flex flex-col border-[3px] border-white rounded-[25px] py-[10px] px-[10px] gap-[15px] md:py-[20px] md:px-[20px] md:gap-[25px]">
         <form
           encType="multipart/form-data"
-          action={tiketUpload}
+          onSubmit={tiketUpload}
           className="formTiket flex flex-col justify-between gap-[35px] lg:gap-[50px]"
         >
           <div className="relative grid gap-[15px] md:gap-[30px] w-full rounded-[15px]">
@@ -119,11 +121,16 @@ export default function Tiket() {
                 className="remove-arrow resize-none w-full border-y-2 border-r-2 border-white bg-transparent bg-gradient-to-r from-white p-[10px] rounded-r-[10px]"
                 id="editHarga"
                 name="editHarga"
+                onKeyDown={(e) => {
+                  if ([38, 40].indexOf(e.keyCode) > -1) {
+                    e.preventDefault();
+                  }
+                }}
                 onWheel={(e) => e.target.blur()}
               />
             </div>
             <button
-              className={`rounded-[10px] self-end justify-self-end bg-ble-600 hover:bg-ble-500 active:bg-ble-700 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
+              className={`rounded-[10px] self-end justify-self-end bg-ble-600 hover:bg-ble-500 active:bg-ble-700 active:scale-95 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
               type="submit"
             >
               Simpan

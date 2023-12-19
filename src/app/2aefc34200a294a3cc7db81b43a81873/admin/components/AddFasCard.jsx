@@ -2,13 +2,13 @@ import Link from "next/link";
 
 export default function AddFasCard() {
   return (
-    <div className="fasilitas-card-admin rounded-[15px] overflow-hidden group">
+    <div className="fasilitas-card-admin rounded-[15px] overflow-hidden group hover:scale-105 active:scale-100 transition-all">
       <Link
         className="grid place-items-center bg-gradient-to-br min-h-[234.09px] h-full from-ble-600 to-ble-50 p-[3px]"
         href={`/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/tambah-fasilitas`}
       >
         <div className="grid place-items-center bg-ble-50 w-full h-full rounded-[12px]">
-          <div className="grid place-items-center group-hover:scale-105 group-hover:-translate-y-2 group-active:scale-100 group-active:translate-y-0 transition-all">
+          <div className="grid place-items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="60"

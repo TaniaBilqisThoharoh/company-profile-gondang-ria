@@ -54,7 +54,15 @@ export default function TambahFasilitas() {
 
   useEffect(() => {
     cekCookies();
-  }, [])
+  }, []);
+
+  const batalHandler = () => {
+    try {
+      window.history.back();
+    } catch {
+      router.push("/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas");
+    }
+  };
 
   const dataUpload = async (e) => {
     e.preventDefault();
@@ -70,7 +78,8 @@ export default function TambahFasilitas() {
       },
     };
 
-    let uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/store`;
+    /* let uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/store`; */
+    let uploadUrl = `https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/store`;
 
     await axios
       .post(uploadUrl, formData, config)
@@ -119,6 +128,7 @@ export default function TambahFasilitas() {
                 Edit Nama
               </label>
               <input
+                required
                 className="text-base placeholder:text-opacity-20 h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
                 type="text"
                 id="editNama"
@@ -134,18 +144,28 @@ export default function TambahFasilitas() {
                 Edit Deskripsi
               </label>
               <textarea
+                required
                 className="resize-none placeholder:text-opacity-20 text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
                 id="editDesk"
                 name="editDesk"
                 placeholder={"Deskripsi fasilitas"}
               ></textarea>
             </div>
-            <button
-              className={`rounded-[10px] self-end justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
-              type="submit"
-            >
-              Simpan
-            </button>
+            <div className="self-end justify-self-end flex gap-4">
+              <button
+                onClick={batalHandler}
+                className={`rounded-[10px] bg-ble-950 text-red-50 hover:bg-ble-800 active:bg-ble-700 active:scale-95 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] transition-all`}
+                type="button"
+              >
+                Batal
+              </button>
+              <button
+                className={`rounded-[10px] hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all self-end justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
+                type="submit"
+              >
+                Simpan
+              </button>
+            </div>
           </div>
         </form>
       </div>

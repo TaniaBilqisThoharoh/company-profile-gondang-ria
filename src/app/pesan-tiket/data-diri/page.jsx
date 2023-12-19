@@ -8,11 +8,10 @@ import { useAppContext } from "@/app/context/AppWrapper";
 import Spinner from "@/app/components/Spinner";
 
 export default function DataDiri() {
-  const { isLoading, showLoading, hideLoading } = useAppContext();
-  const [jumlahTiket, setJumlahTiket] = useState()
-  const [subtotal, setSubtotal] = useState()
-  /* const jumlahTiket = (sessionStorage && sessionStorage.getItem("jumlah_tiket"));
-  const subtotal = (sessionStorage && sessionStorage.getItem("subtotal")); */
+  const { isLoading, hideLoading } = useAppContext();
+  const [jumlahTiket, setJumlahTiket] = useState();
+  const [subtotal, setSubtotal] = useState();
+
   const router = useRouter();
 
   const disabledDate = (current) => {
@@ -29,8 +28,7 @@ export default function DataDiri() {
   };
 
   const kirimEmail = async (order_id) => {
-    console.log(order_id);
-    const urlKirimTiket = `http://127.0.0.1:8000/send-mail-ticket/${
+    const urlKirimTiket = `https://newapi.gondangria.com/send-mail-ticket/${
       order_id && order_id
     }`;
 
@@ -44,8 +42,8 @@ export default function DataDiri() {
         /* KIRIM TIKET LEWAT EMAIL */
         kirimEmail(order_id);
 
-        (sessionStorage && sessionStorage.removeItem("jumlah_tiket"));
-        (sessionStorage && sessionStorage.removeItem("subtotal"));
+        sessionStorage && sessionStorage.removeItem("jumlah_tiket");
+        sessionStorage && sessionStorage.removeItem("subtotal");
         window.alert("Status pembayara: Berhasil");
         router.push("/pesan-tiket");
       },
@@ -60,7 +58,7 @@ export default function DataDiri() {
 
   const storeDataDiri = async (formData, order_id) => {
     formData.append("order_id", order_id);
-    const urlPengunjung = "http://127.0.0.1:8000/api/pengunjung";
+    const urlPengunjung = "https://newapi.gondangria.com/api/pengunjung";
     await axios
       .post(urlPengunjung, formData)
       .then((response) => {
@@ -71,11 +69,15 @@ export default function DataDiri() {
       });
   };
 
-  const dataUpload = async (formData) => {
-    const nama = formData.get("name");
-    const email = formData.get("email");
-    const phone = formData.get("phone");
-    const tgl = formData.get("tanggal");
+  const dataUpload = async (e) => {
+    e.preventDefault()
+    const formData = new FormData()
+    const nama = e.target[0].value;
+    const email = e.target[1].value;
+    const phone = e.target[2].value;
+    const tgl = e.target[3].value;
+
+    console.log(nama, email, phone, tgl)
 
     formData.append("nama", nama);
     formData.append("email", email);
@@ -84,24 +86,30 @@ export default function DataDiri() {
     formData.append("no_telepon", phone);
     formData.append("tanggal", tgl);
 
-    const urlMidtrans = "http://127.0.0.1:8000/api/checkout-midtrans";
+    const urlMidtrans = "https://newapi.gondangria.com/api/checkout-midtrans";
 
     await axios
       .post(urlMidtrans, formData)
       .then(function (response) {
         storeDataDiri(formData, response.data.orderId);
-        setOrderId(response.data.orderId);
         cobaBayar(response.data.token, response.data.orderId);
       })
       .catch(function (error) {
         window.alert("Mohon maaf, telah terjadi kesalahan jaringan");
       });
-    hideLoading();
   };
 
   useEffect(() => {
+    setTimeout(() => {
+      if (jumlahTiket != undefined) {
+        hideLoading()
+      }
+    }, "2000")
+  }, [jumlahTiket, isLoading])
+
+  useEffect(() => {
     setJumlahTiket(sessionStorage && sessionStorage.getItem("jumlah_tiket"));
-  setSubtotal(sessionStorage && sessionStorage.getItem("subtotal"));
+    setSubtotal(sessionStorage && sessionStorage.getItem("subtotal"));
     const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
@@ -111,7 +119,6 @@ export default function DataDiri() {
     scriptTag.setAttribute("data-client-key", myMidtransClientKey);
 
     document.body.appendChild(scriptTag);
-    hideLoading();
     return () => {
       document.body.removeChild(scriptTag);
     };
@@ -132,7 +139,7 @@ export default function DataDiri() {
             </h1>
           </div>
           <form
-            action={dataUpload}
+            onSubmit={dataUpload}
             className="grid grid-cols-1 md:grid-cols-2 gap-y-[41px] gap-x-[50px] w-[95vw] md:w-[70vw] bg-[#D7E8F4] backdrop-blur-[21px] bg-opacity-[50%] pt-[60px] pb-[35px] px-[50px] rounded-[20px] border-[3px] border-white"
           >
             <div className="rounded-2xl bg-gradient-to-tr from-ble-600 from-25% via-ble-500 via-70% to-ble-300 text-ble-50 shadow-xl p-4">

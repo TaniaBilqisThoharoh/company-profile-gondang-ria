@@ -15,7 +15,7 @@ export default function PesanTiket() {
   const [dataFromServer, setDataFromServer] = useState();
 
   const ambilData = async () => {
-    const url = "http://127.0.0.1:8000/api/harga_tiket";
+    const url = "https://newapi.gondangria.com/api/harga_tiket";
 
     await axios
       .get(url)
@@ -31,8 +31,15 @@ export default function PesanTiket() {
       .catch(function (error) {
         window.alert(error);
       });
-    hideLoading();
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (dataFromServer != undefined) {
+        hideLoading()
+      }
+    }, "2000")
+  }, [dataFromServer, isLoading])
 
   useEffect(() => {
     ambilData();

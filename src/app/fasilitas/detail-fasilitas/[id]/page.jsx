@@ -7,7 +7,7 @@ import { useAppContext } from "@/app/context/AppWrapper";
 import Spinner from "@/app/components/Spinner";
 
 export default function DetailFasilitas({ params }) {
-  const { isLoading, showLoading, hideLoading } = useAppContext();
+  const { isLoading, hideLoading } = useAppContext();
   const [nameFromServer, setNameFromServer] = useState();
   const [previewsFromServer, setPreviewsFromServer] = useState();
   const [descFromServer, setDescFromServer] = useState();
@@ -16,7 +16,7 @@ export default function DetailFasilitas({ params }) {
     const config = {
       headers: { Authorization: `Bearer ${Cookies.get("token")}` },
     };
-    const url = "http://127.0.0.1:8000/api/fasilitas/";
+    const url = "https://newapi.gondangria.com/api/fasilitas";
 
     await axios
       .get(url, config)
@@ -28,13 +28,19 @@ export default function DetailFasilitas({ params }) {
             setDescFromServer(item.deskripsi);
           }
         });
-        /* console.log(response.data.map((item) => {return item.id == params.id})) */
       })
       .catch(function (error) {
         window.alert(error);
       });
-    hideLoading();
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (previewsFromServer != undefined) {
+        hideLoading()
+      }
+    }, "2000")
+  }, [previewsFromServer, isLoading])
 
   //hook useEffect
   useEffect(() => {
@@ -57,7 +63,7 @@ export default function DetailFasilitas({ params }) {
               <div className="z-20 w-[90vw] h-[80vh] md:h-[60vh] flex items-center relative">
                 <img
                   id="img-detail"
-                  src={`http://127.0.0.1:8000/images/${previewsFromServer}`}
+                  src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
                   alt=""
                   className="z-10 rounded-[25px] aspect-[17/9] w-[90%] md:w-[65%] absolute right-[50%] translate-x-1/2 top-0 md:left-0 md:translate-x-0 md:top-1/2 md:-translate-y-1/2"
                 />

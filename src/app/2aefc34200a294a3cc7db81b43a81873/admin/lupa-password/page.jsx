@@ -7,15 +7,20 @@ import FormLupaPW from "../components/FormLupaPW";
 export default function LupaPassword() {
   const router = useRouter();
 
-  const cekEmailHandler = async (formData) => {
-    const inputEmail = formData.get("email");
+  const cekEmailHandler = async (e) => {
+    e.preventDefault()
+    const formData = new FormData()
+    const inputEmail = e.target[0].value;
 
     //append data to formData
     formData.append("email", inputEmail);
 
+    /* const url = `http://127.0.0.1:8000/api/password/forgot_password` */
+    const url = `https://newapi.gondangria.com/api/password/forgot_password`
+
     //send data to server
     await axios
-      .post(`http://127.0.0.1:8000/api/password/forgot_password`, formData)
+      .post(url, formData)
       .then((response) => {
         sessionStorage.setItem("email", inputEmail)
         window.alert(response.data.message);

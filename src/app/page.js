@@ -25,7 +25,7 @@ export default function Home() {
   mengembalikan promise, dan menggunakan `await` untuk menangani operasi-asinkron secara bersih. */
   const ambilData = async () => {
     // Ini mendeklarasikan variabel url dengan value endpoint API beranda
-    const url = "http://127.0.0.1:8000/api/beranda";
+    const url = "https://newapi.gondangria.com/api/beranda";
 
     // Memanggil axios dengan method GET
     await axios
@@ -41,10 +41,17 @@ export default function Home() {
         // Ini memanggil fungsi alert dan menampilkan pesan error dari parameter error
         window.alert(error);
       });
-
-    // Fungsi ini digunakan untuk mengubah kondisi loading menjadi false dan menyembunyikan indikator loading
-    hideLoading();
   };
+
+useEffect(() => {
+  // Fungsi di bawah ini menunda waktu eksekusi percabangan if yang ada di dalamnya selama 1 detik/1000 milidetik
+  setTimeout(() => {
+    if (previewsFromServer != undefined) {
+      // Fungsi ini digunakan untuk mengubah kondisi loading menjadi false dan menyembunyikan indikator loading
+      hideLoading()
+    }
+  }, "2000")
+}, [previewsFromServer, isLoading])
 
   /* Ini merupakan React Hook menangani efek samping (side effects) dalam komponen fungsional.
   Efek samping adalah aksi-aksi yang terjadi di luar render normal komponen, seperti berlangganan data, berlangganan kejadian (events), atau melakukan operasi yang membutuhkan waktu. */
@@ -67,7 +74,7 @@ export default function Home() {
             // Jika sudah maka mengembalikan tag img ini
             <img
               className="max-w-screen h-[52vw]"
-              src={`http://127.0.0.1:8000/images/${previewsFromServer}`}
+              src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
               alt="Gondang Ria Photo"
             />
           ) : (

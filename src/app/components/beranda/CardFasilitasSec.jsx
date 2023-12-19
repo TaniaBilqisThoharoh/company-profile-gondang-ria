@@ -8,7 +8,7 @@ export default function CardFasilitasSec() {
   const [dataFromServer, setDataFromServer] = useState();
 
   const ambilData = async () => {
-    const url = "http://127.0.0.1:8000/api/fasilitas";
+    const url = "https://newapi.gondangria.com/api/fasilitas";
 
     await axios
       .get(url)

@@ -79,6 +79,14 @@ export default function HubungiKami() {
   const { isLoading, hideLoading } = useAppContext();
 
   useEffect(() => {
+    setTimeout(() => {
+      if (data != undefined) {
+        hideLoading()
+      }
+    }, "2000")
+  }, [data, isLoading])
+
+  useEffect(() => {
     hideLoading()
   }, [])
 

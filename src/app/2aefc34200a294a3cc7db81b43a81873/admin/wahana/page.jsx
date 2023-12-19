@@ -59,8 +59,10 @@ export default function Wahana() {
       const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` },
       };
+      /* const url =
+        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana"; */
       const url =
-        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana";
+        "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana";
 
       await axios
         .get(url, config)
@@ -72,7 +74,7 @@ export default function Wahana() {
           });
         })
         .catch(function (error) {
-          window.alert(error.data.message);
+          window.alert(error);
         });
     }
   };
@@ -92,8 +94,8 @@ export default function Wahana() {
 
     let formData = new FormData();
     formData.append("nama", nameFromServer);
-    formData.append("gambar", image);
-    formData.append("deskripsi", description);
+    formData.append("gambar", image ? image : null);
+    formData.append("deskripsi", e.target[1].value);
 
     const config = {
       headers: {
@@ -101,31 +103,40 @@ export default function Wahana() {
       },
     };
 
+    /* let uploadUrl =
+      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/store"; */
     let uploadUrl =
-      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/store";
+      "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/store";
 
+    /* const url1 =
+      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana"; */
     const url1 =
-      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana";
+      "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana";
 
     await axios
       .get(url1, config)
       .then(function (response) {
+        const idWahana = response.data[0].id
         // handle success
-        uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/update`;
+        /* uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/update/${idWahana}`; */
+        uploadUrl = `https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/update/${idWahana}`;
 
         axios
           .post(uploadUrl, formData, config)
           .then((result) => {
             window.alert(`${result.data.message}`);
+            window.location.reload()
           })
           .catch((err) => {
-            window.alert(`${err.data.message}`);
+            window.alert(`${err}`);
           });
       })
       .catch(function (error) {
         // handle error
+        /* uploadUrl =
+          "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/store"; */
         uploadUrl =
-          "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/store";
+          "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/store";
 
         axios
           .post(uploadUrl, formData, config)
@@ -133,7 +144,7 @@ export default function Wahana() {
             window.alert(`${result.data.message}`);
           })
           .catch((err) => {
-            window.alert(`${err.data.message}`);
+            window.alert(`${err}`);
           });
       });
   };
@@ -163,7 +174,7 @@ export default function Wahana() {
                     className={`${
                       imagePreviews ? "hidden" : "block"
                     } object-cover object-center h-full rounded-[15px]`}
-                    src={`http://127.0.0.1:8000/images/${previewsFromServer}`}
+                    src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
                     alt={`Preview`}
                   />
                   <img
@@ -199,7 +210,7 @@ export default function Wahana() {
                 defaultValue={descFromServer}
               ></textarea>
               <button
-                className={`rounded-[10px] self-end justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
+                className={`rounded-[10px] self-end justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all`}
                 type="submit"
               >
                 Simpan

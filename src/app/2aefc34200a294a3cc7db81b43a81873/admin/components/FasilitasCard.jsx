@@ -7,7 +7,7 @@ export default function FasilitasCard({ id, name, image }) {
             
               <img
                 className="object-cover w-full h-[170px] group-hover:opacity-80 transition-all"
-                src={`http://127.0.0.1:8000/images/${image}`}
+                src={`https://newapi.gondangria.com/images/${image}`}
                 alt={name}
               />
             

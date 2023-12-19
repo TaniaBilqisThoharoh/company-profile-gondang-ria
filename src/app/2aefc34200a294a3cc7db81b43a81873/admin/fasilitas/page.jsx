@@ -22,8 +22,10 @@ export default function Fasilitas() {
       const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` },
       };
+      /* const url =
+        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas"; */
       const url =
-        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas";
+        "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas";
 
       await axios
         .get(url, config)
@@ -31,7 +33,7 @@ export default function Fasilitas() {
           setDataFromServer(response.data);
         })
         .catch(function (error) {
-          window.alert(error.data.message);
+          window.alert(error);
         });
     }
   };

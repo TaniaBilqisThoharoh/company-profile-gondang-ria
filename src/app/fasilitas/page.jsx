@@ -7,11 +7,11 @@ import Spinner from "../components/Spinner";
 import { useAppContext } from "../context/AppWrapper";
 
 export default function Fasilitas() {
-  const { isLoading, showLoading, hideLoading } = useAppContext();
+  const { isLoading, hideLoading } = useAppContext();
   const [dataFromServer, setDataFromServer] = useState();
 
   const ambilData = async () => {
-    const url = "http://127.0.0.1:8000/api/fasilitas";
+    const url = "https://newapi.gondangria.com/api/fasilitas";
 
     await axios
       .get(url)
@@ -21,12 +21,21 @@ export default function Fasilitas() {
       .catch(function (error) {
         window.alert(error.message);
       });
-    hideLoading();
   };
+
+  useEffect(() => {
+    
+    setTimeout(() => {
+      if (dataFromServer != undefined) {
+        hideLoading()
+      }
+    }, "2000")
+  }, [dataFromServer, isLoading])
 
   useEffect(() => {
     ambilData();
   }, []);
+  
   return (
     <main className="flex bg-white min-h-[800px] w-screen h-full pb-[9vw] flex-col items-center gap-[50px] md:gap-[100px]">
       {isLoading ? (

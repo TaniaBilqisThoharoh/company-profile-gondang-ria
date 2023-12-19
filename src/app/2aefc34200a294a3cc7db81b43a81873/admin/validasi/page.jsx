@@ -6,7 +6,6 @@ import FormValidasi from "../components/FormValidasi";
 import { useEffect, useState } from "react";
 
 export default function Validasi() {
-  /* const emailUser = (sessionStorage && sessionStorage.getItem("email")) */
   const [emailUser, setEmailUser] = useState()
   const router = useRouter();
 
@@ -14,8 +13,10 @@ export default function Validasi() {
     setEmailUser(sessionStorage && sessionStorage.getItem("email"))
   }, [])
 
-  const cekTokenHandler = async (formData) => {
-    const token = formData.get("token");
+  const cekTokenHandler = async (e) => {
+    e.preventDefault()
+    const formData = new FormData()
+    const token = e.target[0].value;
 
     //append data to formData
     formData.append("email", emailUser);
@@ -23,7 +24,7 @@ export default function Validasi() {
 
     //send data to server
     await axios
-      .post(`http://127.0.0.1:8000/api/password/validasi`, formData)
+      .post(`https://newapi.gondangria.com/api/password/validasi`, formData)
       .then((response) => {
         window.alert(response.data.message);
         router.push("/2aefc34200a294a3cc7db81b43a81873/admin/ubah-password");

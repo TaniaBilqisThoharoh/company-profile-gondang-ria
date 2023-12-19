@@ -9,21 +9,13 @@ import { useAppContext } from "../context/AppWrapper";
 import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const { isLoading, showLoading, hideLoading } = useAppContext();
+  const { showLoading} = useAppContext();
   const pathName = usePathname();
   const [navbar, setNavbar] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const isTheSamePage = () => {
-    showLoading()
-    /* router.refresh() */
-    /* const allLinks = document.getElementsByTagName("a");
-    for (const link of allLinks) {
-      const theRealLink = link.href.replace("http://localhost:3000/", "/");
-      if (pathName == theRealLink) {
-        hideLoading();
-      }
-    } */
+    showLoading();
   };
 
   return (

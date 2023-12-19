@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 export default function UbahPassword() {
   const [emailUser, setEmailUser] = useState()
-  /* const emailUser = (sessionStorage && sessionStorage.getItem("email")) */
   const router = useRouter();
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export default function UbahPassword() {
     }
     //send data to server
     await axios
-      .post(`http://127.0.0.1:8000/api/password/change_password`, formData)
+      .post(`https://newapi.gondangria.com/api/password/change_password`, formData)
       .then((response) => {
         window.alert(response.data.message);
         (sessionStorage && sessionStorage.removeItem("email"))

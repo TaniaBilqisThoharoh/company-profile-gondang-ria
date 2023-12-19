@@ -63,7 +63,7 @@ export default function FormUbahPW({ passBaruHandler }) {
       </div>
       <button
         type="submit"
-        className="bg-ble-400 text-base md:text-2xl font-normal text-ble-50 rounded-[10px] px-[30px] py-[7px] md:px-[50px] md:py-[15px] place-self-center hover:bg-ble-500 active:bg-ble-600 transition-all"
+        className="bg-ble-400 text-base font-normal text-ble-50 rounded-[10px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] place-self-center hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all"
       >
         Konfirmasi
       </button>

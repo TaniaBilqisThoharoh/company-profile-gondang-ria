@@ -9,14 +9,14 @@ export default function FasilitasCard({ id, name, image, description }) {
             <div className="w-full h-full">
               <img
                 className="belakang w-full absolute top-0 rounded-t-[15px] h-[149px] xl:h-[221px] object-cover"
-                src={`http://127.0.0.1:8000/images/${image}`}
+                src={`https://newapi.gondangria.com/images/${image}`}
                 alt=""
               />
               <div className="content-[''] absolute bottom-[96px] right-0 w-[30px] h-[30px] bg-white"></div>
               <div className="depan w-full absolute overflow-hidden top-0 rounded-t-[15px] h-[120px] xl:h-[192px] rounded-br-[25px]">
                 <img
                   className="object-cover w-full h-[149px] xl:h-[221px]"
-                  src={`http://127.0.0.1:8000/images/${image}`}
+                  src={`https://newapi.gondangria.com/images/${image}`}
                   alt=""
                 />
               </div>

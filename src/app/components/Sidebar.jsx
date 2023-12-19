@@ -64,7 +64,7 @@ export default function Sidebar() {
     };
 
     await axios
-      .post(`http://127.0.0.1:8000/api/logout`, formData, config)
+      .post(`https://newapi.gondangria.com/api/logout`, formData, config)
       .then((response) => {
         window.alert(response.data.message);
 
@@ -227,7 +227,7 @@ export default function Sidebar() {
                                     pathName.includes(item.href)
                                       ? "bg-ble-50 translate-x-4"
                                       : ""
-                                  } -m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 hover:translate-x-4 mr-7`}
+                                  } -m-3 flex items-center rounded-lg p-2 transition duration-150 ease-in-out hover:bg-gray-50 hover:translate-x-4 active:translate-x-3 mr-7`}
                                 >
                                   <div className="ml-4">
                                     <p className="md:text-[1.6vw] text-sm font-medium text-gray-900">

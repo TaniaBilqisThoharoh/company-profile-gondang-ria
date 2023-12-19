@@ -20,7 +20,7 @@ export default function Wahana() {
   sementara async function menggunakan kata kunci `async`, memungkinkan operasi-asinkron tanpa menunggu selesai,
   mengembalikan promise, dan menggunakan `await` untuk menangani operasi-asinkron secara bersih. */
   const ambilData = async () => {
-    const url = "http://127.0.0.1:8000/api/wahana";
+    const url = "https://newapi.gondangria.com/api/wahana";
 
     await axios
       .get(url)
@@ -30,8 +30,15 @@ export default function Wahana() {
       .catch(function (error) {
         window.alert(error.message);
       });
-    hideLoading();
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (dataFromServer != undefined) {
+        hideLoading()
+      }
+    }, "2000")
+  }, [dataFromServer, isLoading])
 
   useEffect(() => {
     ambilData();
@@ -56,7 +63,7 @@ export default function Wahana() {
               <div className="z-20 w-[90vw] h-[80vh] md:h-[60vh] flex items-center relative">
                 <img
                   id="img-detail"
-                  src={`http://127.0.0.1:8000/images/${dataFromServer.gambar}`}
+                  src={`https://newapi.gondangria.com/images/${dataFromServer.gambar}`}
                   alt="Wahana Photo"
                   className="z-10 rounded-[25px] aspect-[17/9] w-[90%] md:w-[65%] absolute right-[50%] translate-x-1/2 top-0 md:left-0 md:translate-x-0 md:top-1/2 md:-translate-y-1/2"
                 />

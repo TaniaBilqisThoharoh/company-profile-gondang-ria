@@ -56,8 +56,10 @@ export default function Beranda() {
       const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` },
       };
+      /* const url =
+        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda"; */
       const url =
-        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda";
+        "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda";
 
       await axios
         .get(url, config)
@@ -65,7 +67,7 @@ export default function Beranda() {
           setPreviewsFromServer(response.data.hero);
         })
         .catch(function (error) {
-          window.alert(error.data.message);
+          window.alert(error);
         });
     }
   };
@@ -89,16 +91,21 @@ export default function Beranda() {
     };
 
     let uploadUrl =
-      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/store";
+      "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/store";
+    /* let uploadUrl =
+      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/store"; */
 
     const url1 =
-      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda";
+      "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda";
+    /* const url1 =
+      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda"; */
 
     await axios
       .get(url1, config)
       .then(function (response) {
         // handle success
-        uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/update`;
+        uploadUrl = `https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/update`;
+        /* uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/update`; */
 
         axios
           .post(uploadUrl, formData, config)
@@ -106,13 +113,15 @@ export default function Beranda() {
             window.alert(`${result.data.message}`);
           })
           .catch((err) => {
-            window.alert(`${err.data.message}`);
+            window.alert(`${err}`);
           });
       })
       .catch(function (error) {
         // handle error
+        /* uploadUrl =
+          "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/store"; */
         uploadUrl =
-          "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/store";
+          "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/store";
 
         axios
           .post(uploadUrl, formData, config)
@@ -120,7 +129,7 @@ export default function Beranda() {
             window.alert(`${result.data.message}`);
           })
           .catch((err) => {
-            window.alert(`${err.data.message}`);
+            window.alert(`${err}`);
           });
       });
   };
@@ -154,7 +163,7 @@ export default function Beranda() {
                       className={`${
                         imagePreviews ? "hidden" : "block"
                       } object-cover h-full rounded-[15px]`}
-                      src={`http://127.0.0.1:8000/images/${previewsFromServer}`}
+                      src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
                       alt={`Preview`}
                     />
                     <img
@@ -175,7 +184,7 @@ export default function Beranda() {
                 />
               </div>
               <button
-                className={`rounded-[10px] justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
+                className={`hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all rounded-[10px] justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
                 type="submit"
               >
                 Simpan

@@ -8,7 +8,7 @@ export default function FasilitasSec() {
   const [dataFromServer, setDataFromServer] = useState();
 
   const ambilData = async () => {
-    const url = "http://127.0.0.1:8000/api/fasilitas";
+    const url = "https://newapi.gondangria.com/api/fasilitas";
 
     await axios
       .get(url)
@@ -54,7 +54,7 @@ export default function FasilitasSec() {
           {dataFromServer ? (
             <img
               className="object-cover w-[40vw] h-[40vw] max-h-[10rem] max-w-[10rem] md:max-h-[20rem] md:max-w-[20rem] lg:max-h-[28rem] lg:max-w-[28rem] xl:max-h-[35.0135rem] xl:max-w-[35.0135rem] rounded-full aspect-square"
-              src={`http://127.0.0.1:8000/images/${dataFromServer.gambar}`}
+              src={`https://newapi.gondangria.com/images/${dataFromServer.gambar}`}
               alt={`${dataFromServer.name} Photo`}
             />
           ) : (
