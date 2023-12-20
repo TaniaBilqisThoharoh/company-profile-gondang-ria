@@ -130,7 +130,7 @@ export default function Tiket() {
               />
             </div>
             <button
-              className={`rounded-[10px] self-end justify-self-end bg-ble-600 hover:bg-ble-500 active:bg-ble-700 active:scale-95 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
+              className={`rounded-[10px] self-end justify-self-end bg-ble-600 hover:bg-ble-500 active:bg-ble-700 active:scale-95 transition-all text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
               type="submit"
             >
               Simpan

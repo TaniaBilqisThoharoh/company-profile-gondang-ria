@@ -13,9 +13,11 @@ export default function UbahPassword() {
     setEmailUser(sessionStorage && sessionStorage.getItem("email"))
   }, [])
 
-  const passBaruHandler = async (formData) => {
-    const pass = formData.get("password");
-    const confPass = formData.get("confPassword");
+  const passBaruHandler = async (e) => {
+    e.preventDefault()
+    const formData = new FormData()
+    const pass = e.target[1].value;
+    const confPass = e.target[3].value;
 
     if (pass === confPass) {
       //append data to formData

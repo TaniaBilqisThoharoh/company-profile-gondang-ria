@@ -7,10 +7,11 @@ import Spinner from "../components/Spinner";
 import { useAppContext } from "../context/AppWrapper";
 
 export default function Fasilitas() {
-  const { isLoading, hideLoading } = useAppContext();
+  const { isLoading, hideLoading, isFetching, showFetching, hideFetching } = useAppContext();
   const [dataFromServer, setDataFromServer] = useState();
 
   const ambilData = async () => {
+    showFetching()
     const url = "https://newapi.gondangria.com/api/fasilitas";
 
     await axios
@@ -21,16 +22,18 @@ export default function Fasilitas() {
       .catch(function (error) {
         window.alert(error.message);
       });
+      hideFetching()
   };
 
   useEffect(() => {
-    
-    setTimeout(() => {
-      if (dataFromServer != undefined) {
-        hideLoading()
-      }
-    }, "2000")
-  }, [dataFromServer, isLoading])
+    // Fungsi di bawah ini menunda waktu eksekusi percabangan if yang ada di dalamnya selama 1 detik/1000 milidetik
+    isFetching === false &&
+      dataFromServer &&
+      setTimeout(() => {
+        // Fungsi ini digunakan untuk mengubah kondisi loading menjadi false dan menyembunyikan indikator loading
+        hideLoading();
+      }, "2000");
+  }, [dataFromServer, isLoading, isFetching]);
 
   useEffect(() => {
     ambilData();

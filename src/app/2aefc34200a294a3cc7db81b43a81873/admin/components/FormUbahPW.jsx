@@ -7,7 +7,7 @@ export default function FormUbahPW({ passBaruHandler }) {
 
   return (
     <form
-      action={passBaruHandler}
+      onSubmit={passBaruHandler}
       className="flex flex-col gap-[30px] w-full md:gap-[50px] md:w-[60%]"
     >
       <div className="flex flex-col items-center gap-[40px] w-full">

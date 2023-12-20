@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import InfoBox from "../components/InfoBox";
@@ -19,7 +19,10 @@ const data = [
   {
     title: "Sosial Media",
     desc: [
-      <Link key={1} href="https://www.facebook.com/gondang.park?mibextid=LQQJ4d">
+      <Link
+        key={1}
+        href="https://www.facebook.com/gondang.park?mibextid=LQQJ4d"
+      >
         <svg
           width="60"
           height="60"
@@ -34,7 +37,10 @@ const data = [
           />
         </svg>
       </Link>,
-      <Link key={2} href="https://instagram.com/gondangriawaterpark?igshid=NzZlODBkYWE4Ng==">
+      <Link
+        key={2}
+        href="https://instagram.com/gondangriawaterpark?igshid=NzZlODBkYWE4Ng=="
+      >
         <svg
           width="60"
           height="60"
@@ -79,16 +85,12 @@ export default function HubungiKami() {
   const { isLoading, hideLoading } = useAppContext();
 
   useEffect(() => {
-    setTimeout(() => {
-      if (data != undefined) {
-        hideLoading()
-      }
-    }, "2000")
-  }, [data, isLoading])
-
-  useEffect(() => {
-    hideLoading()
-  }, [])
+    if (data != undefined) {
+      setTimeout(() => {
+        hideLoading();
+      }, "2000");
+    }
+  }, [data, isLoading]);
 
   return (
     <main className="flex flex-col bg-ble-50 h-full w-full">

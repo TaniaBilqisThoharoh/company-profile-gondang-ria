@@ -8,7 +8,7 @@ import { useAppContext } from "@/app/context/AppWrapper";
 import Spinner from "@/app/components/Spinner";
 
 export default function DataDiri() {
-  const { isLoading, hideLoading } = useAppContext();
+  const { isLoading, hideLoading, isFetching, showFetching, hideFetching } = useAppContext();
   const [jumlahTiket, setJumlahTiket] = useState();
   const [subtotal, setSubtotal] = useState();
 
@@ -71,13 +71,12 @@ export default function DataDiri() {
 
   const dataUpload = async (e) => {
     e.preventDefault()
+    showFetching()
     const formData = new FormData()
     const nama = e.target[0].value;
     const email = e.target[1].value;
     const phone = e.target[2].value;
     const tgl = e.target[3].value;
-
-    console.log(nama, email, phone, tgl)
 
     formData.append("nama", nama);
     formData.append("email", email);
@@ -97,15 +96,18 @@ export default function DataDiri() {
       .catch(function (error) {
         window.alert("Mohon maaf, telah terjadi kesalahan jaringan");
       });
+      hideFetching()
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      if (jumlahTiket != undefined) {
-        hideLoading()
-      }
-    }, "2000")
-  }, [jumlahTiket, isLoading])
+    // Fungsi di bawah ini menunda waktu eksekusi percabangan if yang ada di dalamnya selama 1 detik/1000 milidetik
+    isFetching === false &&
+      jumlahTiket &&
+      setTimeout(() => {
+        // Fungsi ini digunakan untuk mengubah kondisi loading menjadi false dan menyembunyikan indikator loading
+        hideLoading();
+      }, "2000");
+  }, [jumlahTiket, isLoading, isFetching]);
 
   useEffect(() => {
     setJumlahTiket(sessionStorage && sessionStorage.getItem("jumlah_tiket"));

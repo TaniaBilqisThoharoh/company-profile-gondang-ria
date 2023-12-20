@@ -8,13 +8,14 @@ import { useAppContext } from "../context/AppWrapper";
 import Spinner from "../components/Spinner";
 
 export default function PesanTiket() {
-  const { isLoading, showLoading, hideLoading } = useAppContext();
+  const { isLoading, showLoading, hideLoading, isFetching, showFetching, hideFetching } = useAppContext();
   const [counter, setCounter] = useState(1);
   const [subtotal, setSubtotal] = useState();
   const [disabled, setDisabled] = useState(false);
   const [dataFromServer, setDataFromServer] = useState();
 
   const ambilData = async () => {
+    showFetching()
     const url = "https://newapi.gondangria.com/api/harga_tiket";
 
     await axios
@@ -31,15 +32,18 @@ export default function PesanTiket() {
       .catch(function (error) {
         window.alert(error);
       });
+      hideFetching()
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      if (dataFromServer != undefined) {
-        hideLoading()
-      }
-    }, "2000")
-  }, [dataFromServer, isLoading])
+    // Fungsi di bawah ini menunda waktu eksekusi percabangan if yang ada di dalamnya selama 1 detik/1000 milidetik
+    isFetching === false &&
+      dataFromServer &&
+      setTimeout(() => {
+        // Fungsi ini digunakan untuk mengubah kondisi loading menjadi false dan menyembunyikan indikator loading
+        hideLoading();
+      }, "2000");
+  }, [dataFromServer, isLoading, isFetching]);
 
   useEffect(() => {
     ambilData();

@@ -10,7 +10,8 @@ import Spinner from "../components/Spinner";
 // Halaman Wahana
 export default function Wahana() {
   // Memanggil context dari useAppContext() untuk mengendalikan state/kondisi loading
-  const { isLoading, hideLoading } = useAppContext();
+  const { isLoading, hideLoading, isFetching, showFetching, hideFetching } =
+    useAppContext();
 
   // Ini mendeklarasikan useState hooks untuk menyimpan data dari server
   const [dataFromServer, setDataFromServer] = useState();
@@ -20,6 +21,7 @@ export default function Wahana() {
   sementara async function menggunakan kata kunci `async`, memungkinkan operasi-asinkron tanpa menunggu selesai,
   mengembalikan promise, dan menggunakan `await` untuk menangani operasi-asinkron secara bersih. */
   const ambilData = async () => {
+    showFetching();
     const url = "https://newapi.gondangria.com/api/wahana";
 
     await axios
@@ -30,15 +32,18 @@ export default function Wahana() {
       .catch(function (error) {
         window.alert(error.message);
       });
+    hideFetching();
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      if (dataFromServer != undefined) {
-        hideLoading()
-      }
-    }, "2000")
-  }, [dataFromServer, isLoading])
+    // Fungsi di bawah ini menunda waktu eksekusi percabangan if yang ada di dalamnya selama 1 detik/1000 milidetik
+    isFetching === false &&
+      dataFromServer &&
+      setTimeout(() => {
+        // Fungsi ini digunakan untuk mengubah kondisi loading menjadi false dan menyembunyikan indikator loading
+        hideLoading();
+      }, "2000");
+  }, [dataFromServer, isLoading, isFetching]);
 
   useEffect(() => {
     ambilData();

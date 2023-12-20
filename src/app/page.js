@@ -14,7 +14,8 @@ import Spinner from "./components/Spinner";
 // Halaman Beranda
 export default function Home() {
   // Memanggil context dari useAppContext() untuk mengendalikan state/kondisi loading
-  const { isLoading, hideLoading } = useAppContext();
+  const { isLoading, hideLoading, isFetching, showFetching, hideFetching } =
+    useAppContext();
 
   // Ini mendeklarasikan useState hooks untuk menyimpan gambar preview dari server
   const [previewsFromServer, setPreviewsFromServer] = useState();
@@ -24,6 +25,7 @@ export default function Home() {
   sementara async function menggunakan kata kunci `async`, memungkinkan operasi-asinkron tanpa menunggu selesai,
   mengembalikan promise, dan menggunakan `await` untuk menangani operasi-asinkron secara bersih. */
   const ambilData = async () => {
+    showFetching();
     // Ini mendeklarasikan variabel url dengan value endpoint API beranda
     const url = "https://newapi.gondangria.com/api/beranda";
 
@@ -41,17 +43,18 @@ export default function Home() {
         // Ini memanggil fungsi alert dan menampilkan pesan error dari parameter error
         window.alert(error);
       });
+    hideFetching();
   };
 
-useEffect(() => {
-  // Fungsi di bawah ini menunda waktu eksekusi percabangan if yang ada di dalamnya selama 1 detik/1000 milidetik
-  setTimeout(() => {
-    if (previewsFromServer != undefined) {
-      // Fungsi ini digunakan untuk mengubah kondisi loading menjadi false dan menyembunyikan indikator loading
-      hideLoading()
-    }
-  }, "2000")
-}, [previewsFromServer, isLoading])
+  useEffect(() => {
+    // Fungsi di bawah ini menunda waktu eksekusi percabangan if yang ada di dalamnya selama 1 detik/1000 milidetik
+    isFetching === false &&
+      previewsFromServer &&
+      setTimeout(() => {
+        // Fungsi ini digunakan untuk mengubah kondisi loading menjadi false dan menyembunyikan indikator loading
+        hideLoading();
+      }, "2000");
+  }, [previewsFromServer, isLoading, isFetching]);
 
   /* Ini merupakan React Hook menangani efek samping (side effects) dalam komponen fungsional.
   Efek samping adalah aksi-aksi yang terjadi di luar render normal komponen, seperti berlangganan data, berlangganan kejadian (events), atau melakukan operasi yang membutuhkan waktu. */

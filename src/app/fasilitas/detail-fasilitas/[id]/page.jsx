@@ -7,12 +7,13 @@ import { useAppContext } from "@/app/context/AppWrapper";
 import Spinner from "@/app/components/Spinner";
 
 export default function DetailFasilitas({ params }) {
-  const { isLoading, hideLoading } = useAppContext();
+  const { isLoading, hideLoading, isFetching, showFetching, hideFetching } = useAppContext();
   const [nameFromServer, setNameFromServer] = useState();
   const [previewsFromServer, setPreviewsFromServer] = useState();
   const [descFromServer, setDescFromServer] = useState();
 
   const ambilData = async () => {
+    showFetching()
     const config = {
       headers: { Authorization: `Bearer ${Cookies.get("token")}` },
     };
@@ -32,15 +33,18 @@ export default function DetailFasilitas({ params }) {
       .catch(function (error) {
         window.alert(error);
       });
+      hideFetching()
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      if (previewsFromServer != undefined) {
-        hideLoading()
-      }
-    }, "2000")
-  }, [previewsFromServer, isLoading])
+    // Fungsi di bawah ini menunda waktu eksekusi percabangan if yang ada di dalamnya selama 1 detik/1000 milidetik
+    isFetching === false &&
+      previewsFromServer &&
+      setTimeout(() => {
+        // Fungsi ini digunakan untuk mengubah kondisi loading menjadi false dan menyembunyikan indikator loading
+        hideLoading();
+      }, "2000");
+  }, [previewsFromServer, isLoading, isFetching]);
 
   //hook useEffect
   useEffect(() => {

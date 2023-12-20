@@ -6,13 +6,11 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useAppContext } from "../context/AppWrapper";
-import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const { showLoading} = useAppContext();
   const pathName = usePathname();
   const [navbar, setNavbar] = useState(false);
-  const router = useRouter();
 
   const isTheSamePage = () => {
     showLoading();
