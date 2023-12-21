@@ -129,7 +129,7 @@ export default function TambahFasilitas() {
               </label>
               <input
                 required
-                className="text-base placeholder:text-opacity-20 h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
+                className="text-base text-ble-950 placeholder:text-opacity-20 h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
                 type="text"
                 id="editNama"
                 name="editNama"
@@ -145,7 +145,7 @@ export default function TambahFasilitas() {
               </label>
               <textarea
                 required
-                className="resize-none placeholder:text-opacity-20 text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
+                className="resize-none text-ble-950 placeholder:text-opacity-20 text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
                 id="editDesk"
                 name="editDesk"
                 placeholder={"Deskripsi fasilitas"}

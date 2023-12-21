@@ -118,7 +118,7 @@ export default function Tiket() {
               </h3>
               <input
                 type="number"
-                className="remove-arrow resize-none w-full border-y-2 border-r-2 border-white bg-transparent bg-gradient-to-r from-white p-[10px] rounded-r-[10px]"
+                className="remove-arrow text-ble-950 resize-none w-full border-y-2 border-r-2 border-white bg-transparent bg-gradient-to-r from-white p-[10px] rounded-r-[10px]"
                 id="editHarga"
                 name="editHarga"
                 onKeyDown={(e) => {

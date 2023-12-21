@@ -98,7 +98,7 @@ export default function Sidebar() {
                 alt="Picture of the author"
                 className="my-4 md:m-0 p-0 object-cover aspect-square w-10 md:w-16"
               />
-              <h3 className="md:text-2xl text-base text-center">
+              <h3 className="md:text-2xl text-ble-950 text-base text-center">
                 Admin Gondang Ria
               </h3>
             </div>

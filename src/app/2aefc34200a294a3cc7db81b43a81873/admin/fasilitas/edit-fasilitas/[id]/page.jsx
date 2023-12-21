@@ -199,7 +199,7 @@ export default function EditFasilitas({ params }) {
                   Edit Nama
                 </label>
                 <input
-                  className="text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
+                  className="text-base text-ble-950 h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
                   type="text"
                   id="editNama"
                   name="editNama"
@@ -215,7 +215,7 @@ export default function EditFasilitas({ params }) {
                 </label>
 
                 <textarea
-                  className="resize-none text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
+                  className="resize-none text-ble-950 text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
                   id="editDesk"
                   name="editDesk"
                   rows={3}

@@ -204,7 +204,7 @@ export default function Wahana() {
 
               <textarea
                 onChange={deskripsiHandler}
-                className="resize-none text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
+                className="resize-none text-ble-950 text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
                 id="editDesk"
                 name="editDesk"
                 defaultValue={descFromServer}
