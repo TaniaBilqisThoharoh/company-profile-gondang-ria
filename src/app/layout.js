@@ -6,6 +6,7 @@ import { Noto_Sans_Display } from "next/font/google";
 import { usePathname } from "next/navigation";
 import Sidebar from "./components/Sidebar";
 import { AppWrapper } from "./context/AppWrapper";
+import { Analytics } from '@vercel/analytics/react';
 
 /* export const metadata = {
   title: "Gondang Ria",
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
         <body className={`${NotoSans.className} overflow-x-hidden`}>
           {pathName.includes(adminPath) ? <Sidebar /> : <Navbar />}
           {children}
+          <Analytics />
         </body>
       </html>
     </AppWrapper>
