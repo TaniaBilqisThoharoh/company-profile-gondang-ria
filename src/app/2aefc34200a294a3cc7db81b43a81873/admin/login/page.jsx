@@ -98,7 +98,7 @@ export default function Login() {
               type="email"
               name="email"
               onInput={(e) => setEmail(e.target.value)}
-              className="w-full text-grn-950 font-normal text-2xl border-b-2 border-grn-950 p-[10px] outline-ble-300 rounded-[10px]"
+              className="w-full text-ble-950 font-normal text-2xl border-b-2 border-grn-950 p-[10px] outline-ble-300 rounded-[10px]"
             />
           </div>
           {/* =============================================== AKHIRAN FORM EMAIL =============================================== */}
