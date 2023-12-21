@@ -118,7 +118,7 @@ export default function PesanTiket() {
                 </button>
               </div>
             </div>
-            <div className="flex justify-between gap-6 md:gap-0 text-right w-[80%] items-center">
+            <div className="flex justify-between text-ble-900 gap-6 md:gap-0 text-right w-[80%] items-center">
               <h3 className="text-ble-900 text-base md:text-2xl font-bold">
                 Subtotal
               </h3>

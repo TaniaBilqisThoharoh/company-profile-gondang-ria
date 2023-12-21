@@ -50,7 +50,7 @@ export default function WahanaSec() {
               <h3 className="text-ble-600 font-bold md:font-extrabold text-xl md:text-3xl lg:text-5xl">
                 Seru Tanpa Batas di Gondang Ria!
               </h3>
-              <p className="text-xs md:text-base font-normal w-[80vw] md:w-[43vw] lg:w-[37vw] max-w-[40rem] md:max-w-[30rem] lg:max-w-[24rem]">
+              <p className="text-xs md:text-base font-normal text-ble-900 w-[80vw] md:w-[43vw] lg:w-[37vw] max-w-[40rem] md:max-w-[30rem] lg:max-w-[24rem]">
                 Datang ke Gondang Ria dan nikmati beragam wahana air yang
                 menegangkan dan menyegarkan. Dari seluncuran cepat hingga kolam
                 renang yang menenangkan, kesenangan ada di setiap sudut!

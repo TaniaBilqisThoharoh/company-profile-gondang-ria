@@ -35,7 +35,7 @@ export default function FasilitasSec() {
             <h3 className="text-ble-600 font-bold md:font-extrabold text-xl md:text-3xl lg:text-5xl w-full max-w-[333px]">
               Fasilitas di Gondang Ria
             </h3>
-            <p className="text-xs md:text-base font-normal w-full">
+            <p className="text-xs md:text-base text-ble-900 font-normal w-full">
               Di Gondang Ria, setiap fasilitas kami hadirkan untuk memaksimalkan
               keceriaan Anda. Dari seluncuran menegangkan hingga kolam renang
               yang menenangkan, kami janjikan kenangan yang akan selalu Anda
