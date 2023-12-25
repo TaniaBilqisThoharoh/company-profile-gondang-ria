@@ -1,14 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import axios from "axios";
 import { DatePicker } from "antd";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/app/context/AppWrapper";
+import { FaChevronLeft } from "react-icons/fa6";
 import Spinner from "@/app/components/Spinner";
 
 export default function DataDiri() {
-  const { isLoading, hideLoading, isFetching, showFetching, hideFetching } = useAppContext();
+  const { isLoading, hideLoading, showLoading, isFetching, showFetching, hideFetching } =
+    useAppContext();
   const [jumlahTiket, setJumlahTiket] = useState();
   const [subtotal, setSubtotal] = useState();
 
@@ -70,9 +73,9 @@ export default function DataDiri() {
   };
 
   const dataUpload = async (e) => {
-    e.preventDefault()
-    showFetching()
-    const formData = new FormData()
+    e.preventDefault();
+    showFetching();
+    const formData = new FormData();
     const nama = e.target[0].value;
     const email = e.target[1].value;
     const phone = e.target[2].value;
@@ -96,7 +99,7 @@ export default function DataDiri() {
       .catch(function (error) {
         window.alert("Mohon maaf, telah terjadi kesalahan jaringan");
       });
-      hideFetching()
+    hideFetching();
   };
 
   useEffect(() => {
@@ -135,7 +138,10 @@ export default function DataDiri() {
         <Spinner />
       ) : (
         <>
-          <div className="z-10 w-full h-[20vw] max-h-[140px] pl-[50px] md:pl-[150px] bg-title-grey justify-start items-center inline-flex">
+          <div className="z-10 w-full h-[20vw] max-h-[140px] pl-[50px] md:pl-[150px] bg-title-grey justify-start items-center gap-2 md:gap-4 inline-flex">
+            <Link href={"/pesan-tiket"} onClick={() => showLoading()}>
+              <FaChevronLeft className="w-4 h-4 md:w-9 md:h-9" />
+            </Link>
             <h1 className="text-ble-900 text-2xl md:text-5xl font-bold">
               Data Diri
             </h1>

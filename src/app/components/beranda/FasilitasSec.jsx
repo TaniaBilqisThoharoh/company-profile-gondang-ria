@@ -28,10 +28,10 @@ export default function FasilitasSec() {
     <section className="relative w-screen flex justify-center align-center py-10 px-0 md:px-20">
       <div
         id="fasilitas_card"
-        className="flex flex-col-reverse gap-[2vw] justify-center items-center rounded-[1.875rem] bg-ble-50 p-5 w-[80vw] h-full md:w-full md:p-0 md:bg-transparent md:gap-[10.5vw] md:flex-row"
+        className="flex flex-col-reverse gap-[2vw] justify-center items-center rounded-[1.875rem] bg-ble-50 p-3 w-[80vw] sm:h-full h-[100vw] md:w-full md:p-0 md:bg-transparent md:gap-[10.5vw] md:flex-row"
       >
-        <div className="flex justify-center items-center">
-          <div className="flex flex-col justify-around items-center text-center md:text-left md:items-start md:w-[35vw] max-w-[540px] h-[38.5vw] max-h-[350px]">
+        <div className="flex justify-center items-center h-full">
+          <div className="flex flex-col justify-between items-center text-center md:text-left md:items-start md:w-[35vw] max-w-[540px] h-[50vw] sm:h-[38.5vw] max-h-[1000px] sm:max-h-[350px]">
             <h3 className="text-ble-600 font-bold md:font-extrabold text-xl md:text-3xl lg:text-5xl w-full max-w-[333px]">
               Fasilitas di Gondang Ria
             </h3>
@@ -44,7 +44,7 @@ export default function FasilitasSec() {
             <Link
               onClick={() => showLoading()}
               href="/fasilitas"
-              className="max-w-[151px] bg-ble-600 rounded-[10px] text-ble-50 font-semibold text-base md:text-lg py-2 px-8 hover:bg-ble-700 active:bg-ble-500 transition-all"
+              className="max-w-[151px] bg-ble-600 rounded-[10px] text-ble-50 font-semibold text-xs sm:text-base md:text-lg px-5 py-2 sm:px-8 hover:bg-ble-700 active:bg-ble-500 transition-all"
             >
               PELAJARI
             </Link>

@@ -73,8 +73,8 @@ body {
   max-width: 1262.89px;
   max-height: 535.42px;
   width: 88.5vw;
-  height: 39vw;
-  left: -10px;
+  height: 50vw;
+  left: -5px;
   top: 0;
   transform: rotate(-2deg);
   border-radius: 1.25rem;
@@ -185,6 +185,12 @@ footer {
     rgba(255, 255, 255, 0) 100%
   );
   backdrop-filter: blur(21px);
+}
+
+@media (max-width: 360px) {
+  #info-detail {
+    height: 100vw;
+  }
 }
 
 #nd-ble-200 {

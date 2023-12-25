@@ -115,7 +115,7 @@ export default function HubungiKami() {
             </div>
           </div>
           {/* GOOGLE MAPS API */}
-          <div className="relative w-screen grid place-items-center mt-32 md:mt-14">
+          <div className="relative w-screen grid place-items-center mt-36 md:mt-14">
             <div className="gmaps absolute bottom-10 z-10 overflow-hidden rounded-[15px]">
               <iframe
                 className="w-[85vw] md:w-[75vw] h-[75vh]"
