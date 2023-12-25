@@ -9,6 +9,9 @@ import DropZone from "../../components/DropZone";
 export default function TambahFasilitas() {
   const [image, setImage] = useState();
   const [imagePreviews, setImagePreviews] = useState();
+  const [descInput, setDescInput] = useState("");
+  const charLimit = 150
+  const [charCounter, setCharCounter] = useState(charLimit);
   const router = useRouter();
 
   // reducer function to handle state changes
@@ -92,11 +95,17 @@ export default function TambahFasilitas() {
       });
   };
 
+  const onCharChange = (e) => {
+    e.preventDefault();
+    setDescInput(e.target.value);
+    setCharCounter(charLimit - e.target.value.length)
+  };
+
   const customClass = "w-full h-[40vh] md:h-[50vh]";
 
   return (
     <main id="admin-page" className="relative h-screen w-screen">
-      <div className="absolute upload left-1/2 -translate-x-1/2 w-[95vw] md:w-[62vw] md:left-[35vw] md:translate-x-0 top-1/2 -translate-y-1/2 flex flex-col border-[3px] border-white rounded-[25px] py-[10px] px-[10px] gap-[15px] md:py-[20px] md:px-[20px] md:gap-[25px]">
+      <div className="absolute upload left-1/2 -translate-x-1/2 w-[95vw] md:w-[62vw] md:left-[35vw] md:translate-x-0 top-1/2 -translate-y-[45%] flex flex-col border-[3px] border-white rounded-[25px] py-[10px] px-[10px] gap-[15px] md:py-[20px] md:px-[20px] md:gap-[25px]">
         <form
           encType="multipart/form-data"
           onSubmit={dataUpload}
@@ -145,11 +154,14 @@ export default function TambahFasilitas() {
               </label>
               <textarea
                 required
+                maxLength={charLimit}
+                onChange={onCharChange}
                 className="resize-none text-ble-950 placeholder:text-opacity-20 text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
                 id="editDesk"
                 name="editDesk"
                 placeholder={"Deskripsi fasilitas"}
               ></textarea>
+              <p className={`${charCounter <= 10 ? "text-red-500" : "text-ble-950"}`}>{charCounter}/150</p>
             </div>
             <div className="self-end justify-self-end flex gap-4">
               <button

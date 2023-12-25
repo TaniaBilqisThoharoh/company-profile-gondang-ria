@@ -9,11 +9,13 @@ import DropZone from "../components/DropZone";
 
 export default function Wahana() {
   const [image, setImage] = useState();
-  const [description, setDescription] = useState();
+  const [descInput, setDescInput] = useState("");
   const [imagePreviews, setImagePreviews] = useState();
   const [nameFromServer, setNameFromServer] = useState();
   const [previewsFromServer, setPreviewsFromServer] = useState();
   const [descFromServer, setDescFromServer] = useState();
+  const charLimit = 150
+  const [charCounter, setCharCounter] = useState();
   const router = useRouter();
 
   // reducer function to handle state changes
@@ -71,6 +73,7 @@ export default function Wahana() {
             setNameFromServer(item.nama);
             setPreviewsFromServer(item.gambar);
             setDescFromServer(item.deskripsi);
+            setCharCounter(charLimit - item.deskripsi.length)
           });
         })
         .catch(function (error) {
@@ -83,11 +86,6 @@ export default function Wahana() {
   useEffect(() => {
     ambilData();
   }, []);
-
-  const deskripsiHandler = (e) => {
-    e.preventDefault();
-    setDescription(e.target.value);
-  };
 
   const dataUpload = async (e) => {
     e.preventDefault();
@@ -149,6 +147,12 @@ export default function Wahana() {
       });
   };
 
+  const onCharChange = (e) => {
+    e.preventDefault();
+    setDescInput(e.target.value);
+    setCharCounter(charLimit - e.target.value.length)
+  };
+
   const customClass = "w-full h-[50vh]";
 
   return (
@@ -158,7 +162,7 @@ export default function Wahana() {
           previewsFromServer
             ? "border-[3px] border-white"
             : "bg-transparent border-0"
-        } absolute upload left-1/2 -translate-x-1/2 w-[95vw] md:w-[62vw] md:left-[35vw] md:translate-x-0 top-1/2 -translate-y-1/2 flex flex-col rounded-[25px] py-[10px] px-[10px] gap-[15px] md:py-[20px] md:px-[20px] md:gap-[25px]`}
+        } absolute upload left-1/2 -translate-x-1/2 w-[95vw] md:w-[62vw] md:left-[35vw] md:translate-x-0 top-1/2 -translate-y-[45%] flex flex-col rounded-[25px] py-[10px] px-[10px] gap-[15px] md:py-[20px] md:px-[20px] md:gap-[25px]`}
       >
         {previewsFromServer ? (
           <form
@@ -203,12 +207,14 @@ export default function Wahana() {
               </label>
 
               <textarea
-                onChange={deskripsiHandler}
+              maxLength={charLimit}
+                onChange={onCharChange}
                 className="resize-none text-ble-950 text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
                 id="editDesk"
                 name="editDesk"
                 defaultValue={descFromServer}
               ></textarea>
+              <p className={`${charCounter <= 10 ? "text-red-500" : "text-ble-950"}`}>{charCounter}/150</p>
               <button
                 className={`rounded-[10px] self-end justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all`}
                 type="submit"

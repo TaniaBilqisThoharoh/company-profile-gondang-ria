@@ -13,7 +13,10 @@ export default function EditFasilitas({ params }) {
   const [idFromServer, setIdFromServer] = useState();
   const [nameFromServer, setNameFromServer] = useState();
   const [previewsFromServer, setPreviewsFromServer] = useState();
-  const [descFromServer, setDescFromServer] = useState();
+  const [descFromServer, setDescFromServer] = useState("");
+  const [descInput, setDescInput] = useState("");
+  const charLimit = 150;
+  const [charCounter, setCharCounter] = useState();
   const router = useRouter();
 
   // reducer function to handle state changes
@@ -73,6 +76,7 @@ export default function EditFasilitas({ params }) {
               setNameFromServer(item.nama);
               setPreviewsFromServer(item.gambar);
               setDescFromServer(item.deskripsi);
+              setCharCounter(charLimit - item.deskripsi.length)
             }
           });
         })
@@ -145,6 +149,12 @@ export default function EditFasilitas({ params }) {
       });
   };
 
+  const onCharChange = (e) => {
+    e.preventDefault();
+    setDescInput(e.target.value);
+    setCharCounter(charLimit - e.target.value.length)
+  };
+
   const customClass = "w-full h-[40vh] md:h-[50vh]";
 
   return (
@@ -154,7 +164,7 @@ export default function EditFasilitas({ params }) {
           previewsFromServer
             ? "border-[3px] border-white"
             : "bg-transparent border-0 place-items-center"
-        } absolute upload left-1/2 -translate-x-1/2 w-[95vw] md:w-[62vw] md:left-[35vw] md:translate-x-0 top-1/2 -translate-y-1/2 flex flex-col rounded-[25px] py-[10px] px-[10px] gap-[15px] md:py-[20px] md:px-[20px] md:gap-[25px]`}
+        } absolute upload left-1/2 -translate-x-1/2 w-[95vw] md:w-[62vw] md:left-[35vw] md:translate-x-0 top-1/2 -translate-y-[45%] flex flex-col rounded-[25px] p-[10px] gap-[15px] md:py-[20px] md:px-[20px] md:gap-[25px]`}
       >
         {previewsFromServer ? (
           <form
@@ -190,7 +200,7 @@ export default function EditFasilitas({ params }) {
                 customClass={customClass}
               />
             </div>
-            <div className="flex flex-col gap-[10px] lg:gap-[30px] justify-between w-full lg:w-[55%]">
+            <div className="flex flex-col gap-[10px] justify-between w-full lg:w-[55%]">
               <div className="flex flex-col w-full gap-[10px]">
                 <label
                   className="text-base lg:text-3xl font-bold text-ble-950"
@@ -215,12 +225,15 @@ export default function EditFasilitas({ params }) {
                 </label>
 
                 <textarea
+                  maxLength={charLimit}
+                  onChange={onCharChange}
                   className="resize-none text-ble-950 text-base h-full border-2 border-white bg-white bg-opacity-70 p-[10px] rounded-[10px]"
                   id="editDesk"
                   name="editDesk"
                   rows={3}
                   defaultValue={descFromServer}
                 ></textarea>
+                <p className={`${charCounter <= 10 ? "text-red-500" : "text-ble-950"}`}>{charCounter}/150</p>
               </div>
               <div className="flex justify-between">
                 <button

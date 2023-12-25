@@ -140,7 +140,7 @@ export default function DataDiri() {
         <>
           <div className="z-10 w-full h-[20vw] max-h-[140px] pl-[50px] md:pl-[150px] bg-title-grey justify-start items-center gap-2 md:gap-4 inline-flex">
             <Link href={"/pesan-tiket"} onClick={() => showLoading()}>
-              <FaChevronLeft className="w-4 h-4 md:w-9 md:h-9" />
+              <FaChevronLeft className="w-5 h-5 md:w-9 md:h-9 fill-ble-950 text-ble-950" />
             </Link>
             <h1 className="text-ble-900 text-2xl md:text-5xl font-bold">
               Data Diri

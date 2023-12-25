@@ -73,9 +73,9 @@ export default function DetailFasilitas({ params }) {
                 />
                 <div
                   id="info-detail"
-                  className="z-0 absolute w-[80vw] sm:w-[50vw] md:w-[80vw] left-1/2 -translate-x-1/2 md:right-0 pr-0 md:pr-[1vw] flex justify-center items-end pb-[5vw] md:justify-end md:items-center md:pb-0 top-0 md:top-1/2 md:-translate-y-1/2 h-[75vw] sm:h-[60vw] md:h-[25vw]"
+                  className="z-0 absolute w-[80vw] sm:w-[50vw] md:w-[80vw] left-1/2 -translate-x-1/2 md:right-0 pr-0 md:pr-[1vw] flex justify-center items-end pb-[5vw] md:justify-end md:items-center md:pb-0 top-10 sm:top-14 md:top-1/2 md:-translate-y-1/2 h-[75vw] sm:h-[60vw] md:h-[25vw]"
                 >
-                  <p className="text-ble-900 text-base md:text-xl font-normal w-[80%] md:w-[30%] h-fit">
+                  <p className="text-ble-900 text-base lg:text-xl font-normal w-[80%] md:w-[30%] h-fit">
                     {descFromServer}
                   </p>
                 </div>

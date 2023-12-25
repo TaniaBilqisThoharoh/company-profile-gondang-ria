@@ -134,7 +134,7 @@ export default function Beranda() {
       });
   };
 
-  const customClass = "w-[50vw] xl:w-full h-[50vh]";
+  const customClass = "w-full h-[50vh]";
 
   return (
     <main id="admin-page" className="relative h-screen w-screen">
@@ -162,14 +162,14 @@ export default function Beranda() {
                       priority
                       className={`${
                         imagePreviews ? "hidden" : "block"
-                      } object-cover h-full rounded-[15px]`}
+                      } object-cover min-h-full h-full rounded-[15px]`}
                       src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
                       alt={`Preview`}
                     />
                     <img
                       className={`${
                         !imagePreviews ? "hidden" : "block"
-                      } object-cover rounded-[15px]`}
+                      } object-cover min-h-full rounded-[15px]`}
                       src={imagePreviews}
                       alt={`Preview`}
                     />
