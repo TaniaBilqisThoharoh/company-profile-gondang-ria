@@ -115,12 +115,12 @@ export default function DataDiri() {
   useEffect(() => {
     setJumlahTiket(sessionStorage && sessionStorage.getItem("jumlah_tiket"));
     setSubtotal(sessionStorage && sessionStorage.getItem("subtotal"));
-    const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const midtransScriptUrl = "https://app.midtrans.com/snap/snap.js";
 
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransScriptUrl;
 
-    const myMidtransClientKey = "SB-Mid-client-ue4OhOdT44EWgk4W";
+    const myMidtransClientKey = "Mid-client-8yTL-HtfpZCJz2sZ";
     scriptTag.setAttribute("data-client-key", myMidtransClientKey);
 
     document.body.appendChild(scriptTag);
