@@ -13,7 +13,7 @@ const data = [
   },
   {
     title: "Email",
-    desc: <Link href="mailto:gondangria@gmail.com">gondangria@gmail.com</Link>,
+    desc: <Link href="mailto:gondangria23@gmail.com">gondangria23@gmail.com</Link>,
   },
   { title: "Telepon", desc: "+6281229965995" },
   {
