@@ -6,6 +6,7 @@ import FormValidasi from "../components/FormValidasi";
 import { useEffect, useState } from "react";
 
 export default function Validasi() {
+  const [isLoading, setIsLoading] = useState(false);
   const [emailUser, setEmailUser] = useState()
   const router = useRouter();
 
@@ -15,6 +16,7 @@ export default function Validasi() {
 
   const cekTokenHandler = async (e) => {
     e.preventDefault()
+    setIsLoading(true)
     const formData = new FormData()
     const token = e.target[0].value;
 
@@ -30,8 +32,9 @@ export default function Validasi() {
         router.push("/2aefc34200a294a3cc7db81b43a81873/admin/ubah-password");
       })
       .catch((error) => {
-        window.alert(error.response.data.message);
+        window.alert(error);
       });
+      setIsLoading(false)
   };
 
   return (
@@ -43,7 +46,7 @@ export default function Validasi() {
         id="login-admin"
         className="rounded-[20px] border-[3px] border-white border-opacity-90 py-8 px-12 bg-white opacity-100 flex items-center justify-center w-[95vw] md:w-[70vw] lg:w-[50vw]"
       >
-        <FormValidasi cekTokenHandler={cekTokenHandler} />
+        <FormValidasi cekTokenHandler={cekTokenHandler} isLoading={isLoading} />
       </div>
     </main>
   );

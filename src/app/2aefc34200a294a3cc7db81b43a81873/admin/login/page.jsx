@@ -6,10 +6,12 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie";
 import PeekBtn from "../components/PeekBtn";
+import Spinner from "@/app/components/Spinner";
 
 export default function Login() {
   const router = useRouter();
   //define state
+  const [isLoading, setIsLoading] = useState(false);
   const [isPasswordHidden, setPasswordHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,6 +34,7 @@ export default function Login() {
   const loginHandler = async (e) => {
     e.preventDefault();
 
+    setIsLoading(true);
     //initialize formData
     const formData = new FormData();
 
@@ -60,7 +63,11 @@ export default function Login() {
         //assign error to state "validation"
         setValidation(error);
       });
+    setIsLoading(false);
   };
+
+  const customClass = "fill-ble-400 w-12 h-6";
+  const hClass = "h-full";
 
   return (
     <main
@@ -137,9 +144,9 @@ export default function Login() {
           {/* =============================================== AKHIRAN FORM PASSWORD =============================================== */}
           <button
             type="submit"
-            className="bg-ble-400 text-base md:text-2xl font-normal text-ble-50 rounded-[10px] px-[30px] py-[7px] md:px-[50px] md:py-[15px] place-self-center hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all"
+            className="bg-ble-400 text-base md:text-2xl h-fit font-normal text-ble-50 rounded-[10px] px-[30px] py-[7px] md:px-[50px] md:py-[15px] place-self-center hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all"
           >
-            Login
+            {isLoading ? <Spinner customClass={customClass} hClass={hClass} /> : "Login"}
           </button>
         </form>
       </div>

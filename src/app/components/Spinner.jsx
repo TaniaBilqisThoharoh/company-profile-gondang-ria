@@ -1,10 +1,10 @@
-export default function Spinner() {
+export default function Spinner({ customClass, hClass }) {
   return (
-    <div className="grid place-items-center w-full h-screen">
+    <div className={`grid place-items-center w-full ${hClass ? hClass : "h-screen"}`}>
       <div role="status">
         <svg
           aria-hidden="true"
-          className="inline w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-ble-400"
+          className={`inline w-20 h-20 text-gray-200 animate-spin dark:text-gray-600  ${customClass ? customClass : "w-20 h-20 fill-ble-400"}`}
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

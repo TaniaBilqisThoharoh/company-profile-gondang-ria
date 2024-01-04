@@ -1,14 +1,17 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import axios from "axios";
 import FormLupaPW from "../components/FormLupaPW";
 
 export default function LupaPassword() {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const cekEmailHandler = async (e) => {
     e.preventDefault()
+    setIsLoading(true)
     const formData = new FormData()
     const inputEmail = e.target[0].value;
 
@@ -28,8 +31,9 @@ export default function LupaPassword() {
       })
       .catch((error) => {
         //assign error to state "validation"
-        window.alert(error.response.data.message);
+        window.alert(error);
       });
+      setIsLoading(false);
   };
 
   return (
@@ -41,7 +45,7 @@ export default function LupaPassword() {
         id="login-admin"
         className="rounded-[20px] border-[3px] border-white border-opacity-90 py-8 px-12 bg-white opacity-100 flex items-center justify-center w-[95vw] md:w-[70vw] lg:w-[50vw]"
       >
-        <FormLupaPW cekEmailHandler={cekEmailHandler} />
+        <FormLupaPW cekEmailHandler={cekEmailHandler} isLoading={isLoading} />
       </div>
     </main>
   );

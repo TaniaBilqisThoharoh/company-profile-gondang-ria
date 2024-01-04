@@ -1,4 +1,8 @@
-export default function FormValidasi({ cekTokenHandler }) {
+import Spinner from "@/app/components/Spinner"
+
+export default function FormValidasi({ cekTokenHandler, isLoading }) {
+  const customClass = "fill-ble-400 w-12 h-6";
+  const hClass = "h-full";
     return  (
         <form
           onSubmit={cekTokenHandler}
@@ -34,7 +38,7 @@ export default function FormValidasi({ cekTokenHandler }) {
             type="submit"
             className="bg-ble-400 text-base font-normal text-ble-50 rounded-[10px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] place-self-center hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all"
           >
-            Konfirmasi
+            {isLoading ? <Spinner customClass={customClass} hClass={hClass} /> : "Konfirmasi"}
           </button>
         </form>
     )

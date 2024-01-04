@@ -1,9 +1,13 @@
 import { useState } from "react";
 import PeekBtn from "./PeekBtn";
+import Spinner from "@/app/components/Spinner";
 
-export default function FormUbahPW({ passBaruHandler }) {
+export default function FormUbahPW({ passBaruHandler, isLoading }) {
   const [isPasswordHidden, setPasswordHidden] = useState(true);
   const [isConfPasswordHidden, setConfPasswordHidden] = useState(true);
+
+  const customClass = "fill-ble-400 w-12 h-6";
+  const hClass = "h-full";
 
   return (
     <form
@@ -14,7 +18,10 @@ export default function FormUbahPW({ passBaruHandler }) {
         <h3 className="text-ble-950 text-xl md:text-4xl font-black">
           Buat password baru
         </h3>
-        <p>Harap masukkan password baru Anda! Pastikan password yang dimasukkan sama!</p>
+        <p>
+          Harap masukkan password baru Anda! Pastikan password yang dimasukkan
+          sama!
+        </p>
         <p></p>
       </div>
       <div className="grid">
@@ -31,6 +38,7 @@ export default function FormUbahPW({ passBaruHandler }) {
               setPasswordHidden={setPasswordHidden}
             />
             <input
+              required
               type={isPasswordHidden ? "password" : "text"}
               name="password"
               /* onInput={(e) => setPassword(e.target.value)} */
@@ -53,6 +61,7 @@ export default function FormUbahPW({ passBaruHandler }) {
               setPasswordHidden={setConfPasswordHidden}
             />
             <input
+              required
               type={isConfPasswordHidden ? "password" : "text"}
               name="confPassword"
               /* onInput={(e) => setConfPassword(e.target.value)} */
@@ -65,7 +74,7 @@ export default function FormUbahPW({ passBaruHandler }) {
         type="submit"
         className="bg-ble-400 text-base font-normal text-ble-50 rounded-[10px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] place-self-center hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all"
       >
-        Konfirmasi
+        {isLoading ? <Spinner customClass={customClass} hClass={hClass} /> : "Konfirmasi"}
       </button>
     </form>
   );
