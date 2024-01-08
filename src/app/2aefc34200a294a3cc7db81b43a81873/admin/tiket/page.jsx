@@ -9,6 +9,7 @@ export default function Tiket() {
   const [dataFromServer, setDataFromServer] = useState();
   const router = useRouter();
 
+  /* Function ambildata berfungsi untuk mengambil data harga tiket */
   const ambilData = async () => {
     //check token
     if (!Cookies.get("token")) {
@@ -38,6 +39,7 @@ export default function Tiket() {
     ambilData();
   }, []);
 
+  /* Function tiketupload berfungsi untuk mengupdate harga tiket */
   const tiketUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -108,6 +110,7 @@ export default function Tiket() {
               </div>
             )}
           </div>
+          {/* ============================UBAH HARGA TIKET========================================================================== */}
           <div className="flex flex-col gap-[10px] lg:gap-[30px] justify-between w-full">
             <label for="editHarga" className="text-lg md:text-3xl text-ble-950">
               Ubah Harga Tiket
@@ -129,6 +132,7 @@ export default function Tiket() {
                 onWheel={(e) => e.target.blur()}
               />
             </div>
+            {/* ======================================================================================================================= */}
             <button
               className={`rounded-[10px] self-end justify-self-end bg-ble-600 hover:bg-ble-500 active:bg-ble-700 active:scale-95 transition-all text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
               type="submit"

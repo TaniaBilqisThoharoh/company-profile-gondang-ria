@@ -18,7 +18,7 @@ export default function Wahana() {
   const [charCounter, setCharCounter] = useState();
   const router = useRouter();
 
-  // reducer function to handle state changes
+  // Function reducer berfungsi untuk menangani perubahan state
   const reducer = (state, action) => {
     switch (action.type) {
       case "SET_IN_DROP_ZONE":
@@ -52,6 +52,7 @@ export default function Wahana() {
     }
   });
 
+  /* Function ambildata berfungsi untuk mengambil data gambar dan deskripsi wahana */
   const ambilData = async () => {
     //check token
     if (!Cookies.get("token")) {
@@ -87,6 +88,7 @@ export default function Wahana() {
     ambilData();
   }, []);
 
+  /* Function dataupload berfungsi untuk mengupload data gambar dan deskripsi wahana */
   const dataUpload = async (e) => {
     e.preventDefault();
 
@@ -147,6 +149,7 @@ export default function Wahana() {
       });
   };
 
+  /* Function oncharchange berfungsi untuk mendeteksi jumlah karakter  */
   const onCharChange = (e) => {
     e.preventDefault();
     setDescInput(e.target.value);
@@ -199,6 +202,7 @@ export default function Wahana() {
               />
             </div>
             <div className="flex flex-col gap-[10px] lg:gap-[30px] justify-between w-full lg:w-[55%]">
+              {/* ===========================EDIT DESKRIPSI================================================================================= */}
               <label
                 htmlFor="editDesk"
                 className="text-lg lg:text-4xl font-bold text-ble-950"
@@ -215,12 +219,15 @@ export default function Wahana() {
                 defaultValue={descFromServer}
               ></textarea>
               <p className={`${charCounter <= 10 ? "text-red-500" : "text-ble-950"}`}>{charCounter}/150</p>
+              {/* ============================================================================================================================== */}
+              {/* ============================================================SIMPAN============================================================ */}
               <button
                 className={`rounded-[10px] self-end justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all`}
                 type="submit"
               >
                 Simpan
               </button>
+              {/* =============================================================================================================================== */}
             </div>
           </form>
         ) : (

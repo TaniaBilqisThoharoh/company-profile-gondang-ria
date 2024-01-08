@@ -14,6 +14,7 @@ export default function UbahPassword() {
     setEmailUser(sessionStorage && sessionStorage.getItem("email"))
   }, [])
 
+  /* Function passbaruhandler berfungsi untuk menangani password baru yang diinputkan oleh admin */
   const passBaruHandler = async (e) => {
     e.preventDefault()
     setIsLoading(true)

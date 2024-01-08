@@ -8,17 +8,48 @@ import { useAppContext } from "../context/AppWrapper";
 import Spinner from "../components/Spinner";
 
 export default function PesanTiket() {
-  const { isLoading, showLoading, hideLoading, isFetching, showFetching, hideFetching } = useAppContext();
+  const {
+    isLoading,
+    showLoading,
+    hideLoading,
+    isFetching,
+    showFetching,
+    hideFetching,
+  } = useAppContext();
   const [counter, setCounter] = useState(1);
   const [subtotal, setSubtotal] = useState();
   const [disabled, setDisabled] = useState(false);
   const [dataFromServer, setDataFromServer] = useState();
 
+  /* Function ambildata berfungsi untuk mengambil data harga tiket */
   const ambilData = async () => {
-    showFetching()
+    showFetching();
     const url = "https://newapi.gondangria.com/api/harga_tiket";
 
-    await axios
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((tiketData) => {
+        tiketData.data.map((item) => {
+          setDataFromServer(parseInt(item.harga_tiket));
+          setSubtotal(
+            new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(counter * parseInt(item.harga_tiket))
+          );
+        });
+      })
+      .catch((error) => {
+        window.alert(error);
+        console.error("Error:", error);
+      });
+
+    /* await axios
       .get(url)
       .then(function (response) {
         setDataFromServer(parseInt(response.data.data[0].harga_tiket));
@@ -31,8 +62,8 @@ export default function PesanTiket() {
       })
       .catch(function (error) {
         window.alert(error);
-      });
-      hideFetching()
+      }); */
+    hideFetching();
   };
 
   useEffect(() => {

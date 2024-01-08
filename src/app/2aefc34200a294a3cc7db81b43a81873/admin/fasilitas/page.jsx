@@ -13,6 +13,7 @@ export default function Fasilitas() {
 
   const router = useRouter();
 
+  /* Function ambildata berfungsi untuk mengambil data seluruh fasilitas yang ada di database */
   const ambilData = async () => {
     //check token
     if (!Cookies.get("token")) {

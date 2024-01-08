@@ -10,18 +10,33 @@ export default function Fasilitas() {
   const { isLoading, hideLoading, isFetching, showFetching, hideFetching } = useAppContext();
   const [dataFromServer, setDataFromServer] = useState();
 
+  /* Function ambildata berfungsi untuk mengambil data id, nama, gambar, deskripsi fasilitas */
   const ambilData = async () => {
     showFetching()
     const url = "https://newapi.gondangria.com/api/fasilitas";
 
-    await axios
+    fetch(url).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(fasilitasData => {
+      setDataFromServer(fasilitasData);
+    })
+    .catch(error => {
+      window.alert(error);
+      console.error('Error:', error);
+    });
+
+    /* await axios
       .get(url)
       .then(function (response) {
         setDataFromServer(response.data);
       })
       .catch(function (error) {
         window.alert(error.message);
-      });
+      }); */
       hideFetching()
   };
 

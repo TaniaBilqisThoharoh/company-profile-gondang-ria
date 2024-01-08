@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import DropZone from "../../../components/DropZone";
 
+/* Ini parent function nama function edit fasilitas */
 export default function EditFasilitas({ params }) {
   const [image, setImage] = useState();
   const [imagePreviews, setImagePreviews] = useState();
@@ -19,7 +20,7 @@ export default function EditFasilitas({ params }) {
   const [charCounter, setCharCounter] = useState();
   const router = useRouter();
 
-  // reducer function to handle state changes
+  // ini reducer function untuk menangani perubahan state 
   const reducer = (state, action) => {
     switch (action.type) {
       case "SET_IN_DROP_ZONE":
@@ -53,6 +54,7 @@ export default function EditFasilitas({ params }) {
     }
   });
 
+/* Function ambildata yang digunakan untuk mengambil data gondangria datanya berupa gambar, deskripsi, nama fasilitas */
   const ambilData = async () => {
     //check token
     if (!Cookies.get("token")) {
@@ -89,7 +91,7 @@ export default function EditFasilitas({ params }) {
   useEffect(() => {
     ambilData();
   }, []);
-
+/* function dataupload digunakan untuk mengupload data gambar, nama, dekripsi fasilitas */
   const dataUpload = async (e) => {
     e.preventDefault();
 
@@ -118,6 +120,7 @@ export default function EditFasilitas({ params }) {
       });
   };
 
+  /* Function batalhandler menangani batal edit fasilitas */
   const batalHandler = () => {
     try {
       window.history.back();
@@ -125,7 +128,7 @@ export default function EditFasilitas({ params }) {
       router.push("/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas");
     }
   };
-
+/* Function deletefas berfungsi untuk menghapus fasilitas */
   const deleteFas = async () => {
     const config = {
       headers: {
@@ -148,7 +151,7 @@ export default function EditFasilitas({ params }) {
         window.alert(`${err}`);
       });
   };
-
+/* Function oncharchange berfungsi untuk mendeteksi jumlah karakter */
   const onCharChange = (e) => {
     e.preventDefault();
     setDescInput(e.target.value);
@@ -201,6 +204,7 @@ export default function EditFasilitas({ params }) {
               />
             </div>
             <div className="flex flex-col gap-[10px] justify-between w-full lg:w-[55%]">
+              {/* ==============================================================EDIT NAMA==================================================================== */}
               <div className="flex flex-col w-full gap-[10px]">
                 <label
                   className="text-base lg:text-3xl font-bold text-ble-950"
@@ -216,6 +220,7 @@ export default function EditFasilitas({ params }) {
                   defaultValue={nameFromServer}
                 />
               </div>
+              {/* =========================================================EDIT DESKRIPSI================================================================ */}
               <div className="flex flex-col w-full gap-[10px]">
                 <label
                   htmlFor="editDesk"
@@ -235,7 +240,9 @@ export default function EditFasilitas({ params }) {
                 ></textarea>
                 <p className={`${charCounter <= 10 ? "text-red-500" : "text-ble-950"}`}>{charCounter}/150</p>
               </div>
+              {/* ================================================================================================================================================= */}
               <div className="flex justify-between">
+                {/* ==================================================================BUTTON BATAL============================================================================================================== */}
                 <button
                   onClick={batalHandler}
                   className={`rounded-[10px] bg-ble-950 text-red-50 hover:bg-ble-800 active:bg-ble-700 active:scale-95 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-lg md:py-[5px] md:px-[15px] xl:text-xl xl:py-[10px] xl:px-[25px] transition-all`}
@@ -243,7 +250,9 @@ export default function EditFasilitas({ params }) {
                 >
                   Batal
                 </button>
+                {/* ================================================================================================================================================================ */}
                 <div className="self-end justify-self-end flex gap-4">
+                  {/* ================================================================BUTTON HAPUS================================================================ */}
                   <button
                     onClick={deleteFas}
                     className={`rounded-[10px] bg-red-600 text-red-50 hover:bg-red-700 active:bg-red-500 active:scale-95 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-lg md:py-[5px] md:px-[15px] xl:text-xl xl:py-[10px] xl:px-[25px] transition-all`}
@@ -251,12 +260,15 @@ export default function EditFasilitas({ params }) {
                   >
                     Hapus
                   </button>
+                  {/* =============================================================================================================================================== */}
+                  {/* ================================================================BUTTON SIMPAN================================================================================================================= */}
                   <button
                     className={`rounded-[10px] bg-ble-600 text-ble-50 hover:bg-ble-700 active:bg-ble-500 active:scale-95 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-lg md:py-[5px] md:px-[15px] xl:text-xl xl:py-[10px] xl:px-[25px] transition-all`}
                     type="submit"
                   >
                     Simpan
                   </button>
+                  {/* ================================================================================================================================================= */}
                 </div>
               </div>
             </div>

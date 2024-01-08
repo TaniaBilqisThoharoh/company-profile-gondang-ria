@@ -12,15 +12,33 @@ export default function DetailFasilitas({ params }) {
   const [previewsFromServer, setPreviewsFromServer] = useState();
   const [descFromServer, setDescFromServer] = useState();
 
+  /* Function ambildata berfungsi untuk mengambil data id, nama, gambar dan deskripsi detail fasilitas */
   const ambilData = async () => {
     showFetching()
-    const config = {
-      headers: { Authorization: `Bearer ${Cookies.get("token")}` },
-    };
     const url = "https://newapi.gondangria.com/api/fasilitas";
 
-    await axios
-      .get(url, config)
+    fetch(url).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(detailFasData => {
+      detailFasData.filter((item) => {
+        if (item.id == params.id) {
+          setNameFromServer(item.nama);
+          setPreviewsFromServer(item.gambar);
+          setDescFromServer(item.deskripsi);
+        }
+      });
+    })
+    .catch(error => {
+      window.alert(error);
+      console.error('Error:', error);
+    });
+
+    /* await axios
+      .get(url)
       .then(function (response) {
         response.data.filter((item) => {
           if (item.id == params.id) {
@@ -32,7 +50,7 @@ export default function DetailFasilitas({ params }) {
       })
       .catch(function (error) {
         window.alert(error);
-      });
+      }); */
       hideFetching()
   };
 

@@ -9,6 +9,7 @@ export default function LupaPassword() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  /* Function cekemailhandler berfungsi untuk mengecek email apakah terdaftar di database atau tidak */
   const cekEmailHandler = async (e) => {
     e.preventDefault()
     setIsLoading(true)

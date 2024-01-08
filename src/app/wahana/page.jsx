@@ -20,18 +20,37 @@ export default function Wahana() {
   /* Fungsi biasa dieksekusi secara berurutan, mengembalikan nilai secara langsung,
   sementara async function menggunakan kata kunci `async`, memungkinkan operasi-asinkron tanpa menunggu selesai,
   mengembalikan promise, dan menggunakan `await` untuk menangani operasi-asinkron secara bersih. */
+  
+  /* Function ambildata berfungsi untuk mengambil data berupa nama, gambar, dan deskripsi wahana */
   const ambilData = async () => {
     showFetching();
     const url = "https://newapi.gondangria.com/api/wahana";
+    
+    fetch(url).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(wahanaData => {
+      wahanaData.map((item) => {
+        console.log('User Data:', item);
+        setDataFromServer(item)
+      })
+    })
+    .catch(error => {
+      window.alert(error);
+      console.error('Error:', error);
+    });
 
-    await axios
+    /* await axios
       .get(url)
       .then(function (response) {
         response.data.map((item) => setDataFromServer(item));
       })
       .catch(function (error) {
         window.alert(error.message);
-      });
+      }); */
     hideFetching();
   };
 

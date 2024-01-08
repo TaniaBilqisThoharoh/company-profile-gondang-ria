@@ -14,7 +14,7 @@ export default function TambahFasilitas() {
   const [charCounter, setCharCounter] = useState(charLimit);
   const router = useRouter();
 
-  // reducer function to handle state changes
+  // Function reducer berfungsi untuk menangani perubahan state
   const reducer = (state, action) => {
     switch (action.type) {
       case "SET_IN_DROP_ZONE":
@@ -48,6 +48,7 @@ export default function TambahFasilitas() {
     }
   });
 
+  /* Function cekcookies berfungsi untuk mengecek token ontentikasi admin di cookies apakah ada atau tidak ada */
   const cekCookies = async () => {
     if (!Cookies.get("token")) {
       //redirect to login page
@@ -59,6 +60,7 @@ export default function TambahFasilitas() {
     cekCookies();
   }, []);
 
+  /* Function batalhandler berfungsi untuk membatalkan proses tambah fasilitas */
   const batalHandler = () => {
     try {
       window.history.back();
@@ -67,6 +69,7 @@ export default function TambahFasilitas() {
     }
   };
 
+/* Function dataupload yang berfungsi untuk mengupload data gambar, nama, deskripsi fasilitas */
   const dataUpload = async (e) => {
     e.preventDefault();
 
@@ -95,6 +98,7 @@ export default function TambahFasilitas() {
       });
   };
 
+  /* Function oncharchange mendeteksi jumlah karakter */
   const onCharChange = (e) => {
     e.preventDefault();
     setDescInput(e.target.value);
@@ -129,6 +133,7 @@ export default function TambahFasilitas() {
             />
           </div>
           <div className="flex flex-col gap-[10px] lg:gap-[30px] justify-between w-full lg:w-[55%]">
+            {/* ===============================================EDIT NAMA========================================================================== */}
             <div className="flex flex-col w-full gap-[10px]">
               <label
                 className="text-base lg:text-3xl font-bold text-ble-950"
@@ -145,6 +150,8 @@ export default function TambahFasilitas() {
                 placeholder={"Nama fasilitas"}
               />
             </div>
+            {/* ================================================================================================================================== */}
+            {/* ===========================================================EDIT DESKRIPSI========================================================== */}
             <div className="flex flex-col w-full gap-[10px]">
               <label
                 htmlFor="editDesk"
@@ -163,7 +170,9 @@ export default function TambahFasilitas() {
               ></textarea>
               <p className={`${charCounter <= 10 ? "text-red-500" : "text-ble-950"}`}>{charCounter}/150</p>
             </div>
+            {/* ========================================================================================================================================= */}
             <div className="self-end justify-self-end flex gap-4">
+            {/* =======================================================BATAL============================================================================= */}
               <button
                 onClick={batalHandler}
                 className={`rounded-[10px] bg-ble-950 text-red-50 hover:bg-ble-800 active:bg-ble-700 active:scale-95 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px] transition-all`}
@@ -171,12 +180,15 @@ export default function TambahFasilitas() {
               >
                 Batal
               </button>
+              {/* ========================================================================================================================================= */}
+              {/* =======================================================SIMPAN============================================================================ */}
               <button
                 className={`rounded-[10px] hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all self-end justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
                 type="submit"
               >
                 Simpan
               </button>
+              {/* ========================================================================================================================================== */}
             </div>
           </div>
         </form>

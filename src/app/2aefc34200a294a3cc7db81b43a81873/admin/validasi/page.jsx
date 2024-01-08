@@ -14,6 +14,7 @@ export default function Validasi() {
     setEmailUser(sessionStorage && sessionStorage.getItem("email"))
   }, [])
 
+  /* function cektokenhandler berfungsi untuk mengecek token yang diinput dengan token yang ada di database */
   const cekTokenHandler = async (e) => {
     e.preventDefault()
     setIsLoading(true)

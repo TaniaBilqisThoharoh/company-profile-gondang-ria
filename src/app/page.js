@@ -24,13 +24,30 @@ export default function Home() {
   /* Fungsi biasa dieksekusi secara berurutan, mengembalikan nilai secara langsung,
   sementara async function menggunakan kata kunci `async`, memungkinkan operasi-asinkron tanpa menunggu selesai,
   mengembalikan promise, dan menggunakan `await` untuk menangani operasi-asinkron secara bersih. */
+  
+  /* Function ambildata berfungsi untuk mengambil data beranda berupa gambar hero */
   const ambilData = async () => {
     showFetching();
     // Ini mendeklarasikan variabel url dengan value endpoint API beranda
     const url = "https://newapi.gondangria.com/api/beranda";
 
+    fetch(url).then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(heroData => {
+      setPreviewsFromServer(heroData.hero)
+      console.log('User Data:', heroData);
+    })
+    .catch(error => {
+      window.alert(error);
+      console.error('Error:', error);
+    });
+
     // Memanggil axios dengan method GET
-    await axios
+    /* await axios
       .get(url)
       .then(function (response) {
         // Memanggil setPreviewsFromServer() untuk memasukkan nilai yang didapat dari response
@@ -42,7 +59,7 @@ export default function Home() {
         // Jika terjadi error maka fungsi ini dipanggil
         // Ini memanggil fungsi alert dan menampilkan pesan error dari parameter error
         window.alert(error);
-      });
+      }); */
     hideFetching();
   };
 

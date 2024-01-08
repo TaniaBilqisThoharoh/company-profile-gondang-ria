@@ -62,7 +62,7 @@ export default function FasilitasSec() {
           )}
         </div>
       </div>
-      <div className="absolute mx-auto md:right-0 top-0 w-full md:w-[57vw] h-[46vw]">
+      <div className="absolute mx-auto md:right-0 top-0 w-full md:w-[57vw] h-[46vw] overflow-hidden">
         <div
           id="main-bg-ble-400"
           className="absolute w-[50vw] h-[50vw] md:w-[90%] md:h-[90%] -right-0 md:-right-[14.7%] -top-[11.4%]"

@@ -17,6 +17,8 @@ export default function DataDiri() {
 
   const router = useRouter();
 
+  /* Function disabledate berfungsi untuk menonaktifkan tanggal sesudah tanggal hari ini dan 
+  pada hari jumat serta menonaktifkan hari ini jika melewati jam operasional yaitu pukul 17.00 sore */
   const disabledDate = (current) => {
     let date = new Date();
     const jam = new Date().getHours();
@@ -30,6 +32,7 @@ export default function DataDiri() {
     }
   };
 
+  /* Function kirimemail berfungsi untuk mengirim tiket melalui email */
   const kirimEmail = async (order_id) => {
     const urlKirimTiket = `https://newapi.gondangria.com/send-mail-ticket/${
       order_id && order_id
@@ -38,6 +41,7 @@ export default function DataDiri() {
     await fetch(urlKirimTiket, { mode: "no-cors" });
   };
 
+  /* Function cobabayar berfungsi untuk memanggil fungsi pay dari midtrans untuk melakukan transaksi */
   const cobaBayar = (token, order_id) => {
     snap.pay(token, {
       // Optional
@@ -59,6 +63,7 @@ export default function DataDiri() {
     });
   };
 
+  /* Function strodatadiri berfungsi untuk menyimpan data diri pengunjung di database */
   const storeDataDiri = async (formData, order_id) => {
     formData.append("order_id", order_id);
     const urlPengunjung = "https://newapi.gondangria.com/api/pengunjung";
@@ -72,6 +77,8 @@ export default function DataDiri() {
       });
   };
 
+  /* Function dataupload berfungsi untuk membuat token pembayaran dari midtrans dengan cara mengupload data diri, 
+  jumlah tiket, dan subtotal untuk menguplaod ke database */
   const dataUpload = async (e) => {
     e.preventDefault();
     showFetching();
@@ -89,6 +96,27 @@ export default function DataDiri() {
     formData.append("tanggal", tgl);
 
     const urlMidtrans = "https://newapi.gondangria.com/api/checkout-midtrans";
+
+    /* fetch(urlMidtrans, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(newUserData => {
+        
+        console.log('New User Data:', newUserData);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      }); */
 
     await axios
       .post(urlMidtrans, formData)

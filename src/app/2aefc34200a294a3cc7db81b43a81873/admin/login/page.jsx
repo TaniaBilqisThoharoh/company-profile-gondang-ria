@@ -19,6 +19,7 @@ export default function Login() {
   //define state validation
   const [validation, setValidation] = useState([]);
 
+  /* Function cekcookies berfungsi untuk mengecek token ontentikasi admin di cookies apakah ada atau tidak ada */
   const cekCookies = async () => {
     if (Cookies.get("token")) {
       //redirect to transaksi page
@@ -30,7 +31,7 @@ export default function Login() {
     cekCookies();
   }, []);
 
-  //function "loginHanlder"
+  //function "loginHanlder" berfungsi untuk menangani login
   const loginHandler = async (e) => {
     e.preventDefault();
 

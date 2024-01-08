@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 export default function Transaksi() {
   const router = useRouter();
 
+  /* Function cekcookies berfungsi untuk mengecek token ontentikasi admin di cookies apakah ada atau tidak ada */
   const cekCookies = async () => {
     if (!Cookies.get("token")) {
       //redirect to login page

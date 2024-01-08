@@ -13,7 +13,7 @@ export default function Beranda() {
   const [previewsFromServer, setPreviewsFromServer] = useState();
   const router = useRouter();
 
-  // reducer function to handle state changes
+  // function reducer untuk menangani perubahan state
   const reducer = (state, action) => {
     switch (action.type) {
       case "SET_IN_DROP_ZONE":
@@ -47,6 +47,7 @@ export default function Beranda() {
     }
   });
 
+  /* Function ambildata berfungsi untuk mengambil data gambar hero dari database */
   const ambilData = async () => {
     //check token
     if (!Cookies.get("token")) {
@@ -77,7 +78,7 @@ export default function Beranda() {
     ambilData();
   }, []);
 
-  // multile image upload
+  // Function imageupload berfungsi untuk mengupload gambar
   const imageUpload = async (e) => {
     e.preventDefault();
 
@@ -183,12 +184,14 @@ export default function Beranda() {
                   customClass={customClass}
                 />
               </div>
+              {/* ================================================TOMBOL SIMPAN================================================================================== */}
               <button
                 className={`hover:bg-ble-500 active:bg-ble-600 active:scale-95 transition-all rounded-[10px] justify-self-end bg-ble-600 text-ble-50 text-base max-w-[140px] max-h-[50px] py-[5px] px-[15px] md:text-xl md:py-[10px] md:px-[25px]`}
                 type="submit"
               >
                 Simpan
               </button>
+              {/* ================================================================================================================================================ */}
             </form>
           </>
         ) : (
