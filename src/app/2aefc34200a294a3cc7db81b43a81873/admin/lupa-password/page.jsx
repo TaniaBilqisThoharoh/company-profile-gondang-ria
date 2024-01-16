@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
 import FormLupaPW from "../components/FormLupaPW";
+import { baseApi } from "@/app/context/ApiUrl";
 
 export default function LupaPassword() {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,8 +20,7 @@ export default function LupaPassword() {
     //append data to formData
     formData.append("email", inputEmail);
 
-    /* const url = `http://127.0.0.1:8000/api/password/forgot_password` */
-    const url = `https://newapi.gondangria.com/api/password/forgot_password`
+    const url = `${baseApi}/password/forgot_password`
 
     //send data to server
     await axios

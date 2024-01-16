@@ -15,6 +15,7 @@ import Image from "next/image";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useAppContext } from "../context/AppWrapper";
+import { baseApi } from "../context/ApiUrl";
 
 const baseAdminURL = "/2aefc34200a294a3cc7db81b43a81873/admin";
 const adminPathTransaksi = `https://dashboard.midtrans.com/beta/transactions`;
@@ -64,7 +65,7 @@ export default function Sidebar() {
     };
 
     await axios
-      .post(`https://newapi.gondangria.com/api/logout`, formData, config)
+      .post(`${baseApi}/logout`, formData, config)
       .then((response) => {
         window.alert(response.data.message);
 

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAppContext } from "../context/AppWrapper";
 import Spinner from "../components/Spinner";
+import { baseApi, baseUrl } from "../context/ApiUrl";
 
 // Halaman Wahana
 export default function Wahana() {
@@ -24,9 +25,9 @@ export default function Wahana() {
   /* Function ambildata berfungsi untuk mengambil data berupa nama, gambar, dan deskripsi wahana */
   const ambilData = async () => {
     showFetching();
-    const url = "https://newapi.gondangria.com/api/wahana";
+    const url = `${baseApi}/wahana`;
     
-    fetch(url).then(response => {
+    /* fetch(url).then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -41,16 +42,16 @@ export default function Wahana() {
     .catch(error => {
       window.alert(error);
       console.error('Error:', error);
-    });
+    }); */
 
-    /* await axios
+    await axios
       .get(url)
       .then(function (response) {
         response.data.map((item) => setDataFromServer(item));
       })
       .catch(function (error) {
         window.alert(error.message);
-      }); */
+      });
     hideFetching();
   };
 
@@ -87,11 +88,12 @@ export default function Wahana() {
               <div className="z-20 w-[90vw] h-[80vh] md:h-[60vh] flex items-center relative">
                 <img
                   id="img-detail"
-                  src={`https://newapi.gondangria.com/images/${dataFromServer.gambar}`}
+                  src={`${baseUrl}/images/${dataFromServer.gambar}`}
                   alt="Wahana Photo"
                   className="z-10 rounded-[25px] aspect-[17/9] w-[90%] md:w-[65%] absolute right-[50%] translate-x-1/2 top-0 md:left-0 md:translate-x-0 md:top-1/2 md:-translate-y-1/2"
                 />
 
+{/* Ubah tata letak deskripsi */}
                 <div
                   id="info-detail"
                   className="z-0 absolute w-[80vw] sm:w-[50vw] md:w-[80vw] left-1/2 -translate-x-1/2 md:right-0 pr-0 md:pr-[1vw] flex justify-center items-end pb-[5vw] md:justify-end md:items-center md:pb-0 top-10 sm:top-14 md:top-1/2 md:-translate-y-1/2 h-[75vw] sm:h-[60vw] md:h-[25vw]"

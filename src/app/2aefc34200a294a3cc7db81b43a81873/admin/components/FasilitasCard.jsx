@@ -1,3 +1,4 @@
+import { baseUrl } from "@/app/context/ApiUrl";
 import Link from "next/link";
 
 export default function FasilitasCard({ id, name, image }) {
@@ -7,7 +8,7 @@ export default function FasilitasCard({ id, name, image }) {
             
               <img
                 className="object-cover w-full h-[170px] group-hover:opacity-80 transition-all"
-                src={`https://newapi.gondangria.com/images/${image}`}
+                src={`${baseUrl}/images/${image}`}
                 alt={name}
               />
             

@@ -1,10 +1,11 @@
 // "use client" menandakan bahwa file ini dijalankan di client side (browser pengguna)
 "use client";
 
-// Ini adalah daftar import
+// Ini adalah daftar import yang dibutuhkan untuk halaman ini
 import { useState, useEffect } from "react";
 import { BarLoader } from "react-spinners";
 import axios from "axios";
+import { baseApi, baseUrl } from "./context/ApiUrl";
 import WahanaSec from "./components/beranda/WahanaSec";
 import FasilitasSec from "./components/beranda/FasilitasSec";
 import BottomSec from "./components/beranda/BottomSec";
@@ -24,14 +25,16 @@ export default function Home() {
   /* Fungsi biasa dieksekusi secara berurutan, mengembalikan nilai secara langsung,
   sementara async function menggunakan kata kunci `async`, memungkinkan operasi-asinkron tanpa menunggu selesai,
   mengembalikan promise, dan menggunakan `await` untuk menangani operasi-asinkron secara bersih. */
-  
+
   /* Function ambildata berfungsi untuk mengambil data beranda berupa gambar hero */
   const ambilData = async () => {
+    /* ini memanggil function showfetching dari useappcontext, fungsinya adalah untuk memberi tahu website bahwa
+    ketika ambil data dari server maka statenya adalah loading */
     showFetching();
     // Ini mendeklarasikan variabel url dengan value endpoint API beranda
-    const url = "https://newapi.gondangria.com/api/beranda";
+    const url = `${baseApi}/beranda`;
 
-    fetch(url).then(response => {
+    /* fetch(url).then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -44,10 +47,10 @@ export default function Home() {
     .catch(error => {
       window.alert(error);
       console.error('Error:', error);
-    });
+    }); */
 
     // Memanggil axios dengan method GET
-    /* await axios
+    await axios
       .get(url)
       .then(function (response) {
         // Memanggil setPreviewsFromServer() untuk memasukkan nilai yang didapat dari response
@@ -58,8 +61,9 @@ export default function Home() {
       .catch(function (error) {
         // Jika terjadi error maka fungsi ini dipanggil
         // Ini memanggil fungsi alert dan menampilkan pesan error dari parameter error
+        console.log(error)
         window.alert(error);
-      }); */
+      });
     hideFetching();
   };
 
@@ -94,7 +98,7 @@ export default function Home() {
             // Jika sudah maka mengembalikan tag img ini
             <img
               className="max-w-screen h-[52vw]"
-              src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
+              src={`${baseUrl}/images/${previewsFromServer}`}
               alt="Gondang Ria Photo"
             />
           ) : (

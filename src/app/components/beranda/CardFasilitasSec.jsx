@@ -3,12 +3,13 @@
 import FasCardComp from "../FasCardComp";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { baseApi } from "@/app/context/ApiUrl";
 
 export default function CardFasilitasSec() {
   const [dataFromServer, setDataFromServer] = useState();
 
   const ambilData = async () => {
-    const url = "https://newapi.gondangria.com/api/fasilitas";
+    const url = `${baseApi}/fasilitas`;
 
     await axios
       .get(url)

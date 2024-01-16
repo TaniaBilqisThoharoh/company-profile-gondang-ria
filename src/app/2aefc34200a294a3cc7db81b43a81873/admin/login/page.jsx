@@ -7,6 +7,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import PeekBtn from "../components/PeekBtn";
 import Spinner from "@/app/components/Spinner";
+import { baseApi } from "@/app/context/ApiUrl";
 
 export default function Login() {
   const router = useRouter();
@@ -43,9 +44,8 @@ export default function Login() {
     formData.append("email", email);
     formData.append("password", password);
 
-    const url = `https://newapi.gondangria.com/api/login`;
-    /* const url = "http://127.0.0.1:8000/api/login" */
-
+    const url = `${baseApi}/login`;
+    
     //send data to server
     await axios
       .post(url, formData)

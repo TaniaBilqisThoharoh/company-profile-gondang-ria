@@ -4,13 +4,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useAppContext } from "@/app/context/AppWrapper";
+import { baseApi, baseUrl } from "@/app/context/ApiUrl";
 
 export default function WahanaSec() {
   const { showLoading } = useAppContext();
   const [previewsFromServer, setPreviewsFromServer] = useState();
 
+  /* Function ambil data berfungsi untuk mengambil data wahana */
   const ambilData = async () => {
-    const url = "https://newapi.gondangria.com/api/wahana";
+    const url = `${baseApi}/wahana`;
 
     await axios
       .get(url)
@@ -37,7 +39,7 @@ export default function WahanaSec() {
             {previewsFromServer ? (
               <img
                 className="object-cover w-[25vw] h-[25vw] max-w-[21.875rem] max-h-[21.875rem] rounded-full aspect-square"
-                src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
+                src={`${baseUrl}/images/${previewsFromServer}`}
                 alt="Wahana Photo"
               />
             ) : (

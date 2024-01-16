@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { useAppContext } from "@/app/context/AppWrapper";
 import Spinner from "@/app/components/Spinner";
+import { baseApi, baseUrl } from "@/app/context/ApiUrl";
 
 export default function DetailFasilitas({ params }) {
   const { isLoading, hideLoading, isFetching, showFetching, hideFetching } = useAppContext();
@@ -15,9 +16,9 @@ export default function DetailFasilitas({ params }) {
   /* Function ambildata berfungsi untuk mengambil data id, nama, gambar dan deskripsi detail fasilitas */
   const ambilData = async () => {
     showFetching()
-    const url = "https://newapi.gondangria.com/api/fasilitas";
+    const url = `${baseApi}/fasilitas`;
 
-    fetch(url).then(response => {
+    /* fetch(url).then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -35,9 +36,9 @@ export default function DetailFasilitas({ params }) {
     .catch(error => {
       window.alert(error);
       console.error('Error:', error);
-    });
+    }); */
 
-    /* await axios
+    await axios
       .get(url)
       .then(function (response) {
         response.data.filter((item) => {
@@ -50,7 +51,7 @@ export default function DetailFasilitas({ params }) {
       })
       .catch(function (error) {
         window.alert(error);
-      }); */
+      });
       hideFetching()
   };
 
@@ -85,11 +86,12 @@ export default function DetailFasilitas({ params }) {
               <div className="z-20 w-[90vw] h-[80vh] md:h-[60vh] flex items-center relative">
                 <img
                   id="img-detail"
-                  src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
+                  src={`${baseUrl}/images/${previewsFromServer}`}
                   alt=""
                   className="z-10 rounded-[25px] aspect-[17/9] w-[90%] md:w-[65%] absolute right-[50%] translate-x-1/2 top-0 md:left-0 md:translate-x-0 md:top-1/2 md:-translate-y-1/2"
                 />
                 <div
+                /* Ubah deskripsi fasilitas */
                   id="info-detail"
                   className="z-0 absolute w-[80vw] sm:w-[50vw] md:w-[80vw] left-1/2 -translate-x-1/2 md:right-0 pr-0 md:pr-[1vw] flex justify-center items-end pb-[5vw] md:justify-end md:items-center md:pb-0 top-10 sm:top-14 md:top-1/2 md:-translate-y-1/2 h-[75vw] sm:h-[60vw] md:h-[25vw]"
                 >

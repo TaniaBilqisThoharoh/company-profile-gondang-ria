@@ -6,6 +6,7 @@ import { BarLoader } from "react-spinners";
 import Cookies from "js-cookie";
 import axios from "axios";
 import DropZone from "../components/DropZone";
+import { baseApi, baseUrl } from "@/app/context/ApiUrl";
 
 export default function Wahana() {
   const [image, setImage] = useState();
@@ -62,10 +63,9 @@ export default function Wahana() {
       const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` },
       };
-      /* const url =
-        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana"; */
+  
       const url =
-        "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana";
+        `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/wahana`;
 
       await axios
         .get(url, config)
@@ -103,23 +103,17 @@ export default function Wahana() {
       },
     };
 
-    /* let uploadUrl =
-      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/store"; */
     let uploadUrl =
-      "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/store";
+      `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/wahana/store`;
 
-    /* const url1 =
-      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana"; */
-    const url1 =
-      "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana";
+    const url1 = `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/wahana`;
 
     await axios
       .get(url1, config)
       .then(function (response) {
         const idWahana = response.data[0].id
         // handle success
-        /* uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/update/${idWahana}`; */
-        uploadUrl = `https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/update/${idWahana}`;
+        uploadUrl = `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/wahana/update/${idWahana}`;
 
         axios
           .post(uploadUrl, formData, config)
@@ -133,10 +127,9 @@ export default function Wahana() {
       })
       .catch(function (error) {
         // handle error
-        /* uploadUrl =
-          "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/store"; */
+      
         uploadUrl =
-          "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/wahana/store";
+        `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/wahana/store`;;
 
         axios
           .post(uploadUrl, formData, config)
@@ -181,7 +174,7 @@ export default function Wahana() {
                     className={`${
                       imagePreviews ? "hidden" : "block"
                     } object-cover object-center h-full rounded-[15px]`}
-                    src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
+                    src={`${baseUrl}/images/${previewsFromServer}`}
                     alt={`Preview`}
                   />
                   <img

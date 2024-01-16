@@ -6,6 +6,7 @@ import Ticket from "../components/Ticket";
 import Link from "next/link";
 import { useAppContext } from "../context/AppWrapper";
 import Spinner from "../components/Spinner";
+import { baseApi } from "../context/ApiUrl";
 
 export default function PesanTiket() {
   const {
@@ -24,9 +25,9 @@ export default function PesanTiket() {
   /* Function ambildata berfungsi untuk mengambil data harga tiket */
   const ambilData = async () => {
     showFetching();
-    const url = "https://newapi.gondangria.com/api/harga_tiket";
+    const url = `${baseApi}/harga_tiket`;
 
-    fetch(url)
+    /* fetch(url)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -47,9 +48,9 @@ export default function PesanTiket() {
       .catch((error) => {
         window.alert(error);
         console.error("Error:", error);
-      });
+      }); */
 
-    /* await axios
+    await axios
       .get(url)
       .then(function (response) {
         setDataFromServer(parseInt(response.data.data[0].harga_tiket));
@@ -62,7 +63,7 @@ export default function PesanTiket() {
       })
       .catch(function (error) {
         window.alert(error);
-      }); */
+      });
     hideFetching();
   };
 

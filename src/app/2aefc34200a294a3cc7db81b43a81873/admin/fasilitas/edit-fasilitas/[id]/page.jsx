@@ -6,6 +6,7 @@ import { BarLoader } from "react-spinners";
 import Cookies from "js-cookie";
 import axios from "axios";
 import DropZone from "../../../components/DropZone";
+import { baseApi, baseUrl } from "@/app/context/ApiUrl";
 
 /* Ini parent function nama function edit fasilitas */
 export default function EditFasilitas({ params }) {
@@ -64,10 +65,9 @@ export default function EditFasilitas({ params }) {
       const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` },
       };
-      /* const url =
-        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas"; */
+      
       const url =
-        "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas";
+        `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas`;
 
       await axios
         .get(url, config)
@@ -106,8 +106,7 @@ export default function EditFasilitas({ params }) {
       },
     };
 
-    /* let uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/update/${params.id}`; */
-    let uploadUrl = `https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/update/${params.id}`;
+    let uploadUrl = `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/update/${params.id}`;
 
     await axios
       .post(uploadUrl, formData, config)
@@ -136,8 +135,7 @@ export default function EditFasilitas({ params }) {
       },
     };
 
-    /* let uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/destroy/${params.id}`; */
-    let uploadUrl = `https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/destroy/${params.id}`;
+    let uploadUrl = `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas/destroy/${params.id}`;
 
     await axios
       .delete(uploadUrl, config)
@@ -183,7 +181,7 @@ export default function EditFasilitas({ params }) {
                     className={`${
                       imagePreviews ? "hidden" : "block"
                     } object-cover object-center h-full rounded-[15px]`}
-                    src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
+                    src={`${baseUrl}/images/${previewsFromServer}`}
                     alt={`Preview`}
                   />
                   <img

@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import FasilitasCard from "../components/FasilitasCard";
 import AddFasCard from "../components/AddFasCard";
+import { baseApi } from "@/app/context/ApiUrl";
 
 export default function Fasilitas() {
   const [dataFromServer, setDataFromServer] = useState();
@@ -23,10 +24,9 @@ export default function Fasilitas() {
       const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` },
       };
-      /* const url =
-        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas"; */
+      
       const url =
-        "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas";
+        `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/fasilitas`;
 
       await axios
         .get(url, config)

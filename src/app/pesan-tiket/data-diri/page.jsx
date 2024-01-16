@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useAppContext } from "@/app/context/AppWrapper";
 import { FaChevronLeft } from "react-icons/fa6";
 import Spinner from "@/app/components/Spinner";
+import { baseApi, baseUrl } from "@/app/context/ApiUrl";
 
 export default function DataDiri() {
   const { isLoading, hideLoading, showLoading, isFetching, showFetching, hideFetching } =
@@ -34,7 +35,7 @@ export default function DataDiri() {
 
   /* Function kirimemail berfungsi untuk mengirim tiket melalui email */
   const kirimEmail = async (order_id) => {
-    const urlKirimTiket = `https://newapi.gondangria.com/send-mail-ticket/${
+    const urlKirimTiket = `${baseUrl}/send-mail-ticket/${
       order_id && order_id
     }`;
 
@@ -66,7 +67,7 @@ export default function DataDiri() {
   /* Function strodatadiri berfungsi untuk menyimpan data diri pengunjung di database */
   const storeDataDiri = async (formData, order_id) => {
     formData.append("order_id", order_id);
-    const urlPengunjung = "https://newapi.gondangria.com/api/pengunjung";
+    const urlPengunjung = `${baseApi}/pengunjung`;
     await axios
       .post(urlPengunjung, formData)
       .then((response) => {
@@ -95,7 +96,7 @@ export default function DataDiri() {
     formData.append("no_telepon", phone);
     formData.append("tanggal", tgl);
 
-    const urlMidtrans = "https://newapi.gondangria.com/api/checkout-midtrans";
+    const urlMidtrans = `${baseApi}/checkout-midtrans`;
 
     /* fetch(urlMidtrans, {
       method: 'POST',
@@ -118,6 +119,8 @@ export default function DataDiri() {
         console.error('Error:', error);
       }); */
 
+      
+      /* Midtrans */
     await axios
       .post(urlMidtrans, formData)
       .then(function (response) {

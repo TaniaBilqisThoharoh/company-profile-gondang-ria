@@ -5,6 +5,7 @@ import axios from "axios";
 import FasilitasCard from "../components/FasilitasCard";
 import Spinner from "../components/Spinner";
 import { useAppContext } from "../context/AppWrapper";
+import { baseApi } from "../context/ApiUrl";
 
 export default function Fasilitas() {
   const { isLoading, hideLoading, isFetching, showFetching, hideFetching } = useAppContext();
@@ -13,9 +14,9 @@ export default function Fasilitas() {
   /* Function ambildata berfungsi untuk mengambil data id, nama, gambar, deskripsi fasilitas */
   const ambilData = async () => {
     showFetching()
-    const url = "https://newapi.gondangria.com/api/fasilitas";
+    const url = `${baseApi}/fasilitas`;
 
-    fetch(url).then(response => {
+    /* fetch(url).then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -27,16 +28,16 @@ export default function Fasilitas() {
     .catch(error => {
       window.alert(error);
       console.error('Error:', error);
-    });
+    }); */
 
-    /* await axios
+    await axios
       .get(url)
       .then(function (response) {
         setDataFromServer(response.data);
       })
       .catch(function (error) {
         window.alert(error.message);
-      }); */
+      });
       hideFetching()
   };
 

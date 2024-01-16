@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import FormValidasi from "../components/FormValidasi";
 import { useEffect, useState } from "react";
+import { baseApi } from "@/app/context/ApiUrl";
 
 export default function Validasi() {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +28,7 @@ export default function Validasi() {
 
     //send data to server
     await axios
-      .post(`https://newapi.gondangria.com/api/password/validasi`, formData)
+      .post(`${baseApi}/password/validasi`, formData)
       .then((response) => {
         window.alert(response.data.message);
         router.push("/2aefc34200a294a3cc7db81b43a81873/admin/ubah-password");

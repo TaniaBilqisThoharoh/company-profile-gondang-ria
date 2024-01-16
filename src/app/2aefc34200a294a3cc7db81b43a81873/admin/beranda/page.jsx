@@ -6,6 +6,7 @@ import { BarLoader } from "react-spinners";
 import Cookies from "js-cookie";
 import axios from "axios";
 import DropZone from "../components/DropZone";
+import { baseApi, baseUrl } from "@/app/context/ApiUrl";
 
 export default function Beranda() {
   const [image, setImage] = useState();
@@ -50,17 +51,21 @@ export default function Beranda() {
   /* Function ambildata berfungsi untuk mengambil data gambar hero dari database */
   const ambilData = async () => {
     //check token
+
+    /* Memeriksa apakah terdapat cookies pada client terkait atau tidak*/
     if (!Cookies.get("token")) {
       //redirect page dashboard
+      /* Block code ini akan berjalan jika tidak ada token di cookies */
       router.push("/2aefc34200a294a3cc7db81b43a81873/admin/login");
     } else {
+      /* Block code ini akan berjalan jika ada token di cookies */
+      /* dibawah ini merupakan deklarasi object config dengan key headers yang memiliki value { Authorization: `Bearer ${Cookies.get("token")}` } */
       const config = {
         headers: { Authorization: `Bearer ${Cookies.get("token")}` },
       };
-      /* const url =
-        "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda"; */
+/* Dibawah ini merupakan deklarasi variabel url dengan nilai ${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/beranda */
       const url =
-        "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda";
+        `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/beranda`;
 
       await axios
         .get(url, config)
@@ -92,21 +97,16 @@ export default function Beranda() {
     };
 
     let uploadUrl =
-      "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/store";
-    /* let uploadUrl =
-      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/store"; */
+      `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/beranda/store`;
 
     const url1 =
-      "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda";
-    /* const url1 =
-      "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda"; */
+      `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/beranda`;
 
     await axios
       .get(url1, config)
       .then(function (response) {
         // handle success
-        uploadUrl = `https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/update`;
-        /* uploadUrl = `http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/update`; */
+        uploadUrl = `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/beranda/update`;
 
         axios
           .post(uploadUrl, formData, config)
@@ -119,10 +119,9 @@ export default function Beranda() {
       })
       .catch(function (error) {
         // handle error
-        /* uploadUrl =
-          "http://127.0.0.1:8000/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/store"; */
+
         uploadUrl =
-          "https://newapi.gondangria.com/api/2aefc34200a294a3cc7db81b43a81873/admin/beranda/store";
+          `${baseApi}/2aefc34200a294a3cc7db81b43a81873/admin/beranda/store`;
 
         axios
           .post(uploadUrl, formData, config)
@@ -164,7 +163,7 @@ export default function Beranda() {
                       className={`${
                         imagePreviews ? "hidden" : "block"
                       } object-cover min-h-full h-full rounded-[15px]`}
-                      src={`https://newapi.gondangria.com/images/${previewsFromServer}`}
+                      src={`${baseUrl}/images/${previewsFromServer}`}
                       alt={`Preview`}
                     />
                     <img

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import FormUbahPW from "../components/FormUbahPW";
 import { useEffect, useState } from "react";
+import { baseApi } from "@/app/context/ApiUrl";
 
 export default function UbahPassword() {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +32,7 @@ export default function UbahPassword() {
     }
     //send data to server
     await axios
-      .post(`https://newapi.gondangria.com/api/password/change_password`, formData)
+      .post(`${baseApi}/password/change_password`, formData)
       .then((response) => {
         window.alert(response.data.message);
         (sessionStorage && sessionStorage.removeItem("email"))

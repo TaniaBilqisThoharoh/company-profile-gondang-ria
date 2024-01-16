@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useAppContext } from "../context/AppWrapper";
+import { baseUrl } from "../context/ApiUrl";
 
 export default function FasilitasCard({ id, name, image, description }) {
   const { showLoading } = useAppContext()
@@ -9,14 +10,14 @@ export default function FasilitasCard({ id, name, image, description }) {
             <div className="w-full h-full">
               <img
                 className="belakang w-full absolute top-0 rounded-t-[15px] h-[149px] xl:h-[221px] object-cover"
-                src={`https://newapi.gondangria.com/images/${image}`}
+                src={`${baseUrl}/images/${image}`}
                 alt=""
               />
               <div className="content-[''] absolute bottom-[96px] right-0 w-[30px] h-[30px] bg-white"></div>
               <div className="depan w-full absolute overflow-hidden top-0 rounded-t-[15px] h-[120px] xl:h-[192px] rounded-br-[25px]">
                 <img
                   className="object-cover w-full h-[149px] xl:h-[221px]"
-                  src={`https://newapi.gondangria.com/images/${image}`}
+                  src={`${baseUrl}/images/${image}`}
                   alt=""
                 />
               </div>
