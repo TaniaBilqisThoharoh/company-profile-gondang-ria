@@ -2,13 +2,15 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAppContext } from "@/app/context/AppWrapper";
+import { baseApi, baseUrl } from "@/app/context/ApiUrl";
 
 export default function FasilitasSec() {
   const { showLoading } = useAppContext();
   const [dataFromServer, setDataFromServer] = useState();
 
+  /* Function ambil data berfungsi untuk mengambil data fasilitas */
   const ambilData = async () => {
-    const url = "https://newapi.gondangria.com/api/fasilitas";
+    const url = `${baseApi}/fasilitas`;
 
     await axios
       .get(url)
@@ -54,7 +56,7 @@ export default function FasilitasSec() {
           {dataFromServer ? (
             <img
               className="object-cover w-[40vw] h-[40vw] max-h-[10rem] max-w-[10rem] md:max-h-[20rem] md:max-w-[20rem] lg:max-h-[28rem] lg:max-w-[28rem] xl:max-h-[35.0135rem] xl:max-w-[35.0135rem] rounded-full aspect-square"
-              src={`https://newapi.gondangria.com/images/${dataFromServer.gambar}`}
+              src={`${baseUrl}/images/${dataFromServer.gambar}`}
               alt={`${dataFromServer.name} Photo`}
             />
           ) : (
@@ -62,7 +64,7 @@ export default function FasilitasSec() {
           )}
         </div>
       </div>
-      <div className="absolute mx-auto md:right-0 top-0 w-full md:w-[57vw] h-[46vw] overflow-hidden">
+      <div className="absolute mx-auto md:right-0 top-0 w-full md:w-[57vw] h-[46vw] overflow-hidden md:overflow-visible">
         <div
           id="main-bg-ble-400"
           className="absolute w-[50vw] h-[50vw] md:w-[90%] md:h-[90%] -right-0 md:-right-[14.7%] -top-[11.4%]"
