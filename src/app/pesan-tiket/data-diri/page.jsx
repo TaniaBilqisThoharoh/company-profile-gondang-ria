@@ -24,7 +24,7 @@ export default function DataDiri() {
     let date = new Date();
     const jam = new Date().getHours();
 
-    if (jam < 8 || jam > 17) {
+    if (jam < 8 || jam > 16) {
       date.setDate(date.getDate());
       return current <= date || new Date(current).getDay() === 5;
     } else {
