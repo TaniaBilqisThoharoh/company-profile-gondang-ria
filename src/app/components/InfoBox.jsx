@@ -40,7 +40,7 @@ export default function InfoBox({ title, desc }) {
           <p
             className={`${
               title === "Sosial Media" && "flex gap-[30px]"
-            } hubungi-kami font-normal bg-transparent text-ble-700 ${title === "Email" && "hover:text-ble-500 active:text-ble-300"} text-sm lg:text-lg p-[20px]`}
+            } hubungi-kami font-normal bg-transparent text-ble-700 ${title === "Email" ? "hover:text-ble-500 active:text-ble-300 px-[3px] py-[20px]" : "p-[20px]"} text-sm lg:text-lg`}
           >
             {desc}
           </p>

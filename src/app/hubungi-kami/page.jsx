@@ -81,6 +81,7 @@ const data = [
   },
 ];
 
+/* Parent function untuk menampilkan halaman hubungi kami */
 export default function HubungiKami() {
   const { isLoading, hideLoading } = useAppContext();
 
